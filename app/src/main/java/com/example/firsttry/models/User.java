@@ -1,12 +1,17 @@
 package com.example.firsttry.models;
 
 import com.example.firsttry.enums.UserRoles;
+import com.example.firsttry.utilities.DatabaseHandler;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
-public class User {
-    private int Id;
+public class User extends Model
+{
+    @Override
+    public String tableName() { return "users"; }
+
     private String Username;
     private String Email;
     private String Password;
@@ -14,9 +19,11 @@ public class User {
 
     public User() { }
 
-    public int getId() { return Id; }
-
-    public void setId(int id) { Id = id; }
+    public User(String username, String email)
+    {
+        Username = username;
+        Email = email;
+    }
 
     public String getUsername() { return Username; }
 
@@ -43,5 +50,22 @@ public class User {
         newUser.setEmail(user.getEmail());
         newUser.setUsername(user.getDisplayName());
         return newUser;
+    }
+
+    @Override
+    public CompletableFuture<User> save()
+    {
+        return DatabaseHandler.save(this).thenApply(result -> result
+                .match(
+                        success -> success,
+                        failure -> null
+                ));
+    }
+
+    @Override
+    public CompletableFuture<User> getById(int id)
+    {
+        return DatabaseHandler.getById(id, tableName(), User.class)
+                .thenApply(result -> result);
     }
 }

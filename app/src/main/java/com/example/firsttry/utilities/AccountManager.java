@@ -23,7 +23,8 @@ public class AccountManager
     {
         CompletableFuture<Result<User, Exception>> future = new CompletableFuture<>();
         mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
-                .addOnSuccessListener(authResult -> future.complete(Result.success(user)))
+                .addOnSuccessListener(authResult -> user.save()
+                        .thenApply(account -> future.complete(Result.success(account))))
                 .addOnFailureListener(e -> future.complete(Result.failure(e)));
         return future;
     }
