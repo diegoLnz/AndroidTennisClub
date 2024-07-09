@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">FirstTry</string>
+    <string name="Start">Inizia</string>
+    <string name="Welcome">Benvenuti al Circolo!</string>
+    <string name="Home">Home</string>
+    <string name="Search">Ricerca</string>
+    <string name="Profile">Profilo</string>
+    <string name="LessonReserve">Prenota Lezione</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="HomeWelcome">Benvenuto nella Home</string>
+    <string name="UserSearch">Cerca un utente</string>
+    <string name="UserProfile">Profilo Utente</string>
+    <string name="LessonBook">Prenota una Lezione</string>
+    <string name="search_for_courts_lessons_etc">Search for courts, lessons, etc.</string>
+    <string name="cerca">Cerca</string>
+    <string name="risultati">Risultati</string>
+    <string name="seleziona_data">Seleziona data</string>
+    <string name="mm_dd_yyyy">MM/DD/YYYY</string>
+    <string name="seleziona_ora">Seleziona ora</string>
+    <string name="hh_mm">HH:MM</string>
+    <string name="prenota_lezione">Prenota lezione</string>
+    <string name="salva_profilo">Salva profilo</string>
+    <string name="bio">Bio</string>
+    <string name="email">Email</string>
+    <string name="nome">Nome</string>
+    <string name="immagine_profilo">Immagine profilo</string>
+    <string name="profilo_utente">Profilo utente</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="non_hai_un_account_registrati">Non hai un account? Registrati!</string>
+    <string name="registrati">Registrati</string>
+    <string name="username">Username</string>
+    <string name="esci">Esci</string>
+</resources>

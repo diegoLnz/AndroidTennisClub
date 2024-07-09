@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/UserSearch"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/edit_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/search_for_courts_lessons_etc"
+        android:inputType="text"
+        android:padding="8dp"/>
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cerca"
+        android:padding="8dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/search_results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/risultati"
+        android:textSize="18sp"
+        android:paddingTop="16dp"/>
+</LinearLayout>

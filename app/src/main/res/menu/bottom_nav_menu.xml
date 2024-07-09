@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/baseline_home_24"
+        android:title="@string/Home" />
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/baseline_search_24"
+        android:title="@string/Search" />
+    <item
+        android:id="@+id/nav_book_lesson"
+        android:icon="@drawable/baseline_bookmark_add_24"
+        android:title="@string/LessonReserve" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/Profile" />
+</menu>
