@@ -5,7 +5,6 @@ import com.example.firsttry.utilities.DatabaseHandler;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class User extends Model
 {
@@ -14,6 +13,7 @@ public class User extends Model
 
     private String Username;
     private String Email;
+    private String Bio;
     private String Password;
     private UserRoles Role;
 
@@ -33,6 +33,10 @@ public class User extends Model
 
     public void setEmail(String email) { Email = email; }
 
+    public String getBio() { return Bio; }
+
+    public void setBio(String bio) { Bio = bio; }
+
     public String getPassword() { return Password; }
 
     public void setPassword(String password) { Password = password; }
@@ -41,21 +45,20 @@ public class User extends Model
 
     public void setRole(UserRoles role) { Role = role; }
 
-    public static User fromFirebaseUser(FirebaseUser user) {
+    public static CompletableFuture<User> fromFirebaseUser(FirebaseUser user) {
         if (user == null) {
             return null;
         }
 
-        User newUser = new User();
-        newUser.setEmail(user.getEmail());
-        newUser.setUsername(user.getDisplayName());
-        return newUser;
+        User returnUser = new User();
+        return returnUser.getById(user.getUid())
+                .thenApply(result -> result);
     }
 
     @Override
     public CompletableFuture<User> save()
     {
-        return DatabaseHandler.save(this).thenApply(result -> result
+        return DatabaseHandler.saveOrUpdate(this).thenApply(result -> result
                 .match(
                         success -> success,
                         failure -> null
@@ -63,7 +66,7 @@ public class User extends Model
     }
 
     @Override
-    public CompletableFuture<User> getById(int id)
+    public CompletableFuture<User> getById(String id)
     {
         return DatabaseHandler.getById(id, tableName(), User.class)
                 .thenApply(result -> result);

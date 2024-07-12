@@ -13,11 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.firsttry.extensions.ValidatedEditText;
+import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
+
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment
 {
+    private ValidatedEditText _username;
     private ValidatedEditText _email;
+    private ValidatedEditText _bio;
     private View _currentView;
 
     @Nullable
@@ -31,8 +36,15 @@ public class ProfileFragment extends Fragment
 
     private void setFields()
     {
-        _email = _currentView.findViewById(R.id.edit_email);
-        _email.setText(AccountManager.getCurrentAccount().getEmail());
+        Objects.requireNonNull(AccountManager.getCurrentAccount())
+                .thenAccept(user -> {
+                    _username = _currentView.findViewById(R.id.edit_username);
+                    _username.setText(user.getUsername());
+                    _email = _currentView.findViewById(R.id.edit_email);
+                    _email.setText(user.getEmail());
+                    _bio = _currentView.findViewById(R.id.edit_bio);
+                    _bio.setText(user.getBio());
+                });
     }
 
     private void setLogoutBtnListener()

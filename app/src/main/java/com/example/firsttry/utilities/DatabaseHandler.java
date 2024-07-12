@@ -1,6 +1,5 @@
 package com.example.firsttry.utilities;
 
-import com.example.firsttry.models.IDatabaseModel;
 import com.example.firsttry.models.Model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -13,32 +12,33 @@ public final class DatabaseHandler
 {
     private static final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    public static <T extends Model> CompletableFuture<Result<T, Exception>> save(T object)
+    public static <T extends Model> CompletableFuture<Result<T, Exception>> saveOrUpdate(T object)
     {
-        DatabaseReference ref = database.getReference(object.tableName());
+        DatabaseReference ref = database.getReference(object.tableName() + "/" + object.getId());
         CompletableFuture<Result<T, Exception>> future = new CompletableFuture<>();
-
         ref.setValue(object)
                 .addOnSuccessListener(aVoid -> future.complete(Result.success(object)))
                 .addOnFailureListener(e -> future.complete(Result.failure(e)));
         return future;
     }
 
-    public static <T> CompletableFuture<T> getById(int id, String tableName, Class<T> clazz)
+    public static <T> CompletableFuture<T> getById(String id, String tableName, Class<T> valueType)
     {
         CompletableFuture<T> future = new CompletableFuture<>();
-        DatabaseReference ref = database.getReference(tableName)
-                .child(String.valueOf(id));
+        DatabaseReference ref = database.getReference(tableName + "/" + id);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot snapshot)
             {
-                if (snapshot.exists()) {
-                    T object = snapshot.getValue(clazz);
+                if (snapshot.exists())
+                {
+                    T object = snapshot.getValue(valueType);
                     future.complete(object);
-                } else {
+                }
+                else
+                {
                     future.completeExceptionally(new Exception("Data not found"));
                 }
             }

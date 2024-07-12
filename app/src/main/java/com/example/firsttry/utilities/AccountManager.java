@@ -1,5 +1,6 @@
 package com.example.firsttry.utilities;
 
+import com.example.firsttry.enums.UserRoles;
 import com.example.firsttry.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,8 +24,19 @@ public class AccountManager
     {
         CompletableFuture<Result<User, Exception>> future = new CompletableFuture<>();
         mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
-                .addOnSuccessListener(authResult -> user.save()
-                        .thenApply(account -> future.complete(Result.success(account))))
+                .addOnCompleteListener(authResult -> {
+                    if (authResult.isSuccessful())
+                    {
+                        user.setId(authResult.getResult().getUser().getUid());
+                        user.setPassword(Sha256Encryptor.encrypt(user.getPassword()));
+                        user.setRole(UserRoles.Common);
+                        user.save().thenApply(account -> future.complete(Result.success(account)));
+                    }
+                    else
+                    {
+                        future.complete(Result.failure(authResult.getException()));
+                    }
+                })
                 .addOnFailureListener(e -> future.complete(Result.failure(e)));
         return future;
     }
@@ -35,5 +47,11 @@ public class AccountManager
     }
 
     public static boolean isLogged() { return mAuth.getCurrentUser() != null; }
-    public static User getCurrentAccount() { return User.fromFirebaseUser(mAuth.getCurrentUser()); }
+    public static CompletableFuture<User> getCurrentAccount()
+    {
+        if (mAuth.getCurrentUser() == null)
+            return null;
+
+        return User.fromFirebaseUser(mAuth.getCurrentUser());
+    }
 }

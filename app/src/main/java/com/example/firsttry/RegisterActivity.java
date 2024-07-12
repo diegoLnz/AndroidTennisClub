@@ -15,7 +15,9 @@ import com.example.firsttry.utilities.AccountManager;
 
 public class RegisterActivity extends ValidatedCompatActivity
 {
+    private ValidatedEditText EditTextUsername;
     private ValidatedEditText EditTextEmail;
+    private ValidatedEditText EditTextBio;
     private ValidatedEditText EditTextPassword;
     private Button RegisterButton;
 
@@ -29,8 +31,13 @@ public class RegisterActivity extends ValidatedCompatActivity
 
     private void setFields()
     {
+        EditTextUsername = findViewById(R.id.editTextUsernameReg);
         EditTextEmail = findViewById(R.id.editTextEmailReg);
+        EditTextBio = findViewById(R.id.editTextBioReg);
         EditTextPassword = findViewById(R.id.editTextPasswordReg);
+        EditTextUsername.setRequired(true);
+        EditTextEmail.setRequired(true);
+        EditTextPassword.setRequired(true);
         RegisterButton = findViewById(R.id.buttonRegister);
     }
 
@@ -41,14 +48,27 @@ public class RegisterActivity extends ValidatedCompatActivity
                     .getText()
                     .toString()
                     .trim();
+
             String password = EditTextPassword
+                    .getText()
+                    .toString()
+                    .trim();
+
+            String username = EditTextUsername
+                    .getText()
+                    .toString()
+                    .trim();
+
+            String bio = EditTextBio
                     .getText()
                     .toString()
                     .trim();
 
             User user = new User();
             user.setEmail(email);
+            user.setUsername(username);
             user.setPassword(password);
+            user.setBio(bio);
 
             registerUser(user);
         });
