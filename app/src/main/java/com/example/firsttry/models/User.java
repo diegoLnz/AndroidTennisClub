@@ -16,6 +16,7 @@ public class User extends Model
     private String Bio;
     private String Password;
     private UserRoles Role;
+    private Integer Score;
 
     public User() { }
 
@@ -44,6 +45,10 @@ public class User extends Model
     public UserRoles getRole() { return Role; }
 
     public void setRole(UserRoles role) { Role = role; }
+
+    public Integer getScore() { return Score; }
+
+    public void setScore(Integer score) { Score = score; }
 
     public static CompletableFuture<User> fromFirebaseUser(FirebaseUser user) {
         if (user == null) {

@@ -13,12 +13,12 @@
         android:textStyle="bold"
         android:paddingBottom="16dp"/>
 
-    <EditText
+    <com.example.firsttry.extensions.ValidatedEditText
         android:id="@+id/edit_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints=""
-        android:hint="@string/search_for_courts_lessons_etc"
+        android:hint="@string/username"
         android:inputType="text"
         android:padding="8dp"/>
 
