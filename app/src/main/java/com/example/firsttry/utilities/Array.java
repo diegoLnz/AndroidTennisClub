@@ -54,7 +54,7 @@ public class Array<T>
         }
     }
 
-    public T first()
+    public T firstOrDefault()
     {
         return list.isEmpty()
                 ? null

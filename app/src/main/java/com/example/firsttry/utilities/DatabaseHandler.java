@@ -59,7 +59,8 @@ public final class DatabaseHandler
         CompletableFuture<Array<T>> future = new CompletableFuture<>();
         DatabaseReference ref = database.getReference(tableName);
 
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
