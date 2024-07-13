@@ -15,6 +15,9 @@
         android:theme="@style/Theme.FirstTry"
         tools:targetApi="31">
         <activity
+            android:name=".UsersSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".GenericSettingsActivity"
             android:exported="false" />
         <activity

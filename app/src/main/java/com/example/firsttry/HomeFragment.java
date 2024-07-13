@@ -23,8 +23,8 @@ public class HomeFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        _currentView = inflater.inflate(R.layout.fragment_home, container, false);
         handleAdmin();
+        _currentView = inflater.inflate(R.layout.fragment_home, container, false);
         return _currentView;
     }
 

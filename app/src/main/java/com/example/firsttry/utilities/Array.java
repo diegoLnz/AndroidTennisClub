@@ -9,13 +9,18 @@ import java.util.function.Function;
 
 public class Array<T>
 {
-    private final List<T> list;
+    private List<T> list;
 
     @SafeVarargs
     public Array(T... array)
     {
         this.list = new ArrayList<>();
         list.addAll(Arrays.asList(array));
+    }
+
+    public Array(List<T> list)
+    {
+        this.list = list;
     }
 
     public void add(T item) {
@@ -60,4 +65,37 @@ public class Array<T>
                 ? null
                 : list.get(0);
     }
+
+    public T get(Integer pos)
+    {
+        return list.size() >= pos
+                ? list.get(pos)
+                : null;
+    }
+
+    public Array<T> orderBy(Function<T, Comparable> selector)
+    {
+        List<T> sortedList = new ArrayList<>(list);
+        sortedList.sort((item1, item2) -> {
+            Comparable value1 = selector.apply(item1);
+            Comparable value2 = selector.apply(item2);
+            return value1.compareTo(value2);
+        });
+        this.list = sortedList;
+        return new Array<>(sortedList);
+    }
+
+    public Array<T> orderByDescending(Function<T, Comparable> selector)
+    {
+        List<T> sortedList = new ArrayList<>(list);
+        sortedList.sort((item1, item2) -> {
+            Comparable value1 = selector.apply(item1);
+            Comparable value2 = selector.apply(item2);
+            return value2.compareTo(value1);
+        });
+        this.list = sortedList;
+        return new Array<>(sortedList);
+    }
+
+    public Integer size() { return list.size(); }
 }
