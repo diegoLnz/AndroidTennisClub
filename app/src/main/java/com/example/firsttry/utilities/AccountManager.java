@@ -41,10 +41,7 @@ public class AccountManager
         return future;
     }
 
-    public static void doLogout()
-    {
-        mAuth.signOut();
-    }
+    public static void doLogout() { mAuth.signOut(); }
 
     public static boolean isLogged() { return mAuth.getCurrentUser() != null; }
     public static CompletableFuture<User> getCurrentAccount()

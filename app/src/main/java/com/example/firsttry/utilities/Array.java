@@ -1,5 +1,7 @@
 package com.example.firsttry.utilities;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +46,7 @@ public class Array<T>
                 action.apply(item);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            Log.e("forEach", e.getMessage(), e);
         }
     }
 }

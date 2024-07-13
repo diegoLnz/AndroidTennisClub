@@ -9,14 +9,8 @@ public class Sha256Encryptor
 {
     public static String encrypt(String input)
     {
-        try
-        {
-            return toHexString(getSHA(input));
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            throw new RuntimeException(e);
-        }
+        try { return toHexString(getSHA(input)); }
+        catch (NoSuchAlgorithmException e) { throw new RuntimeException(e); }
     }
 
     private static byte[] getSHA(String input) throws NoSuchAlgorithmException
