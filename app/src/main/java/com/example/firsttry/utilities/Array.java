@@ -12,7 +12,8 @@ public class Array<T>
     private final List<T> list;
 
     @SafeVarargs
-    public Array(T... array) {
+    public Array(T... array)
+    {
         this.list = new ArrayList<>();
         list.addAll(Arrays.asList(array));
     }
@@ -21,7 +22,8 @@ public class Array<T>
         list.add(item);
     }
 
-    public Array<T> where(Function<T, Boolean> predicate) {
+    public Array<T> where(Function<T, Boolean> predicate)
+    {
         Array<T> result = new Array<>();
         for (T item : list) {
             if (predicate.apply(item)) {
@@ -31,7 +33,8 @@ public class Array<T>
         return result;
     }
 
-    public <R> Array<R> select(Function<T, R> selector) {
+    public <R> Array<R> select(Function<T, R> selector)
+    {
         Array<R> selectedItems = new Array<>();
         for (T item : list) {
             R selected = selector.apply(item);
@@ -40,7 +43,8 @@ public class Array<T>
         return selectedItems;
     }
 
-    public void forEach(Function<T, Void> action) {
+    public void forEach(Function<T, Void> action)
+    {
         try {
             for (T item : list) {
                 action.apply(item);
@@ -48,5 +52,12 @@ public class Array<T>
         } catch (Exception e) {
             Log.e("forEach", e.getMessage(), e);
         }
+    }
+
+    public T first()
+    {
+        return list.isEmpty()
+                ? null
+                : list.get(0);
     }
 }

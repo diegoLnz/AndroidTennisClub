@@ -10,10 +10,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeFragment extends Fragment {
+import com.example.firsttry.enums.UserRoles;
+import com.example.firsttry.utilities.AccountManager;
+import com.example.firsttry.utilities.FragmentHandler;
+
+import java.util.Objects;
+
+public class HomeFragment extends Fragment
+{
+    private View _currentView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        _currentView = inflater.inflate(R.layout.fragment_home, container, false);
+        handleAdmin();
+        return _currentView;
+    }
+
+    private void handleAdmin()
+    {
+        Objects.requireNonNull(AccountManager.getCurrentAccount())
+                .thenAccept(user -> {
+                    if (user.getRole() == UserRoles.Admin)
+                        FragmentHandler.replaceFragment(this.getActivity(), new HomeAdminFragment());
+                });
     }
 }

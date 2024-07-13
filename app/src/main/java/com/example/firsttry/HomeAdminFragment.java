@@ -1,5 +1,6 @@
 package com.example.firsttry;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ public class HomeAdminFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         _currentView = inflater.inflate(R.layout.fragment_home_admin, container, false);
+        setSettingsButtonListener();
         return _currentView;
     }
 
@@ -26,7 +28,8 @@ public class HomeAdminFragment extends Fragment
     {
         _settingsBtn = _currentView.findViewById(R.id.buttonGenericSettings);
         _settingsBtn.setOnClickListener(v -> {
-            
+            startActivity(new Intent(getActivity(), GenericSettingsActivity.class));
+            getActivity().finish();
         });
     }
 }

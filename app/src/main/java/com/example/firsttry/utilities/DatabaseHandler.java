@@ -1,5 +1,7 @@
 package com.example.firsttry.utilities;
 
+import androidx.annotation.NonNull;
+
 import com.example.firsttry.models.Model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -45,6 +47,40 @@ public final class DatabaseHandler
 
             @Override
             public void onCancelled(DatabaseError error) {
+                future.completeExceptionally(new Exception("Error retrieving data: " + error.getMessage()));
+            }
+        });
+
+        return future;
+    }
+
+    public static <T> CompletableFuture<Array<T>> list(String tableName, Class<T> valueType)
+    {
+        CompletableFuture<Array<T>> future = new CompletableFuture<>();
+        DatabaseReference ref = database.getReference(tableName);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                if (snapshot.exists())
+                {
+                    Array<T> list = new Array<>();
+                    for (DataSnapshot childSnapshot : snapshot.getChildren())
+                    {
+                        T object = childSnapshot.getValue(valueType);
+                        list.add(object);
+                    }
+                    future.complete(list);
+                }
+                else
+                {
+                    future.completeExceptionally(new Exception("Data not found"));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
                 future.completeExceptionally(new Exception("Error retrieving data: " + error.getMessage()));
             }
         });

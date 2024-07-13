@@ -77,4 +77,7 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="impostazioni_circolo">Impostazioni circolo</string>
+    <string name="impostazioni_utenti">Impostazioni utenti</string>
+    <string name="impostazioni_campi">Impostazioni campi</string>
 </resources>

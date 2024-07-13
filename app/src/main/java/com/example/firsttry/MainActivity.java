@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.utilities.FragmentHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends ValidatedCompatActivity {
@@ -61,10 +62,7 @@ public class MainActivity extends ValidatedCompatActivity {
         if (fragment == null)
             return false;
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
+        FragmentHandler.replaceFragment(this, fragment);
         return true;
     }
 
