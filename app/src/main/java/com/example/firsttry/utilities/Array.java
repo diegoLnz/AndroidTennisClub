@@ -108,6 +108,12 @@ public class Array<T>
         return new Array<>(sortedList);
     }
 
+    public Array<T> remove(Function<T, Boolean> predicate)
+    {
+        list.removeIf(predicate::apply);
+        return this;
+    }
+
     public Integer size() { return list.size(); }
 
     public List<T> getList() { return list; }

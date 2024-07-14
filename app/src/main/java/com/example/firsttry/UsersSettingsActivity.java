@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.firsttry.extensions.UserAdapter;
 import com.example.firsttry.extensions.ValidatedCompatActivity;
 import com.example.firsttry.models.User;
+import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.DatabaseHandler;
+
+import java.util.Objects;
 
 public class UsersSettingsActivity
         extends ValidatedCompatActivity
@@ -32,12 +35,14 @@ public class UsersSettingsActivity
 
     private void loadUsers()
     {
-        DatabaseHandler.list(new User().tableName(), User.class)
-                .thenAccept(users -> runOnUiThread(() -> {
-                    users.orderBy(User::getUsername);
-                    adapter = new UserAdapter(users, this);
-                    recyclerView.setAdapter(adapter);
-                }));
+        AccountManager.getCurrentAccount().thenAccept(account ->
+                DatabaseHandler.list(new User().tableName(), User.class)
+                        .thenAccept(users -> runOnUiThread(() -> {
+                            users.orderBy(User::getUsername)
+                                    .remove(userToRemove -> Objects.equals(userToRemove.getId(), account.getId()));
+                            adapter = new UserAdapter(users, this);
+                            recyclerView.setAdapter(adapter);
+                        })));
     }
 
     @Override

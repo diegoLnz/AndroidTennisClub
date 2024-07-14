@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.models.User;
@@ -21,7 +22,6 @@ import java.util.Objects;
 public class ProfileFragment extends Fragment
 {
     private ValidatedEditText _username;
-    private ValidatedEditText _email;
     private ValidatedEditText _bio;
     private View _currentView;
 
@@ -29,6 +29,7 @@ public class ProfileFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         _currentView = inflater.inflate(R.layout.fragment_profile, container, false);
+        setSaveBtnListener();
         setLogoutBtnListener();
         setFields();
         return _currentView;
@@ -40,11 +41,15 @@ public class ProfileFragment extends Fragment
                 .thenAccept(user -> {
                     _username = _currentView.findViewById(R.id.edit_username);
                     _username.setText(user.getUsername());
-                    _email = _currentView.findViewById(R.id.edit_email);
-                    _email.setText(user.getEmail());
                     _bio = _currentView.findViewById(R.id.edit_bio);
                     _bio.setText(user.getBio());
                 });
+    }
+
+    private void setSaveBtnListener()
+    {
+        Button saveBtn = _currentView.findViewById(R.id.btn_save_profile);
+        saveBtn.setOnClickListener(v -> saveUser());
     }
 
     private void setLogoutBtnListener()
@@ -58,5 +63,18 @@ public class ProfileFragment extends Fragment
         AccountManager.doLogout();
         startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();
+    }
+
+    private void saveUser()
+    {
+        AccountManager.getCurrentAccount().thenAccept(user -> {
+            user.setUsername(_username.getText().toString());
+            user.setBio(_bio.getText().toString());
+            user.save()
+                    .thenAccept(res -> Toast.makeText(
+                            getActivity(),
+                            "Modifiche salvate con successo!",
+                            Toast.LENGTH_SHORT).show());
+        });
     }
 }
