@@ -1,5 +1,6 @@
 package com.example.firsttry;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +41,11 @@ public class UsersSettingsActivity
     }
 
     @Override
-    public void onEdit(User user) {
-
+    public void onEdit(User user)
+    {
+        Intent intent = new Intent(this, UserEditActivity.class);
+        intent.putExtra("userId", user.getId());
+        startActivity(intent);
+        finish();
     }
 }

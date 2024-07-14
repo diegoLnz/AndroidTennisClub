@@ -66,6 +66,17 @@ public class Array<T>
                 : list.get(0);
     }
 
+    public T firstOrDefault(Function<T, Boolean> predicate)
+    {
+        Array<T> result = new Array<>();
+        for (T item : list) {
+            if (predicate.apply(item)) {
+                result.add(item);
+            }
+        }
+        return result.get(0);
+    }
+
     public T get(Integer pos)
     {
         return list.size() >= pos
@@ -98,4 +109,6 @@ public class Array<T>
     }
 
     public Integer size() { return list.size(); }
+
+    public List<T> getList() { return list; }
 }
