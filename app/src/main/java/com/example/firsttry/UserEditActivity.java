@@ -31,6 +31,7 @@ public class UserEditActivity extends ValidatedCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit);
+        checkAuthenticated();
         fillUserData();
     }
 

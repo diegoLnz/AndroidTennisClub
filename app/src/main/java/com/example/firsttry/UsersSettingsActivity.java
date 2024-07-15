@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.firsttry.extensions.UserAdapter;
+import com.example.firsttry.extensions.adapters.UserAdapter;
 import com.example.firsttry.extensions.ValidatedCompatActivity;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
@@ -26,6 +26,7 @@ public class UsersSettingsActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_settings);
+        checkAuthenticated();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -35,7 +36,7 @@ public class UsersSettingsActivity
 
     private void loadUsers()
     {
-        AccountManager.getCurrentAccount().thenAccept(account ->
+        Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(account ->
                 DatabaseHandler.list(new User().tableName(), User.class)
                         .thenAccept(users -> runOnUiThread(() -> {
                             users.orderBy(User::getUsername)

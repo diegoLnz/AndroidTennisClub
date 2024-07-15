@@ -81,4 +81,10 @@
     <string name="impostazioni_utenti">Impostazioni utenti</string>
     <string name="impostazioni_campi">Impostazioni campi</string>
     <string name="modifica">Modifica</string>
+    <string name="vedi_dettagli">Vedi dettagli</string>
+    <string name="username_o_email">Username o Email</string>
+    <string name="elimina">Elimina</string>
+    <string name="gestisci_campi">Gestisci campi</string>
+    <string name="aggiungi">Aggiungi</string>
+    <string name="registra">Registra</string>
 </resources>

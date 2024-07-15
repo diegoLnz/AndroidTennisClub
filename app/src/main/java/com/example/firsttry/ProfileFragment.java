@@ -70,11 +70,10 @@ public class ProfileFragment extends Fragment
         AccountManager.getCurrentAccount().thenAccept(user -> {
             user.setUsername(_username.getText().toString());
             user.setBio(_bio.getText().toString());
-            user.save()
-                    .thenAccept(res -> Toast.makeText(
-                            getActivity(),
-                            "Modifiche salvate con successo!",
-                            Toast.LENGTH_SHORT).show());
+            user.save().thenAccept(res -> Toast.makeText(
+                    getActivity(),
+                    "Modifiche salvate con successo!",
+                    Toast.LENGTH_SHORT).show());
         });
     }
 }

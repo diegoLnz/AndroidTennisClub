@@ -20,6 +20,9 @@ public class ClubData extends Model
         this.profilePicPath = profilePicPath;
     }
 
+    @Override
+    public String getId() { return "1"; }
+
     public String getName() { return Name; }
 
     public void setName(String name) { this.Name = name; }

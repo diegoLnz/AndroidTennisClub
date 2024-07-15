@@ -76,7 +76,7 @@ public final class DatabaseHandler
                 }
                 else
                 {
-                    future.completeExceptionally(new Exception("Data not found"));
+                    future.complete(new Array<>());
                 }
             }
 

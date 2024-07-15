@@ -1,4 +1,4 @@
-package com.example.firsttry.extensions;
+package com.example.firsttry.extensions.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.firsttry.R;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.Array;
-
-import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>
 {

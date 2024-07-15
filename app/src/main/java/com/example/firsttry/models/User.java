@@ -4,6 +4,7 @@ import com.example.firsttry.enums.UserRoles;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class User extends Model
@@ -17,6 +18,7 @@ public class User extends Model
     private String Password;
     private UserRoles Role;
     private Integer Score;
+    private List<Report> reports;
 
     public User() { }
 
@@ -49,6 +51,10 @@ public class User extends Model
     public Integer getScore() { return Score; }
 
     public void setScore(Integer score) { Score = score; }
+
+    public List<Report> getReports() { return reports; }
+
+    public void setReports(List<Report> reports) { this.reports = reports; }
 
     public static CompletableFuture<User> fromFirebaseUser(FirebaseUser user) {
         if (user == null) {

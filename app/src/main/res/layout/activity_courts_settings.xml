@@ -8,38 +8,35 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/UserSearch"
+        android:text="@string/gestisci_campi"
         android:textSize="24sp"
         android:textStyle="bold"
         android:paddingBottom="16dp"/>
 
     <com.example.firsttry.extensions.ValidatedEditText
-        android:id="@+id/edit_search"
+        android:id="@+id/edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints=""
-        android:hint="@string/username_o_email"
+        android:hint="@string/nome"
         android:inputType="text"
         android:padding="8dp"/>
 
+    <Spinner
+        android:id="@+id/types_view_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <Button
-        android:id="@+id/btn_search"
+        android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cerca"
+        android:text="@string/registra"
         android:padding="8dp"
         android:layout_marginTop="16dp"/>
 
-    <TextView
-        android:id="@+id/search_results"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/risultati"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchedUsersRecyclerView"
+        android:id="@+id/addedCourtsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
