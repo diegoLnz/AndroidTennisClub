@@ -50,7 +50,8 @@ public class SearchedUserAdapter extends RecyclerView.Adapter<SearchedUserAdapte
         TextView email;
         Button viewDetailsButton;
 
-        public SearchedUserViewHolder(@NonNull View itemView) {
+        public SearchedUserViewHolder(@NonNull View itemView)
+        {
             super(itemView);
             username = itemView.findViewById(R.id.username);
             email = itemView.findViewById(R.id.email);

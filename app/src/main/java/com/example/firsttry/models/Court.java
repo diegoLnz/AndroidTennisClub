@@ -1,6 +1,7 @@
 package com.example.firsttry.models;
 
 import com.example.firsttry.enums.CourtTypes;
+import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
 import java.util.concurrent.CompletableFuture;
@@ -34,6 +35,13 @@ public class Court extends Model
     public Boolean getDeleted() { return isDeleted; }
 
     public void setDeleted(Boolean deleted) { this.isDeleted = deleted; }
+
+    public CompletableFuture<Array<CourtBook>> getRelatedBookings()
+    {
+        return DatabaseHandler.list(this.tableName(), CourtBook.class)
+                .thenApply(bookings -> bookings
+                        .where(booking -> booking.getCourtId().equals(this.getId())));
+    }
 
     @Override
     public CompletableFuture<Court> save()

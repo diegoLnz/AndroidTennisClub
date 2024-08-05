@@ -87,4 +87,8 @@
     <string name="gestisci_campi">Gestisci campi</string>
     <string name="aggiungi">Aggiungi</string>
     <string name="registra">Registra</string>
+    <string name="vedi_disponibilita">Vedi disponibilità</string>
+    <string name="prenota_un_campo">Prenota un campo</string>
+    <string name="renditi_disponibile">Renditi disponibile</string>
+    <string name="dd_mm_yyyy">dd/MM/YYYY</string>
 </resources>

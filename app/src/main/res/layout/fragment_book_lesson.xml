@@ -45,10 +45,10 @@
         android:padding="8dp"/>
 
     <Button
-        android:id="@+id/btn_book_lesson"
+        android:id="@+id/btn_search_available_courts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/prenota_lezione"
+        android:text="@string/vedi_disponibilita"
         android:padding="8dp"
         android:layout_marginTop="16dp"/>
 </LinearLayout>

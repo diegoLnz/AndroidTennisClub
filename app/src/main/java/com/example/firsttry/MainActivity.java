@@ -7,18 +7,33 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.firsttry.enums.UserRoles;
 import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.models.User;
+import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.FragmentHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends ValidatedCompatActivity {
     private static boolean introCompleted = false;
+    private static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (introduced())
-            checkAuthenticated();
+        setCurrentUser();
+    }
+
+    private void setCurrentUser()
+    {
+        Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(cUser -> {
+            user = cUser;
+            if (introduced())
+                checkAuthenticated();
+        });
     }
 
     private boolean introduced()
@@ -32,13 +47,20 @@ public class MainActivity extends ValidatedCompatActivity {
 
         setContentView(R.layout.activity_main);
         setBottomNavView();
-        loadFragment(new HomeFragment());
+
+        Fragment fragment = user.getRole().equals(UserRoles.Admin)
+                ? new HomeAdminFragment()
+                : new HomeFragment();
+
+        loadFragment(fragment);
         return true;
     }
 
     private boolean mapFragment(int itemId) {
         if (itemId == R.id.nav_home) {
-            return loadFragment(new HomeFragment());
+            return user.getRole().equals(UserRoles.Admin)
+                    ? loadFragment(new HomeAdminFragment())
+                    : loadFragment(new HomeFragment());
         }
         else if (itemId == R.id.nav_search) {
             return loadFragment(new SearchFragment());

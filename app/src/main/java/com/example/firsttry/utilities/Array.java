@@ -38,6 +38,16 @@ public class Array<T>
         return result;
     }
 
+    public Boolean any(Function<T, Boolean> predicate)
+    {
+        for (T item : list) {
+            if (predicate.apply(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public <R> Array<R> select(Function<T, R> selector)
     {
         Array<R> selectedItems = new Array<>();
