@@ -1,38 +1,32 @@
 package com.example.firsttry;
 
+import static com.example.firsttry.utilities.DateTimeExtensions.convertToDate;
+
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.firsttry.businesslogic.CourtsBookBl;
 import com.example.firsttry.enums.UserRoles;
 import com.example.firsttry.extensions.ValidatedEditText;
-import com.example.firsttry.extensions.adapters.AddedCourtAdapter;
 import com.example.firsttry.extensions.adapters.AvailableCourtAdapter;
 import com.example.firsttry.models.Court;
+import com.example.firsttry.models.CourtBook;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.DatabaseHandler;
-import com.example.firsttry.utilities.FragmentHandler;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 public class HomeFragment
         extends Fragment
@@ -40,7 +34,7 @@ public class HomeFragment
 {
     private ValidatedEditText day;
     private ValidatedEditText time;
-    private Button searchAvailableCourtsBtn;
+    private Date requestedDate;
 
     private RecyclerView recyclerView;
     private AvailableCourtAdapter adapter;
@@ -66,7 +60,7 @@ public class HomeFragment
             if (user.getRole().equals(UserRoles.Admin))
             {
                 startActivity(new Intent(getActivity(), HomeAdminFragment.class));
-                getActivity().finish();
+                requireActivity().finish();
             }
         });
     }
@@ -79,7 +73,7 @@ public class HomeFragment
 
     private void setSearchAvailableCourtsButton()
     {
-        searchAvailableCourtsBtn = _currentView.findViewById(R.id.btn_search_available_courts);
+        Button searchAvailableCourtsBtn = _currentView.findViewById(R.id.btn_search_available_courts);
         searchAvailableCourtsBtn.setOnClickListener(v -> searchAvailableCourts());
     }
 
@@ -88,35 +82,35 @@ public class HomeFragment
         String day = Objects.requireNonNull(this.day.getText()).toString();
         String time = Objects.requireNonNull(this.time.getText()).toString();
 
-        Date date = convertToDate(day, time);
+        requestedDate = convertToDate(day, time);
 
-        CourtsBookBl.getAvailableCourts(date).thenAccept(courts ->
+        CourtsBookBl.getAvailableCourts(requestedDate).thenAccept(courts ->
         {
-            adapter = new AvailableCourtAdapter(courts, this);
+            adapter = new AvailableCourtAdapter(courts, requestedDate, this);
             recyclerView.setAdapter(adapter);
         });
     }
 
-    private Date convertToDate(String dateStr, String timeStr)
-    {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        Date date = null;
-        try
-        {
-            date = dateFormat.parse(dateStr + " " + timeStr);
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-        return date;
-    }
-
-
-
     @Override
     public void onClick(Court court)
     {
+        Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> getCourtBook(court)
+                .thenAccept(courtBook -> {
+                    if (courtBook == null) {
+                        courtBook = new CourtBook();
+                        courtBook.setCourt(court.getId());
+                        courtBook.setStartsAt(requestedDate);
+                    }
+                    courtBook.addUserId(user.getId());
+                    courtBook.save();
+                }));
+    }
 
+    private CompletableFuture<CourtBook> getCourtBook(Court court)
+    {
+        return DatabaseHandler.list(new CourtBook().tableName(), CourtBook.class).thenApply(courtBooks -> courtBooks.where(courtBook
+                        -> courtBook.getCourtId().equals(court.getId())
+                        && courtBook.getStartsAt().equals(requestedDate))
+                .firstOrDefault());
     }
 }

@@ -15,8 +15,8 @@ import com.example.firsttry.utilities.Array;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>
 {
-    private Array<User> userList;
-    private OnUserActionListener listener;
+    private final Array<User> userList;
+    private final OnUserActionListener listener;
 
     public UserAdapter(Array<User> userList, OnUserActionListener listener)
     {

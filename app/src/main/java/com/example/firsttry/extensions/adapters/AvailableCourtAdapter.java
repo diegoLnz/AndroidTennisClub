@@ -11,16 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.R;
 import com.example.firsttry.models.Court;
+import com.example.firsttry.models.CourtBook;
+import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.Array;
+import com.example.firsttry.utilities.DatabaseHandler;
+
+import java.util.Date;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAdapter.AvailableCourtViewHolder>
 {
-    private Array<Court> courtsList;
-    private AvailableCourtAdapter.OnUserActionListener listener;
+    private final Array<Court> courtsList;
+    private final Date dateTime;
+    private final AvailableCourtAdapter.OnUserActionListener listener;
 
-    public AvailableCourtAdapter(Array<Court> courtsList, AvailableCourtAdapter.OnUserActionListener listener)
+    public AvailableCourtAdapter(Array<Court> courtsList, Date dateTime, AvailableCourtAdapter.OnUserActionListener listener)
     {
         this.courtsList = courtsList;
+        this.dateTime = dateTime;
         this.listener = listener;
     }
 
@@ -37,8 +46,28 @@ public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAd
         Court court = courtsList.get(position);
         holder.name.setText(court.getName());
         holder.type.setText(court.getType().toString());
-
         holder.viewDetailsButton.setOnClickListener(v -> listener.onClick(court));
+
+        getRelatedCourtBook(court).thenAccept(courtBook -> getRelatedUsers(courtBook)
+                .thenAccept(users -> users.forEach(user -> {
+                    holder.users.append(user.getUsername() + "\n");
+                    return null;
+                })));
+    }
+
+    private CompletableFuture<CourtBook> getRelatedCourtBook(Court court)
+    {
+        return DatabaseHandler.list(new CourtBook().tableName(), CourtBook.class).thenApply(courtBooks -> courtBooks
+                .where(courtBook
+                        -> Objects.equals(courtBook.getCourtId(), court.getId())
+                        && courtBook.getStartsAt().equals(dateTime))
+                .firstOrDefault());
+    }
+
+    private CompletableFuture<Array<User>> getRelatedUsers(CourtBook courtBook)
+    {
+        return DatabaseHandler.list(new User().tableName(), User.class)
+                .thenApply(users -> users.where(user -> courtBook.getUserIds().contains(user.getId())));
     }
 
     @Override

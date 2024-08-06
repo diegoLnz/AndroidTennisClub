@@ -15,8 +15,8 @@ import com.example.firsttry.utilities.Array;
 
 public class SearchedUserAdapter extends RecyclerView.Adapter<SearchedUserAdapter.SearchedUserViewHolder>
 {
-    private Array<User> userList;
-    private SearchedUserAdapter.OnUserActionListener listener;
+    private final Array<User> userList;
+    private final SearchedUserAdapter.OnUserActionListener listener;
 
     public SearchedUserAdapter(Array<User> userList, SearchedUserAdapter.OnUserActionListener listener)
     {

@@ -35,7 +35,7 @@ public class CourtBook extends Model
 
     public List<String> getUserIds() { return UserIds; }
 
-    public void setUsers(List<String> UserIds) { this.UserIds = UserIds; }
+    public void setUserIds(List<String> UserIds) { this.UserIds = UserIds; }
 
     public String getCourtId() { return CourtId; }
 
@@ -48,6 +48,11 @@ public class CourtBook extends Model
     public Date getEndsAt() { return EndsAt; }
 
     public void setEndsAt(Date EndsAt) { this.EndsAt = EndsAt; }
+
+    public void addUserId(String userId)
+    {
+        this.UserIds.add(userId);
+    }
 
     public CompletableFuture<Array<User>> getUsers()
     {

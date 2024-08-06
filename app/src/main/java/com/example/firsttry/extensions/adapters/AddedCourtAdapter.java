@@ -15,8 +15,8 @@ import com.example.firsttry.utilities.Array;
 
 public class AddedCourtAdapter extends RecyclerView.Adapter<AddedCourtAdapter.AddedCourtViewHolder>
 {
-    private Array<Court> courtsList;
-    private AddedCourtAdapter.OnUserActionListener listener;
+    private final Array<Court> courtsList;
+    private final AddedCourtAdapter.OnUserActionListener listener;
 
     public AddedCourtAdapter(Array<Court> courtsList, AddedCourtAdapter.OnUserActionListener listener)
     {

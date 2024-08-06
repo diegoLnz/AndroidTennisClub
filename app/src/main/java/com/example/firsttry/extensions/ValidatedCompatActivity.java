@@ -50,8 +50,8 @@ public abstract class ValidatedCompatActivity extends AppCompatActivity
         catch (IllegalAccessException e)
         {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     private Void validateSingleField(Object field)
