@@ -4,6 +4,7 @@ import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -14,7 +15,7 @@ public class CourtBook extends Model
     @Override
     public String tableName() { return "courtbooks"; }
 
-    public CourtBook() { }
+    public CourtBook() { UserIds = new ArrayList<>(); }
 
     public CourtBook(
             List<String> UserIds,
@@ -51,7 +52,7 @@ public class CourtBook extends Model
 
     public void addUserId(String userId)
     {
-        this.UserIds.add(userId);
+        UserIds.add(userId);
     }
 
     public CompletableFuture<Array<User>> getUsers()

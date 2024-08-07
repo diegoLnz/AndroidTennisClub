@@ -1,5 +1,6 @@
 package com.example.firsttry;
 
+import static com.example.firsttry.utilities.DateTimeExtensions.addHours;
 import static com.example.firsttry.utilities.DateTimeExtensions.convertToDate;
 
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -82,7 +84,7 @@ public class HomeFragment
         String day = Objects.requireNonNull(this.day.getText()).toString();
         String time = Objects.requireNonNull(this.time.getText()).toString();
 
-        requestedDate = convertToDate(day, time);
+        requestedDate = convertToDate(day, time, true);
 
         CourtsBookBl.getAvailableCourts(requestedDate).thenAccept(courts ->
         {
@@ -100,9 +102,12 @@ public class HomeFragment
                         courtBook = new CourtBook();
                         courtBook.setCourt(court.getId());
                         courtBook.setStartsAt(requestedDate);
+                        courtBook.setEndsAt(addHours(requestedDate, 1));
                     }
                     courtBook.addUserId(user.getId());
-                    courtBook.save();
+                    courtBook.save().thenAccept(result ->
+                            Toast.makeText(requireActivity(), "Courtbook: " + result.getStartsAt().toString() + " saved", Toast.LENGTH_SHORT).show()
+                    );
                 }));
     }
 

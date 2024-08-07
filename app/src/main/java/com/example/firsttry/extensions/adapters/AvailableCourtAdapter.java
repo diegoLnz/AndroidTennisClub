@@ -1,5 +1,7 @@
 package com.example.firsttry.extensions.adapters;
 
+import static com.example.firsttry.utilities.DateTimeExtensions.getTimeTextForBooking;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,7 @@ public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAd
     {
         Court court = courtsList.get(position);
         holder.name.setText(court.getName());
+        holder.time.setText(getTimeTextForBooking(dateTime));
         holder.type.setText(court.getType().toString());
         holder.viewDetailsButton.setOnClickListener(v -> listener.onClick(court));
 
@@ -77,6 +80,7 @@ public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAd
     {
         TextView name;
         TextView type;
+        TextView time;
         TextView users;
         Button viewDetailsButton;
 
@@ -85,6 +89,7 @@ public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAd
             super(itemView);
             name = itemView.findViewById(R.id.name);
             type = itemView.findViewById(R.id.type);
+            time = itemView.findViewById(R.id.time);
             users = itemView.findViewById(R.id.users);
             viewDetailsButton = itemView.findViewById(R.id.action_set_yourself_available);
         }
