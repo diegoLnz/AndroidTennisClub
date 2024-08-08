@@ -18,9 +18,16 @@ public final class DatabaseHandler
     {
         DatabaseReference ref = database.getReference(object.tableName() + "/" + object.getId());
         CompletableFuture<Result<T, Exception>> future = new CompletableFuture<>();
-        ref.setValue(object)
-                .addOnSuccessListener(aVoid -> future.complete(Result.success(object)))
-                .addOnFailureListener(e -> future.complete(Result.failure(e)));
+        try
+        {
+            ref.setValue(object)
+                    .addOnSuccessListener(aVoid -> future.complete(Result.success(object)))
+                    .addOnFailureListener(e -> future.complete(Result.failure(e)));
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
         return future;
     }
 

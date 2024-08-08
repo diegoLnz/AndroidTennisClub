@@ -36,7 +36,7 @@ public class Court extends Model
 
     public void setDeleted(Boolean deleted) { this.isDeleted = deleted; }
 
-    public CompletableFuture<Array<CourtBook>> getRelatedBookings()
+    public CompletableFuture<Array<CourtBook>> relatedBookings()
     {
         return DatabaseHandler.list(this.tableName(), CourtBook.class)
                 .thenApply(bookings -> bookings

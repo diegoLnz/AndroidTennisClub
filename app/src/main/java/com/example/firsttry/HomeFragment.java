@@ -25,6 +25,8 @@ import com.example.firsttry.models.Court;
 import com.example.firsttry.models.CourtBook;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.StringValidator;
+import com.example.firsttry.utilities.ValidatorType;
 
 import java.util.Date;
 import java.util.Objects;
@@ -70,7 +72,10 @@ public class HomeFragment
     private void setFields()
     {
         day = _currentView.findViewById(R.id.edit_date);
+        day.setValidatorType(ValidatorType.DATE);
+
         time = _currentView.findViewById(R.id.edit_time);
+        time.setValidatorType(ValidatorType.TIME);
     }
 
     private void setSearchAvailableCourtsButton()
@@ -83,6 +88,18 @@ public class HomeFragment
     {
         String day = Objects.requireNonNull(this.day.getText()).toString();
         String time = Objects.requireNonNull(this.time.getText()).toString();
+
+        if (!StringValidator.matchDate(day))
+        {
+            Toast.makeText(requireActivity(), "Data non valida", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!StringValidator.matchTime(time))
+        {
+            Toast.makeText(requireActivity(), "Ora non valida", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         requestedDate = convertToDate(day, time, true);
 
@@ -100,13 +117,13 @@ public class HomeFragment
                 .thenAccept(courtBook -> {
                     if (courtBook == null) {
                         courtBook = new CourtBook();
-                        courtBook.setCourt(court.getId());
+                        courtBook.setCourtId(court.getId());
                         courtBook.setStartsAt(requestedDate);
                         courtBook.setEndsAt(addHours(requestedDate, 1));
                     }
                     courtBook.addUserId(user.getId());
                     courtBook.save().thenAccept(result ->
-                            Toast.makeText(requireActivity(), "Courtbook: " + result.getStartsAt().toString() + " saved", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireActivity(), "Disponibilità registrata con successo!", Toast.LENGTH_SHORT).show()
                     );
                 }));
     }

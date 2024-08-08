@@ -3,7 +3,6 @@ package com.example.firsttry.models;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +39,7 @@ public class CourtBook extends Model
 
     public String getCourtId() { return CourtId; }
 
-    public void setCourt(String CourtId) { this.CourtId = CourtId; }
+    public void setCourtId(String CourtId) { this.CourtId = CourtId; }
 
     public Date getStartsAt() { return StartsAt; }
 
@@ -55,7 +54,7 @@ public class CourtBook extends Model
         UserIds.add(userId);
     }
 
-    public CompletableFuture<Array<User>> getUsers()
+    public CompletableFuture<Array<User>> users()
     {
         return DatabaseHandler.list(new User().tableName(), User.class)
                 .thenApply(users -> users
