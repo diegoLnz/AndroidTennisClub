@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Array<T>
@@ -58,11 +59,11 @@ public class Array<T>
         return selectedItems;
     }
 
-    public void forEach(Function<T, Void> action)
+    public void forEach(Consumer<T> action)
     {
         try {
             for (T item : list) {
-                action.apply(item);
+                action.accept(item);
             }
         } catch (Exception e) {
             Log.e("forEach", e.getMessage(), e);
@@ -125,6 +126,8 @@ public class Array<T>
     }
 
     public Integer size() { return list.size(); }
+
+    public Boolean isEmpty() { return list.isEmpty(); }
 
     public List<T> getList() { return list; }
 }

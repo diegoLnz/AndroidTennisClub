@@ -51,11 +51,23 @@ public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAd
         holder.type.setText(court.getType().toString());
         holder.viewDetailsButton.setOnClickListener(v -> listener.onClick(court));
 
-        getRelatedCourtBook(court).thenAccept(courtBook -> getRelatedUsers(courtBook)
-                .thenAccept(users -> users.forEach(user -> {
-                    holder.users.append(user.getUsername() + "\n");
-                    return null;
-                })));
+        getRelatedCourtBook(court).thenAccept(courtBook ->
+                getRelatedUsers(courtBook).thenAccept(users -> {
+                    if (!users.isEmpty())
+                        printUsers(holder, users);
+                })
+        );
+    }
+
+    private void printUsers(
+            @NonNull AvailableCourtAdapter.AvailableCourtViewHolder holder,
+            Array<User> users
+    )
+    {
+        StringBuilder output = new StringBuilder();
+        output.append("\nUtenti disponibili\n");
+        users.forEach(user -> output.append("- ").append(user.getUsername()).append("\n"));
+        holder.users.append(output.toString());
     }
 
     private CompletableFuture<CourtBook> getRelatedCourtBook(Court court)

@@ -28,6 +28,17 @@ public class CourtBook extends Model
         this.EndsAt = EndsAt;
     }
 
+    public CourtBook(
+            String CourtId,
+            Date StartsAt,
+            Date EndsAt)
+    {
+        this.UserIds = new ArrayList<>();
+        this.CourtId = CourtId;
+        this.StartsAt = StartsAt;
+        this.EndsAt = EndsAt;
+    }
+
     private List<String> UserIds;
     private String CourtId;
     private Date StartsAt;

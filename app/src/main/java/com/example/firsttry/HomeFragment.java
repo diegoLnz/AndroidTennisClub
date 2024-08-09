@@ -69,13 +69,16 @@ public class HomeFragment
         });
     }
 
+    //ToDo: Fix validator
     private void setFields()
     {
         day = _currentView.findViewById(R.id.edit_date);
-        day.setValidatorType(ValidatorType.DATE);
+        //day.setValidatorType(ValidatorType.DATE);
+        day.setRequired(true);
 
         time = _currentView.findViewById(R.id.edit_time);
-        time.setValidatorType(ValidatorType.TIME);
+        //time.setValidatorType(ValidatorType.TIME);
+        time.setRequired(true);
     }
 
     private void setSearchAvailableCourtsButton()
@@ -86,22 +89,22 @@ public class HomeFragment
 
     private void searchAvailableCourts()
     {
+        day.validate();
+        time.validate();
+
+        if (day.hasErrors() || time.hasErrors())
+            return;
+
         String day = Objects.requireNonNull(this.day.getText()).toString();
         String time = Objects.requireNonNull(this.time.getText()).toString();
 
-        if (!StringValidator.matchDate(day))
-        {
-            Toast.makeText(requireActivity(), "Data non valida", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if(!StringValidator.matchTime(time))
-        {
-            Toast.makeText(requireActivity(), "Ora non valida", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         requestedDate = convertToDate(day, time, true);
+
+        if (requestedDate.before(new Date()))
+        {
+            Toast.makeText(requireActivity(), "Nessun campo disponibile", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         CourtsBookBl.getAvailableCourts(requestedDate).thenAccept(courts ->
         {
@@ -115,16 +118,16 @@ public class HomeFragment
     {
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> getCourtBook(court)
                 .thenAccept(courtBook -> {
-                    if (courtBook == null) {
-                        courtBook = new CourtBook();
-                        courtBook.setCourtId(court.getId());
-                        courtBook.setStartsAt(requestedDate);
-                        courtBook.setEndsAt(addHours(requestedDate, 1));
+                    if (courtBook == null)
+                    {
+                        courtBook = new CourtBook(
+                                court.getId(),
+                                requestedDate,
+                                addHours(requestedDate, 1));;
                     }
                     courtBook.addUserId(user.getId());
                     courtBook.save().thenAccept(result ->
-                            Toast.makeText(requireActivity(), "Disponibilità registrata con successo!", Toast.LENGTH_SHORT).show()
-                    );
+                            Toast.makeText(requireActivity(), "Disponibilità registrata con successo!", Toast.LENGTH_SHORT).show());
                 }));
     }
 
