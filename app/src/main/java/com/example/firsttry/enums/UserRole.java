@@ -1,6 +1,6 @@
 package com.example.firsttry.enums;
 
-public enum UserRoles
+public enum UserRole
 {
     Admin,
     Teacher,

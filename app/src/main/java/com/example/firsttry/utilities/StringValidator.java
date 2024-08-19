@@ -1,5 +1,7 @@
 package com.example.firsttry.utilities;
 
+import com.example.firsttry.enums.ValidatorType;
+
 public class StringValidator
 {
     private static String dayPattern = "^(0?[1-9]|[12][0-9]|3[01])[\\/](0?[1-9]|1[012])[\\/\\-]\\d{4}$/gm";
@@ -7,21 +9,21 @@ public class StringValidator
 
     public static Boolean matchDate(String input)
     {
-        return match(input, ValidatorType.DATE);
+        return match(input, ValidatorType.Date);
     }
 
     public static Boolean matchTime(String input)
     {
-        return match(input, ValidatorType.TIME);
+        return match(input, ValidatorType.Time);
     }
 
     public static Boolean match(String input, ValidatorType validatorType)
     {
         switch (validatorType)
         {
-            case DATE:
+            case Date:
                 return input.matches(dayPattern);
-            case TIME:
+            case Time:
                 return input.matches(timePattern);
             default:
                 return false;

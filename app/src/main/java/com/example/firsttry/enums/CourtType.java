@@ -1,6 +1,6 @@
 package com.example.firsttry.enums;
 
-public enum CourtTypes
+public enum CourtType
 {
     Indoor,
     Outdoor

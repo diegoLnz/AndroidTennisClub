@@ -45,5 +45,37 @@
             android:text="@string/salva_profilo"
             android:padding="8dp"
             android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btn_suspend_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sospendi"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btn_bandit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bandisci"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#BD0000" />
+
+        <TextView
+            android:id="@+id/reports_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/segnalazioni"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reportsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </ScrollView>

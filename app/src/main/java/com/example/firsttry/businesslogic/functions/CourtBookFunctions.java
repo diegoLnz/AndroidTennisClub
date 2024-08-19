@@ -18,6 +18,6 @@ public class CourtBookFunctions
     public static Function<Court, Boolean> isAvailable(Array<CourtBook> overlappingBookings)
     {
         return court
-                -> !overlappingBookings.any(booking -> booking.getCourtId().equals(court.getId()));
+                -> !overlappingBookings.any(booking -> booking.getCourtId().equals(court.getId()) && booking.getUserIds().size() <= 4);
     }
 }

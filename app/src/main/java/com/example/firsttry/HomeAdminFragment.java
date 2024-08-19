@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.firsttry.enums.UserRoles;
+import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.utilities.AccountManager;
 
 import java.util.Objects;
@@ -33,7 +33,7 @@ public class HomeAdminFragment extends Fragment
     private void redirectIfNotAdmin()
     {
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> {
-            if (!user.getRole().equals(UserRoles.Admin))
+            if (!user.getRole().equals(UserRole.Admin))
             {
                 startActivity(new Intent(getActivity(), HomeFragment.class));
                 getActivity().finish();

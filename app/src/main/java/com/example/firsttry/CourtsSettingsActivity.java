@@ -9,12 +9,10 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.firsttry.enums.CourtTypes;
-import com.example.firsttry.enums.UserRoles;
+import com.example.firsttry.enums.CourtType;
 import com.example.firsttry.extensions.ValidatedCompatActivity;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.extensions.adapters.AddedCourtAdapter;
-import com.example.firsttry.extensions.adapters.UserAdapter;
 import com.example.firsttry.models.Court;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
@@ -79,7 +77,7 @@ public class CourtsSettingsActivity
                     .getSelectedItem()
                     .toString();
 
-            CourtTypes courtType = CourtTypes.valueOf(type);
+            CourtType courtType = CourtType.valueOf(type);
 
             Court court = new Court(name, courtType);
             court.save().thenAccept(res -> {
@@ -97,7 +95,7 @@ public class CourtsSettingsActivity
     private void setCourtTypesSpinner()
     {
         List<String> types = new ArrayList<>();
-        for (CourtTypes type : CourtTypes.values())
+        for (CourtType type : CourtType.values())
             types.add(type.name());
 
         Spinner spinner = findViewById(R.id.types_view_select);

@@ -2,23 +2,18 @@ package com.example.firsttry.extensions;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.EditText;
-
-import androidx.appcompat.widget.AppCompatEditText;
 
 import com.example.firsttry.utilities.Array;
-import com.example.firsttry.utilities.Result;
 import com.example.firsttry.utilities.StringValidator;
-import com.example.firsttry.utilities.ValidatorType;
+import com.example.firsttry.enums.ValidatorType;
 
-import java.util.List;
 import java.util.Objects;
 
 public class ValidatedEditText extends androidx.appcompat.widget.AppCompatEditText
 {
     private Boolean isRequired = false;
     private final Array<String> errors = new Array<>();
-    private ValidatorType validatorType = ValidatorType.NONE;
+    private ValidatorType validatorType = ValidatorType.None;
 
     public ValidatedEditText(Context context) { super(context); }
 
@@ -32,7 +27,7 @@ public class ValidatedEditText extends androidx.appcompat.widget.AppCompatEditTe
     public void setValidatorType(ValidatorType validatorType) { this.validatorType = validatorType; }
     public Array<String> getErrors() { return errors; }
 
-    public Boolean hasErrors() { return errors.size() > 0; }
+    public Boolean hasErrors() { return !errors.isEmpty(); }
 
     public boolean validate()
     {
@@ -51,7 +46,7 @@ public class ValidatedEditText extends androidx.appcompat.widget.AppCompatEditTe
             return false;
         }
 
-        if (validatorType != ValidatorType.NONE)
+        if (validatorType != ValidatorType.None)
         {
             this.errors.add(error = "Il campo non rispetta il formato corretto");
             setError(error);

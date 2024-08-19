@@ -6,10 +6,12 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.firsttry.enums.UserStatus;
 import com.example.firsttry.extensions.adapters.UserAdapter;
 import com.example.firsttry.extensions.ValidatedCompatActivity;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
+import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
 import java.util.Objects;
@@ -39,9 +41,10 @@ public class UsersSettingsActivity
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(account ->
                 DatabaseHandler.list(new User().tableName(), User.class)
                         .thenAccept(users -> runOnUiThread(() -> {
-                            users.orderBy(User::getUsername)
+                            Array<User> filteredUsers = users.orderBy(User::getUsername)
+                                    .where(user -> !user.getStatus().equals(UserStatus.BANDITED))
                                     .remove(userToRemove -> Objects.equals(userToRemove.getId(), account.getId()));
-                            adapter = new UserAdapter(users, this);
+                            adapter = new UserAdapter(filteredUsers, this);
                             recyclerView.setAdapter(adapter);
                         })));
     }

@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.firsttry.enums.UserRoles;
+import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.extensions.ValidatedCompatActivity;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
@@ -15,7 +13,6 @@ import com.example.firsttry.utilities.FragmentHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends ValidatedCompatActivity {
     private static boolean introCompleted = false;
@@ -48,7 +45,7 @@ public class MainActivity extends ValidatedCompatActivity {
         setContentView(R.layout.activity_main);
         setBottomNavView();
 
-        Fragment fragment = user.getRole().equals(UserRoles.Admin)
+        Fragment fragment = user.getRole().equals(UserRole.Admin)
                 ? new HomeAdminFragment()
                 : new HomeFragment();
 
@@ -58,7 +55,7 @@ public class MainActivity extends ValidatedCompatActivity {
 
     private boolean mapFragment(int itemId) {
         if (itemId == R.id.nav_home) {
-            return user.getRole().equals(UserRoles.Admin)
+            return user.getRole().equals(UserRole.Admin)
                     ? loadFragment(new HomeAdminFragment())
                     : loadFragment(new HomeFragment());
         }

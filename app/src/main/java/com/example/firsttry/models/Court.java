@@ -1,6 +1,6 @@
 package com.example.firsttry.models;
 
-import com.example.firsttry.enums.CourtTypes;
+import com.example.firsttry.enums.CourtType;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
@@ -13,7 +13,7 @@ public class Court extends Model
 
     public Court() { this.isDeleted = false; }
 
-    public Court(String name, CourtTypes type)
+    public Court(String name, CourtType type)
     {
         this.Name = name;
         this.Type = type;
@@ -21,16 +21,16 @@ public class Court extends Model
     }
 
     private String Name;
-    private CourtTypes Type;
+    private CourtType Type;
     private Boolean isDeleted;
 
     public String getName() { return Name; }
 
     public void setName(String name) { this.Name = name; }
 
-    public CourtTypes getType() { return Type; }
+    public CourtType getType() { return Type; }
 
-    public void setType(CourtTypes type) { this.Type = type; }
+    public void setType(CourtType type) { this.Type = type; }
 
     public Boolean getDeleted() { return isDeleted; }
 

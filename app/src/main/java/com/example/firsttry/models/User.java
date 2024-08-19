@@ -1,9 +1,13 @@
 package com.example.firsttry.models;
 
-import com.example.firsttry.enums.UserRoles;
+import com.example.firsttry.enums.UserRole;
+import com.example.firsttry.enums.UserStatus;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -16,9 +20,10 @@ public class User extends Model
     private String Email;
     private String Bio;
     private String Password;
-    private UserRoles Role;
-    private Integer Score;
-    private List<Report> reports;
+    private UserRole Role;
+    private UserStatus Status = UserStatus.ACTIVE;
+    private Double Score;
+    private List<Report> reports = new ArrayList<>();
 
     public User() { }
 
@@ -26,6 +31,7 @@ public class User extends Model
     {
         Username = username;
         Email = email;
+        Status = UserStatus.ACTIVE;
     }
 
     public String getUsername() { return Username; }
@@ -44,25 +50,25 @@ public class User extends Model
 
     public void setPassword(String password) { Password = password; }
 
-    public UserRoles getRole() { return Role; }
+    public UserRole getRole() { return Role; }
 
-    public void setRole(UserRoles role) { Role = role; }
+    public void setRole(UserRole role) { Role = role; }
 
-    public Integer getScore() { return Score; }
+    public UserStatus getStatus() { return Status; }
 
-    public void setScore(Integer score) { Score = score; }
+    public void setStatus(UserStatus status) { Status = status; }
+
+    public Double getScore() { return Score; }
+
+    public void setScore(Double score) { Score = score; }
 
     public List<Report> getReports() { return reports; }
 
     public void setReports(List<Report> reports) { this.reports = reports; }
 
-    public static CompletableFuture<User> fromFirebaseUser(FirebaseUser user) {
-        if (user == null) {
-            return null;
-        }
-
-        User returnUser = new User();
-        return returnUser.getById(user.getUid())
+    public static CompletableFuture<User> fromFirebaseUser(@NotNull FirebaseUser user)
+    {
+        return new User().getById(user.getUid())
                 .thenApply(result -> result);
     }
 

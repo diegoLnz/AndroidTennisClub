@@ -18,15 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.businesslogic.CourtsBookBl;
-import com.example.firsttry.enums.UserRoles;
+import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.extensions.adapters.AvailableCourtAdapter;
 import com.example.firsttry.models.Court;
 import com.example.firsttry.models.CourtBook;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.DatabaseHandler;
-import com.example.firsttry.utilities.StringValidator;
-import com.example.firsttry.utilities.ValidatorType;
 
 import java.util.Date;
 import java.util.Objects;
@@ -61,7 +59,7 @@ public class HomeFragment
     private void redirectIfAdmin()
     {
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> {
-            if (user.getRole().equals(UserRoles.Admin))
+            if (user.getRole().equals(UserRole.Admin))
             {
                 startActivity(new Intent(getActivity(), HomeAdminFragment.class));
                 requireActivity().finish();
@@ -126,7 +124,7 @@ public class HomeFragment
                                 addHours(requestedDate, 1));;
                     }
                     courtBook.addUserId(user.getId());
-                    courtBook.save().thenAccept(result ->
+                    courtBook.saveCourtBook().thenAccept(result ->
                             Toast.makeText(requireActivity(), "Disponibilità registrata con successo!", Toast.LENGTH_SHORT).show());
                 }));
     }

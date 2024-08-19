@@ -2,6 +2,7 @@ package com.example.firsttry.models;
 
 import com.example.firsttry.utilities.DatabaseHandler;
 
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 
 public class Report extends Model
@@ -11,11 +12,15 @@ public class Report extends Model
     {
         return
                 new User().tableName()
+                + UserId
                 + "/"
                 + "reports";
     }
     private String Message;
     private String UserId;
+    private String ReporterId;
+    private Date Timestamp;
+    private Boolean IsDeleted;
 
     public String getMessage() { return Message; }
 
@@ -24,6 +29,18 @@ public class Report extends Model
     public String getUserId() { return UserId; }
 
     public void setUserId(String userId) { UserId = userId; }
+
+    public String getReporterId() { return ReporterId; }
+
+    public void setReporterId(String reporterId) { ReporterId = reporterId; }
+
+    public Date getTimestamp() { return Timestamp; }
+
+    public void setTimestamp(Date timestamp) { Timestamp = timestamp; }
+
+    public Boolean getIsDeleted() { return IsDeleted; }
+
+    public void setIsDeleted(Boolean isDeleted) { IsDeleted = isDeleted; }
 
     @Override
     public CompletableFuture<Report> save()

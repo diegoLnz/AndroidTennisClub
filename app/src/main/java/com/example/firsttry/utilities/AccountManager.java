@@ -1,12 +1,11 @@
 package com.example.firsttry.utilities;
 
-import com.example.firsttry.enums.UserRoles;
+import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 public class AccountManager
 {
@@ -29,7 +28,7 @@ public class AccountManager
                     {
                         user.setId(authResult.getResult().getUser().getUid());
                         user.setPassword(Sha256Encryptor.encrypt(user.getPassword()));
-                        user.setRole(UserRoles.Common);
+                        user.setRole(UserRole.Common);
                         user.save().thenApply(account -> future.complete(Result.success(account)));
                     }
                     else

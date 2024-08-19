@@ -91,4 +91,11 @@
     <string name="prenota_un_campo">Prenota un campo</string>
     <string name="renditi_disponibile">Renditi disponibile</string>
     <string name="dd_mm_yyyy">dd/MM/YYYY</string>
+    <string name="segnalazioni">Segnalazioni ricevute</string>
+    <string name="bandisci">Bandisci</string>
+    <string name="sospendi">Sospendi</string>
+    <string name="segnalazione">Segnalazione</string>
+    <string name="data_segnalazione">Data segnalazione</string>
+    <string name="riammetti_al_circolo">Riammetti al circolo</string>
+    <string name="nessuna_segnalazione_ricevuta">Nessuna segnalazione ricevuta</string>
 </resources>

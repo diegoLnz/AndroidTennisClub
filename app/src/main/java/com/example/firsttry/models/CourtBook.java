@@ -1,5 +1,6 @@
 package com.example.firsttry.models;
 
+import com.example.firsttry.enums.BookState;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
@@ -43,6 +44,7 @@ public class CourtBook extends Model
     private String CourtId;
     private Date StartsAt;
     private Date EndsAt;
+    private BookState State = BookState.Available;
 
     public List<String> getUserIds() { return UserIds; }
 
@@ -60,6 +62,10 @@ public class CourtBook extends Model
 
     public void setEndsAt(Date EndsAt) { this.EndsAt = EndsAt; }
 
+    public BookState getState() { return State; }
+
+    public void setState(BookState state) { State = state; }
+
     public void addUserId(String userId)
     {
         UserIds.add(userId);
@@ -70,6 +76,32 @@ public class CourtBook extends Model
         return DatabaseHandler.list(new User().tableName(), User.class)
                 .thenApply(users -> users
                         .where(user -> this.getUserIds().contains(user.getId())));
+    }
+
+    public void calculateState()
+    {
+        int usersCount = this.getUserIds().size();
+
+        if (usersCount == 0)
+        {
+            this.setState(BookState.Available);
+            return;
+        }
+
+        if (usersCount <= 3)
+        {
+            this.setState(BookState.SemiBooked);
+            return;
+        }
+
+        if (usersCount == 4)
+            this.setState(BookState.Booked);
+    }
+
+    public CompletableFuture<CourtBook> saveCourtBook()
+    {
+        this.calculateState();
+        return this.save();
     }
 
     @Override

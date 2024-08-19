@@ -49,7 +49,7 @@ public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAd
         holder.name.setText(court.getName());
         holder.time.setText(getTimeTextForBooking(dateTime));
         holder.type.setText(court.getType().toString());
-        holder.viewDetailsButton.setOnClickListener(v -> listener.onClick(court));
+        holder.setAvailableButton.setOnClickListener(v -> listener.onClick(court));
 
         getRelatedCourtBook(court).thenAccept(courtBook ->
                 getRelatedUsers(courtBook).thenAccept(users -> {
@@ -94,7 +94,7 @@ public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAd
         TextView type;
         TextView time;
         TextView users;
-        Button viewDetailsButton;
+        Button setAvailableButton;
 
         public AvailableCourtViewHolder(@NonNull View itemView)
         {
@@ -103,7 +103,7 @@ public class AvailableCourtAdapter extends RecyclerView.Adapter<AvailableCourtAd
             type = itemView.findViewById(R.id.type);
             time = itemView.findViewById(R.id.time);
             users = itemView.findViewById(R.id.users);
-            viewDetailsButton = itemView.findViewById(R.id.action_set_yourself_available);
+            setAvailableButton = itemView.findViewById(R.id.action_set_yourself_available);
         }
     }
 
