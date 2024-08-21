@@ -17,6 +17,7 @@ import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.extensions.adapters.SearchedUserAdapter;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
+import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
@@ -93,7 +94,8 @@ public class SearchFragment
     }
 
     @Override
-    public void onDetail(User user) {
-
+    public void onDetail(User user)
+    {
+        ActivityHandler.LinkToWithExtra(requireActivity(), UserDetailActivity.class, "userId", user.getId());
     }
 }

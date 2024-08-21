@@ -21,6 +21,12 @@
             android:name=".UserEditActivity"
             android:exported="false" />
         <activity
+            android:name=".UserDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserReportActivity"
+            android:exported="false" />
+        <activity
             android:name=".UsersSettingsActivity"
             android:exported="false" />
         <activity

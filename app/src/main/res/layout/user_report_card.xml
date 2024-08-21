@@ -26,12 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/data_segnalazione"
+        android:layout_marginTop="16dp"
         android:textSize="16sp" />
 
     <Button
-        android:id="@+id/action_view_details"
+        android:id="@+id/action_delete_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/vedi_dettagli" />
+        android:text="@string/elimina_segnalazione" />
 
 </LinearLayout>

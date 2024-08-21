@@ -8,14 +8,19 @@ import java.util.concurrent.CompletableFuture;
 public class Report extends Model
 {
     @Override
-    public String tableName()
+    public String tableName() { return "reports"; }
+
+    public Report() { }
+
+    public Report(String Message, String UserId, String ReporterId, Date Timestamp)
     {
-        return
-                new User().tableName()
-                + UserId
-                + "/"
-                + "reports";
+        this.Message = Message;
+        this.UserId = UserId;
+        this.ReporterId = ReporterId;
+        this.Timestamp = Timestamp;
+        this.IsDeleted = false;
     }
+
     private String Message;
     private String UserId;
     private String ReporterId;

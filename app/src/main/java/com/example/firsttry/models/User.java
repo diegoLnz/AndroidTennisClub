@@ -1,7 +1,9 @@
 package com.example.firsttry.models;
 
+import com.example.firsttry.businesslogic.ReportsBl;
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.enums.UserStatus;
+import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -23,7 +25,6 @@ public class User extends Model
     private UserRole Role;
     private UserStatus Status = UserStatus.ACTIVE;
     private Double Score;
-    private List<Report> reports = new ArrayList<>();
 
     public User() { }
 
@@ -62,9 +63,10 @@ public class User extends Model
 
     public void setScore(Double score) { Score = score; }
 
-    public List<Report> getReports() { return reports; }
-
-    public void setReports(List<Report> reports) { this.reports = reports; }
+    public CompletableFuture<Array<Report>> reports()
+    {
+        return ReportsBl.getReportsByUserId(this.getId());
+    }
 
     public static CompletableFuture<User> fromFirebaseUser(@NotNull FirebaseUser user)
     {

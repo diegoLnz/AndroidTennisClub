@@ -37,10 +37,11 @@ public class UserReportsAdapter extends RecyclerView.Adapter<UserReportsAdapter.
     public void onBindViewHolder(@NonNull UserReportsAdapter.UserReportViewHolder holder, int position)
     {
         Report report = reportsList.get(position);
-        DatabaseHandler.getById(report.getUserId(), new User().tableName(), User.class).thenAccept(user -> {
+        DatabaseHandler.getById(report.getReporterId(), new User().tableName(), User.class).thenAccept(user -> {
             holder.username.setText(user.getUsername());
             holder.reportText.setText(report.getMessage());
-            holder.viewDetailsButton.setOnClickListener(v -> listener.onDelete(report));
+            holder.reportDate.setText(report.getTimestamp().toString());
+            holder.deleteReportButton.setOnClickListener(v -> listener.onDelete(report));
         });
     }
 
@@ -53,7 +54,7 @@ public class UserReportsAdapter extends RecyclerView.Adapter<UserReportsAdapter.
         TextView reportText;
         TextView reportDate;
 
-        Button viewDetailsButton;
+        Button deleteReportButton;
 
         public UserReportViewHolder(@NonNull View itemView)
         {
@@ -61,7 +62,7 @@ public class UserReportsAdapter extends RecyclerView.Adapter<UserReportsAdapter.
             username = itemView.findViewById(R.id.username);
             reportText = itemView.findViewById(R.id.text);
             reportDate = itemView.findViewById(R.id.date);
-            viewDetailsButton = itemView.findViewById(R.id.action_view_details);
+            deleteReportButton = itemView.findViewById(R.id.action_delete_report);
         }
     }
 

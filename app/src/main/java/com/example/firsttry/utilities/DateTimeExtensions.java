@@ -10,6 +10,8 @@ import java.util.Locale;
 
 public class DateTimeExtensions
 {
+    public static Date now() { return new Date(); }
+
     public static Date convertToDate(
             String dateStr,
             String timeStr)

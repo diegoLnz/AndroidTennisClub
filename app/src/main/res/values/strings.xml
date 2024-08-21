@@ -98,4 +98,13 @@
     <string name="data_segnalazione">Data segnalazione</string>
     <string name="riammetti_al_circolo">Riammetti al circolo</string>
     <string name="nessuna_segnalazione_ricevuta">Nessuna segnalazione ricevuta</string>
+    <string name="nome_utente">Nome utente</string>
+    <string name="email_utente">Email utente</string>
+    <string name="tipo_utente">Tipo utente</string>
+    <string name="segnala">Segnala</string>
+    <string name="rank">Rank</string>
+    <string name="segnala_nome_utente">Segnala {nome_utente}</string>
+    <string name="testo_segnalazione">Testo segnalazione</string>
+    <string name="invia_segnalazione">Invia segnalazione</string>
+    <string name="elimina_segnalazione">Elimina segnalazione</string>
 </resources>

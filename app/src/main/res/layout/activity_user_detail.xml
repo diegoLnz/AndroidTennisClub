@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profilo_utente"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/username_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nome_utente"
+            android:textSize="24sp"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/email_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/email_utente"
+            android:textSize="24sp"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/bio_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bio"
+            android:textSize="24sp"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/role_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tipo_utente"
+            android:textSize="24sp"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/rank_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rank"
+            android:textSize="24sp"
+            android:paddingBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btn_report_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/segnala"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#BD0000" />
+
+    </LinearLayout>
+</ScrollView>

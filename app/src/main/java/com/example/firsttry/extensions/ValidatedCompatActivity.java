@@ -7,13 +7,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.firsttry.LoginActivity;
+import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
+import com.example.firsttry.utilities.DatabaseHandler;
+
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 public abstract class ValidatedCompatActivity extends AppCompatActivity
 {
     private boolean isValid = true;
+    protected User CurrentUser = null;
 
     public void checkAuthenticated()
     {
@@ -22,6 +27,12 @@ public abstract class ValidatedCompatActivity extends AppCompatActivity
 
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    public void setCurrentUser()
+    {
+        Objects.requireNonNull(AccountManager.getCurrentAccount())
+                .thenAccept(user -> CurrentUser = user);
     }
 
     public boolean getIsValid() { return isValid; }
@@ -34,6 +45,7 @@ public abstract class ValidatedCompatActivity extends AppCompatActivity
 
     public void validateFields()
     {
+        setIsValid(true);
         Array<Field> fields = new Array<>(getClass().getDeclaredFields());
         fields.select(this::getFieldObjInstance)
                 .where(value -> value instanceof ValidatedEditText)

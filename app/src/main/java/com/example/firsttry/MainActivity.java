@@ -24,7 +24,8 @@ public class MainActivity extends ValidatedCompatActivity {
         setCurrentUser();
     }
 
-    private void setCurrentUser()
+    @Override
+    public void setCurrentUser()
     {
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(cUser -> {
             user = cUser;

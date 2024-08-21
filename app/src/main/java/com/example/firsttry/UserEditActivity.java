@@ -8,6 +8,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.enums.UserRole;
@@ -40,6 +41,10 @@ public class UserEditActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit);
+
+        recyclerView = findViewById(R.id.reportsRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         checkAuthenticated();
         fillUserData();
     }
@@ -65,17 +70,21 @@ public class UserEditActivity
 
     private void setReportsAdapter()
     {
-        Array<Report> reports = new Array<>(_currentUser.getReports());
+        _currentUser.reports().thenAccept(reports -> {
+            if (reports.isEmpty())
+            {
+                TextView reportsLabel = findViewById(R.id.reports_label);
+                reportsLabel.setText(R.string.nessuna_segnalazione_ricevuta);
+                return;
+            }
 
-        if (reports.isEmpty())
-        {
-            TextView reportsLabel = findViewById(R.id.reports_label);
-            reportsLabel.setText(R.string.nessuna_segnalazione_ricevuta);
-            return;
-        }
-
-        adapter = new UserReportsAdapter(reports, this);
-        recyclerView.setAdapter(adapter);
+            adapter = new UserReportsAdapter(reports, this);
+            recyclerView.setAdapter(adapter);
+        })
+        .exceptionally(ex -> {
+            System.err.println(ex.getMessage());
+            return null;
+        });
     }
 
     private void setUserRolesSpinner()
@@ -175,6 +184,14 @@ public class UserEditActivity
     @Override
     public void onDelete(Report report)
     {
-
+        report.setIsDeleted(true);
+        report.save()
+                .thenAccept(deletedReport -> ActivityHandler.LinkToWithPreviousToast(
+                        UserEditActivity.this,
+                        UserEditActivity.class,
+                        "userId",
+                        _currentUser.getId(),
+                        "Segnalazione cancellata!"
+                ));
     }
 }
