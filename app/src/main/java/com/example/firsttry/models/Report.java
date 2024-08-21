@@ -43,10 +43,6 @@ public class Report extends Model
 
     public void setTimestamp(Date timestamp) { Timestamp = timestamp; }
 
-    public Boolean getIsDeleted() { return IsDeleted; }
-
-    public void setIsDeleted(Boolean isDeleted) { IsDeleted = isDeleted; }
-
     @Override
     public CompletableFuture<Report> save()
     {
@@ -74,5 +70,12 @@ public class Report extends Model
     {
         return DatabaseHandler.getById(id, this.tableName(), Report.class)
                 .thenApply(res -> res);
+    }
+
+    @Override
+    public CompletableFuture<Report> softDelete()
+    {
+        setIsDeleted(true);
+        return save();
     }
 }

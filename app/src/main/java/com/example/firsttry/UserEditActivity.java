@@ -184,8 +184,7 @@ public class UserEditActivity
     @Override
     public void onDelete(Report report)
     {
-        report.setIsDeleted(true);
-        report.save()
+        report.softDelete()
                 .thenAccept(deletedReport -> ActivityHandler.LinkToWithPreviousToast(
                         UserEditActivity.this,
                         UserEditActivity.class,

@@ -11,18 +11,17 @@ public class Court extends Model
     @Override
     public String tableName() { return "courts"; }
 
-    public Court() { this.isDeleted = false; }
+    public Court() { }
 
     public Court(String name, CourtType type)
     {
         this.Name = name;
         this.Type = type;
-        this.isDeleted = false;
+        setIsDeleted(false);
     }
 
     private String Name;
     private CourtType Type;
-    private Boolean isDeleted;
 
     public String getName() { return Name; }
 
@@ -31,10 +30,6 @@ public class Court extends Model
     public CourtType getType() { return Type; }
 
     public void setType(CourtType type) { this.Type = type; }
-
-    public Boolean getDeleted() { return isDeleted; }
-
-    public void setDeleted(Boolean deleted) { this.isDeleted = deleted; }
 
     public CompletableFuture<Array<CourtBook>> relatedBookings()
     {
@@ -70,5 +65,12 @@ public class Court extends Model
     {
         return DatabaseHandler.getById(id, this.tableName(), Court.class)
                 .thenApply(court -> court);
+    }
+
+    @Override
+    public CompletableFuture<Court> softDelete()
+    {
+        setIsDeleted(true);
+        return save();
     }
 }

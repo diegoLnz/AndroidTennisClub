@@ -132,4 +132,11 @@ public class CourtBook extends Model
         return DatabaseHandler.getById(id, this.tableName(), CourtBook.class)
                 .thenApply(book -> book);
     }
+
+    @Override
+    public CompletableFuture<CourtBook> softDelete()
+    {
+        setIsDeleted(true);
+        return save();
+    }
 }

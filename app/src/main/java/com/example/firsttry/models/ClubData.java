@@ -47,4 +47,11 @@ public class ClubData extends Model
         return DatabaseHandler.getById(id, this.tableName(), this.getClass())
                 .thenApply(result -> result);
     }
+
+    @Override
+    public CompletableFuture<ClubData> softDelete()
+    {
+        setIsDeleted(true);
+        return save();
+    }
 }

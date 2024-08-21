@@ -90,4 +90,11 @@ public class User extends Model
         return DatabaseHandler.getById(id, tableName(), User.class)
                 .thenApply(result -> result);
     }
+
+    @Override
+    public CompletableFuture<User> softDelete()
+    {
+        setIsDeleted(true);
+        return save();
+    }
 }
