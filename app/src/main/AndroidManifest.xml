@@ -27,6 +27,9 @@
             android:name=".UserReportActivity"
             android:exported="false" />
         <activity
+            android:name=".UserReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".UsersSettingsActivity"
             android:exported="false" />
         <activity

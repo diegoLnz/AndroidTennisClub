@@ -58,6 +58,14 @@
             android:paddingBottom="16dp"/>
 
         <Button
+            android:id="@+id/btn_review_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lascia_una_recensione"
+            android:padding="8dp"
+            android:layout_marginTop="16dp" />
+
+        <Button
             android:id="@+id/btn_report_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,6 +73,21 @@
             android:padding="8dp"
             android:layout_marginTop="16dp"
             android:backgroundTint="#BD0000" />
+
+        <TextView
+            android:id="@+id/reviews_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recensioni_ricevute"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviewsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </ScrollView>

@@ -14,30 +14,28 @@
         android:text="@string/username"
         android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/email"
+    <LinearLayout
+        android:id="@+id/stars_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/email"
-        android:textSize="16sp" />
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+    </LinearLayout>
 
     <TextView
-        android:textStyle="bold"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/stato"
+        android:text="@string/recensione"
         android:layout_marginTop="10dp"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/action_edit"
+    <TextView
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/modifica" />
+        android:text="@string/data_recensione"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+
 </LinearLayout>

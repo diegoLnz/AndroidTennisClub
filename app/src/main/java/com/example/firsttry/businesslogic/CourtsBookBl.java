@@ -25,7 +25,7 @@ public class CourtsBookBl
                     .where(isOverlapping(dateTime));
 
             return DatabaseHandler.list(new Court().tableName(), Court.class).thenApply(courts -> courts
-                    .where(court -> !court.getDeleted())
+                    .where(court -> !court.getIsDeleted())
                     .where(isAvailable(overlappingBookings)));
         });
     }

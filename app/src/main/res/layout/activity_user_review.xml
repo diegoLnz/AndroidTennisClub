@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/review_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nuova_recensione"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp" />
+
+        <com.example.firsttry.extensions.ValidatedEditText
+            android:id="@+id/review_text_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/testo_recensione"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:lines="5"
+            android:scrollbars="vertical"
+            android:padding="16dp"
+            android:maxLength="255" />
+
+        <TextView
+            android:id="@+id/review_rating_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/numero_di_stelle"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="16dp" />
+
+        <Spinner
+            android:id="@+id/rating_view_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_send_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/invia"
+            android:padding="8dp"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

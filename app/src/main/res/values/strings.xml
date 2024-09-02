@@ -107,4 +107,14 @@
     <string name="testo_segnalazione">Testo segnalazione</string>
     <string name="invia_segnalazione">Invia segnalazione</string>
     <string name="elimina_segnalazione">Elimina segnalazione</string>
+    <string name="stato">Stato</string>
+    <string name="lascia_una_recensione">Lascia una recensione</string>
+    <string name="nuova_recensione">Nuova recensione</string>
+    <string name="testo_recensione">Testo recensione</string>
+    <string name="invia">Invia</string>
+    <string name="numero_di_stelle">Numero di stelle</string>
+    <string name="recensioni_ricevute">Recensioni ricevute</string>
+    <string name="recensione">Recensione</string>
+    <string name="data_recensione">Data recensione</string>
+    <string name="nessuna_recensione">Nessuna recensione</string>
 </resources>

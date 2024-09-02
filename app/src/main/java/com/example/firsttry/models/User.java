@@ -1,6 +1,7 @@
 package com.example.firsttry.models;
 
 import com.example.firsttry.businesslogic.ReportsBl;
+import com.example.firsttry.businesslogic.ReviewsBl;
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.enums.UserStatus;
 import com.example.firsttry.utilities.Array;
@@ -66,6 +67,11 @@ public class User extends Model
     public CompletableFuture<Array<Report>> reports()
     {
         return ReportsBl.getReportsByUserId(this.getId());
+    }
+
+    public CompletableFuture<Array<Review>> reviews()
+    {
+        return ReviewsBl.getReviewsByUserId(this.getId());
     }
 
     public static CompletableFuture<User> fromFirebaseUser(@NotNull FirebaseUser user)

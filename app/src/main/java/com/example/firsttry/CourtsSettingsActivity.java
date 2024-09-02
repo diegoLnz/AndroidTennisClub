@@ -49,7 +49,7 @@ public class CourtsSettingsActivity
     {
         DatabaseHandler.list(new Court().tableName(), Court.class).thenAccept(list -> {
             Array<Court> activeCourts = list
-                    .where(item -> !item.getDeleted());
+                    .where(item -> !item.getIsDeleted());
             adapter = new AddedCourtAdapter(activeCourts, this);
             recyclerView.setAdapter(adapter);
         });
@@ -84,7 +84,7 @@ public class CourtsSettingsActivity
                 Toast.makeText(CourtsSettingsActivity.this, "Campo registrato con successo!", Toast.LENGTH_SHORT).show();
                 DatabaseHandler.list(new Court().tableName(), Court.class).thenAccept(list -> {
                     Array<Court> activeCourts = list
-                            .where(item -> !item.getDeleted());
+                            .where(item -> !item.getIsDeleted());
                     adapter = new AddedCourtAdapter(activeCourts, this);
                     recyclerView.setAdapter(adapter);
                 });
@@ -108,12 +108,12 @@ public class CourtsSettingsActivity
     @Override
     public void onDelete(Court court)
     {
-        court.setDeleted(true);
+        court.setIsDeleted(true);
         court.save().thenAccept(res -> {
             Toast.makeText(CourtsSettingsActivity.this, "Campo eliminato con successo!", Toast.LENGTH_SHORT).show();
             DatabaseHandler.list(new Court().tableName(), Court.class).thenAccept(list -> {
                 Array<Court> activeCourts = list
-                        .where(item -> !item.getDeleted());
+                        .where(item -> !item.getIsDeleted());
                 adapter = new AddedCourtAdapter(activeCourts, this);
                 recyclerView.setAdapter(adapter);
             });
