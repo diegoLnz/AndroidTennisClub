@@ -117,4 +117,8 @@
     <string name="recensione">Recensione</string>
     <string name="data_recensione">Data recensione</string>
     <string name="nessuna_recensione">Nessuna recensione</string>
+    <string name="reputazione">Reputazione</string>
+    <string name="gestisci_insegnanti">Gestisci insegnanti</string>
+    <string name="impostazioni_maestri">Impostazioni maestri</string>
+    <string name="indietro">Indietro</string>
 </resources>

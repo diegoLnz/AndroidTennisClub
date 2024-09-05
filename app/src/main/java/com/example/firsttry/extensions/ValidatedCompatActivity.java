@@ -2,13 +2,18 @@ package com.example.firsttry.extensions;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Button;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.firsttry.LoginActivity;
+import com.example.firsttry.R;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
+import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
@@ -19,6 +24,17 @@ public abstract class ValidatedCompatActivity extends AppCompatActivity
 {
     private boolean isValid = true;
     protected User CurrentUser = null;
+    private boolean HasBackButton = false;
+
+    protected Button backButton;
+
+    public boolean hasBackButton() {
+        return HasBackButton;
+    }
+
+    public void setBackButton(Class backActivityClass) {
+        setupBackButton(backActivityClass);
+    }
 
     public void checkAuthenticated()
     {
@@ -43,13 +59,21 @@ public abstract class ValidatedCompatActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
     }
 
-    public void validateFields()
+    private void setupBackButton(Class backActivityClass)
+    {
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> ActivityHandler.LinkTo(this, backActivityClass));
+    }
+
+    public boolean validateFields()
     {
         setIsValid(true);
         Array<Field> fields = new Array<>(getClass().getDeclaredFields());
         fields.select(this::getFieldObjInstance)
                 .where(value -> value instanceof ValidatedEditText)
                 .forEach(this::validateSingleField);
+
+        return getIsValid();
     }
 
     private Object getFieldObjInstance(Field field)

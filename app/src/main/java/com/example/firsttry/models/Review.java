@@ -48,6 +48,11 @@ public class Review extends Model
 
     public void setRating(Integer value) { Rating = value; }
 
+    public CompletableFuture<User> user()
+    {
+        return DatabaseHandler.getById(this.getUserId(), new User().tableName(), User.class);
+    }
+
     @Override
     public CompletableFuture<Review> save()
     {

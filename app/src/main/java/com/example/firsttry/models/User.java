@@ -10,8 +10,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class User extends Model
@@ -25,7 +23,7 @@ public class User extends Model
     private String Password;
     private UserRole Role;
     private UserStatus Status = UserStatus.ACTIVE;
-    private Double Score;
+    private Double Reputation;
 
     public User() { }
 
@@ -60,9 +58,9 @@ public class User extends Model
 
     public void setStatus(UserStatus status) { Status = status; }
 
-    public Double getScore() { return Score; }
+    public Double getReputation() { return Reputation; }
 
-    public void setScore(Double score) { Score = score; }
+    public void setReputation(Double reputation) { Reputation = reputation; }
 
     public CompletableFuture<Array<Report>> reports()
     {
@@ -78,6 +76,22 @@ public class User extends Model
     {
         return new User().getById(user.getUid())
                 .thenApply(result -> result);
+    }
+
+    public CompletableFuture<User> updateReputation()
+    {
+        return reviews().thenCompose(reviews -> {
+            if (reviews.isEmpty()) {
+                Reputation = 0.0;
+                return save();
+            }
+            Double sum = 0.0;
+            for (Review review : reviews.getList()) {
+                sum += review.getRating();
+            }
+            Reputation = sum / reviews.size();
+            return save();
+        });
     }
 
     @Override

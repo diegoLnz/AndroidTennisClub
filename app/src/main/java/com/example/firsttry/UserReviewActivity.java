@@ -74,8 +74,7 @@ public class UserReviewActivity extends ValidatedCompatActivity
 
     private void sendReview()
     {
-        validateFields();
-        if (!getIsValid())
+        if (!validateFields())
             return;
 
         Spinner spinner = findViewById(R.id.rating_view_select);
@@ -89,11 +88,14 @@ public class UserReviewActivity extends ValidatedCompatActivity
                 rating);
 
         review.save()
-                .thenAccept(savedReview -> ActivityHandler.LinkToWithPreviousToast(
+                .thenCompose(Review::user)
+                .thenCompose(User::updateReputation)
+                .thenAccept(user -> ActivityHandler.LinkToWithPreviousToast(
                         this,
                         UserDetailActivity.class,
                         "userId",
-                        targetUser.getId(),
-                        "Recensione inviata con successo!"));
+                        user.getId(),
+                        "Recensione inviata con successo!"
+                ));
     }
 }

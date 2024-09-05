@@ -1,42 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
+        android:padding="16dp">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/gestisci_campi"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:paddingBottom="16dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <com.example.firsttry.extensions.ValidatedEditText
-        android:id="@+id/edit_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:hint="@string/nome"
-        android:inputType="text"
-        android:padding="8dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gestisci_campi"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp"/>
 
-    <Spinner
-        android:id="@+id/types_view_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <com.example.firsttry.extensions.ValidatedEditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/nome"
+            android:inputType="text"
+            android:padding="8dp"/>
 
-    <Button
-        android:id="@+id/btn_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/registra"
-        android:padding="8dp"
-        android:layout_marginTop="16dp"/>
+        <Spinner
+            android:id="@+id/types_view_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/addedCourtsRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/registra"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addedCourtsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/indietro" />
+    </LinearLayout>
+</ScrollView>

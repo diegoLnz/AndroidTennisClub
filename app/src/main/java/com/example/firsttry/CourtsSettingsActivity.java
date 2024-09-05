@@ -35,6 +35,7 @@ public class CourtsSettingsActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courts_settings);
+        setBackButton(GenericSettingsActivity.class);
         checkAuthenticated();
 
         setNameEditText();
@@ -65,8 +66,7 @@ public class CourtsSettingsActivity
     {
         addButton = findViewById(R.id.btn_add);
         addButton.setOnClickListener(v -> {
-            validateFields();
-            if (!getIsValid())
+            if (!validateFields())
                 return;
 
             String name = _name

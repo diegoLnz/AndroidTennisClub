@@ -40,8 +40,7 @@ public class LoginActivity extends ValidatedCompatActivity
     private void setSubmitListener()
     {
         LoginButton.setOnClickListener(v -> {
-            validateFields();
-            if (!getIsValid())
+            if (!validateFields())
                 return;
 
             String email = EditTextEmail.getText()

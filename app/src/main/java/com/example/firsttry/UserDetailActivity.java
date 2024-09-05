@@ -8,13 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.extensions.ValidatedCompatActivity;
-import com.example.firsttry.extensions.adapters.UserReportsAdapter;
 import com.example.firsttry.extensions.adapters.UserReviewsAdapter;
+import com.example.firsttry.models.Review;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.DatabaseHandler;
-
-import java.util.HashMap;
 
 public class UserDetailActivity extends ValidatedCompatActivity
 {
@@ -93,7 +91,7 @@ public class UserDetailActivity extends ValidatedCompatActivity
         email = findViewById(R.id.email_view);
         role = findViewById(R.id.role_view);
         bio = findViewById(R.id.bio_view);
-        rank = findViewById(R.id.rank_view);
+        rank = findViewById(R.id.reputation_view);
     }
 
     private void fillFields()
@@ -107,8 +105,8 @@ public class UserDetailActivity extends ValidatedCompatActivity
         else
             role.setText("");
 
-        if (targetUser.getScore() != null)
-            rank.append("\n" + targetUser.getScore().toString());
+        if (targetUser.getReputation() != null)
+            rank.append("\n" + targetUser.getReputation().toString());
         else
             rank.setText("");
     }
@@ -123,6 +121,7 @@ public class UserDetailActivity extends ValidatedCompatActivity
                         return;
                     }
 
+                    reviews.orderByDescending(Review::getTimestamp);
                     adapter = new UserReviewsAdapter(reviews);
                     recyclerView.setAdapter(adapter);
                 })

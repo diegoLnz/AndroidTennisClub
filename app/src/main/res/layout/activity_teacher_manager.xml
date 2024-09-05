@@ -9,8 +9,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gestisci_insegnanti"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp"/>
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/teachersRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

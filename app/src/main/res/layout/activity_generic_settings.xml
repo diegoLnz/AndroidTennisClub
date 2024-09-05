@@ -37,6 +37,19 @@
             android:layout_marginTop="32dp"
             android:text="@string/impostazioni_campi" />
 
+        <Button
+            android:id="@+id/buttonTeacherSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/impostazioni_maestri" />
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/indietro" />
     </LinearLayout>
 
 </FrameLayout>

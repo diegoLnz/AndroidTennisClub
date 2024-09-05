@@ -63,8 +63,7 @@ public class UserReportActivity extends ValidatedCompatActivity
 
     private void sendReport()
     {
-        validateFields();
-        if (!getIsValid())
+        if (!validateFields())
             return;
 
         Report report = new Report(

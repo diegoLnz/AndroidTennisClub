@@ -18,6 +18,9 @@
             android:name=".CourtsSettingsActivity"
             android:exported="false" />
         <activity
+            android:name=".TeacherManagerActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserEditActivity"
             android:exported="false" />
         <activity

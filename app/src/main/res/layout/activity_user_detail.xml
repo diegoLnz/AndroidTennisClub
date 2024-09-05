@@ -50,10 +50,10 @@
             android:paddingBottom="16dp"/>
 
         <TextView
-            android:id="@+id/rank_view"
+            android:id="@+id/reputation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/rank"
+            android:text="@string/reputazione"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
 
