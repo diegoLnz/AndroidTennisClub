@@ -12,6 +12,7 @@ import com.example.firsttry.extensions.ValidatedCompatActivity;
 import com.example.firsttry.extensions.adapters.UserAdapter;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
+import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 
@@ -47,7 +48,7 @@ public class TeacherManagerActivity
                                     .where(user -> !user.getStatus().equals(UserStatus.BANDITED))
                                     .where(user -> user.getRole().equals(UserRole.Teacher))
                                     .remove(userToRemove -> Objects.equals(userToRemove.getId(), account.getId()));
-                            adapter = new UserAdapter(filteredUsers, this);
+                            adapter = new UserAdapter(filteredUsers, this, true);
                             recyclerView.setAdapter(adapter);
                         })));
     }
@@ -55,9 +56,6 @@ public class TeacherManagerActivity
     @Override
     public void onEdit(User user)
     {
-        Intent intent = new Intent(this, UserEditActivity.class);
-        intent.putExtra("userId", user.getId());
-        startActivity(intent);
-        finish();
+        ActivityHandler.LinkToWithExtra(this, TeacherScheduleManagerActivity.class, "userId", user.getId());
     }
 }

@@ -17,6 +17,7 @@ import com.example.firsttry.utilities.Array;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>
 {
+    private Boolean isOnlyForTeachers = false;
     private final Array<User> userList;
     private final OnUserActionListener listener;
 
@@ -24,6 +25,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     {
         this.userList = userList;
         this.listener = listener;
+    }
+
+    public UserAdapter(Array<User> userList, OnUserActionListener listener, Boolean isOnlyForTeachers)
+    {
+        this.userList = userList;
+        this.listener = listener;
+        this.isOnlyForTeachers = isOnlyForTeachers;
     }
 
     @NonNull
@@ -41,6 +49,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.email.setText(user.getEmail());
         setStatusText(holder, user);
         holder.editButton.setOnClickListener(v -> listener.onEdit(user));
+
+        if (isOnlyForTeachers)
+        {
+            holder.editButton.setText(R.string.gestisci_orari);
+        }
     }
 
     private void setStatusText(@NonNull UserViewHolder holder, User user)

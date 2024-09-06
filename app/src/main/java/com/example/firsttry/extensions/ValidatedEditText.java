@@ -7,12 +7,15 @@ import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.StringValidator;
 import com.example.firsttry.enums.ValidatorType;
 
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class ValidatedEditText extends androidx.appcompat.widget.AppCompatEditText
 {
     private Boolean isRequired = false;
     private final Array<String> errors = new Array<>();
+    private HashMap<Predicate<String>, String> validationConditions = new HashMap<>();
     private ValidatorType validatorType = ValidatorType.None;
 
     public ValidatedEditText(Context context) { super(context); }
@@ -46,6 +49,15 @@ public class ValidatedEditText extends androidx.appcompat.widget.AppCompatEditTe
             return false;
         }
 
+        for (HashMap.Entry<Predicate<String>, String> entry : validationConditions.entrySet())
+        {
+            if (entry.getKey().test(value)) {
+                this.errors.add(error = entry.getValue());
+                setError(error);
+                return false;
+            }
+        }
+
         if (validatorType != ValidatorType.None)
         {
             this.errors.add(error = "Il campo non rispetta il formato corretto");
@@ -54,5 +66,10 @@ public class ValidatedEditText extends androidx.appcompat.widget.AppCompatEditTe
         }
 
         return true;
+    }
+
+    public void addValidationCondition(Predicate<String> condition, String errorMessage)
+    {
+        validationConditions.put(condition, errorMessage);
     }
 }

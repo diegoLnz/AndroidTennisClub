@@ -1,6 +1,7 @@
 package com.example.firsttry.models;
 
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.Repository;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -34,11 +35,7 @@ public class ClubData extends Model
     @Override
     public CompletableFuture<ClubData> save()
     {
-        return DatabaseHandler.saveOrUpdate(this).thenApply(result -> result
-                .match(
-                        success -> success,
-                        failure -> null
-                ));
+        return Repository.saveOrUpdateEntity(this);
     }
 
     @Override

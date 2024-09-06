@@ -3,6 +3,7 @@ package com.example.firsttry.models;
 import com.example.firsttry.enums.CourtType;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.Repository;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -41,23 +42,7 @@ public class Court extends Model
     @Override
     public CompletableFuture<Court> save()
     {
-        return this.getId() == null || this.getId().isEmpty()
-                ?
-                DatabaseHandler.list(this.tableName(), this.getClass())
-                        .thenCompose(courts -> {
-                            int lastId = courts.size();
-                            this.setId(String.valueOf(lastId + 1));
-                            return DatabaseHandler.saveOrUpdate(this);
-                        })
-                        .thenApply(res -> res.match(
-                                success -> success,
-                                failure -> null
-                        ))
-                :
-                DatabaseHandler.saveOrUpdate(this).thenApply(res -> res.match(
-                        success -> success,
-                        failure -> null
-                ));
+        return Repository.saveOrUpdateEntity(this);
     }
 
     @Override

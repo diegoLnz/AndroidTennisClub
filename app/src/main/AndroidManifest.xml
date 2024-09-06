@@ -21,6 +21,9 @@
             android:name=".TeacherManagerActivity"
             android:exported="false" />
         <activity
+            android:name=".TeacherScheduleManagerActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserEditActivity"
             android:exported="false" />
         <activity

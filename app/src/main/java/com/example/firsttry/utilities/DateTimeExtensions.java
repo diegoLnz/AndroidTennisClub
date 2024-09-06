@@ -10,7 +10,21 @@ import java.util.Locale;
 
 public class DateTimeExtensions
 {
-    public static Date now() { return new Date(); }
+    public static Date now()
+    {
+        Date now = new Date();
+        now.setHours(now.getHours() + 2);
+        return now;
+    }
+
+    public static Date getDay(Date date)
+    {
+        Date newDate = new Date(date.toString());
+        newDate.setHours(0);
+        newDate.setMinutes(0);
+        newDate.setSeconds(0);
+        return newDate;
+    }
 
     public static Date convertToDate(
             String dateStr,
@@ -25,6 +39,24 @@ public class DateTimeExtensions
         try
         {
             date = dateFormat.parse(dateStr + " " + timeStr);
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static Date convertToDate(
+            String dateStr)
+    {
+        String format = "dd/MM/yyyy";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
+        Date date = null;
+        try
+        {
+            date = dateFormat.parse(dateStr);
         }
         catch (ParseException e)
         {

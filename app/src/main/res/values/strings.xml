@@ -121,4 +121,11 @@
     <string name="gestisci_insegnanti">Gestisci insegnanti</string>
     <string name="impostazioni_maestri">Impostazioni maestri</string>
     <string name="indietro">Indietro</string>
+    <string name="gestisci_orari">Gestisci orari</string>
+    <string name="seleziona_orario_di_inizio">Seleziona orario di inizio</string>
+    <string name="seleziona_orario_di_fine">Seleziona orario di fine</string>
+    <string name="aggiungi_lezione">Aggiungi lezione</string>
+    <string name="seleziona_campo">Seleziona campo</string>
+    <string name="elimina_lezione">Elimina lezione</string>
+    <string name="prenotati">Prenotati</string>
 </resources>

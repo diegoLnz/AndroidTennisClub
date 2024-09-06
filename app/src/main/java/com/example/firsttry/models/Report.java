@@ -1,6 +1,7 @@
 package com.example.firsttry.models;
 
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.Repository;
 
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
@@ -46,23 +47,7 @@ public class Report extends Model
     @Override
     public CompletableFuture<Report> save()
     {
-        return this.getId() == null || this.getId().isEmpty()
-                ?
-                DatabaseHandler.list(this.tableName(), this.getClass())
-                        .thenCompose(reports -> {
-                            int lastId = reports.size();
-                            this.setId(String.valueOf(lastId + 1));
-                            return DatabaseHandler.saveOrUpdate(this);
-                        })
-                        .thenApply(res -> res.match(
-                                success -> success,
-                                failure -> null
-                        ))
-                :
-                DatabaseHandler.saveOrUpdate(this).thenApply(res -> res.match(
-                        success -> success,
-                        failure -> null
-                ));
+        return Repository.saveOrUpdateEntity(this);
     }
 
     @Override

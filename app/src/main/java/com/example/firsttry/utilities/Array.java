@@ -88,6 +88,24 @@ public class Array<T>
         return result.get(0);
     }
 
+    public T lastOrDefault()
+    {
+        return list.isEmpty()
+                ? null
+                : list.get(list.size() - 1);
+    }
+
+    public T lastOrDefault(Function<T, Boolean> predicate)
+    {
+        Array<T> result = new Array<>();
+        for (T item : list) {
+            if (predicate.apply(item)) {
+                result.add(item);
+            }
+        }
+        return result.get(result.size() - 1);
+    }
+
     public T get(Integer pos)
     {
         return list.size() >= pos
