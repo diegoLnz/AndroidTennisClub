@@ -1,6 +1,7 @@
 package com.example.firsttry;
 
 import static com.example.firsttry.utilities.DateTimeExtensions.convertToDate;
+import static com.example.firsttry.utilities.DateTimeExtensions.now;
 
 import android.os.Bundle;
 
@@ -69,7 +70,10 @@ public class BookLessonFragment
     private void searchAvailableLessons()
     {
         String dateValue = Objects.requireNonNull(dateEditText.getText()).toString();
-        LessonsBl.getLessonsByDay(dateValue).thenAccept(this::setRecyclerView);
+        LessonsBl.getLessonsByDay(dateValue).thenAccept(lessons -> {
+            lessons = lessons.where(lesson -> lesson.getStartTime().after(now()));
+            setRecyclerView(lessons);
+        });
     }
 
     @Override
@@ -86,10 +90,12 @@ public class BookLessonFragment
 
     @Override
     public void onDelete(Lesson lesson) {
-        lesson.softDelete()
-                .thenAccept(res -> {
+        Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> LessonBook.list(book -> book.getLessonId().equals(lesson.getId())
+                        && book.getUserId().equals(user.getId())
+                        && !book.getIsDeleted())
+                .thenAccept(list -> list.firstOrDefault().softDelete().thenAccept(res -> {
                     Toast.makeText(getContext(), "Prenotazione annullata!", Toast.LENGTH_SHORT).show();
                     searchAvailableLessons();
-                });
+                })));
     }
 }

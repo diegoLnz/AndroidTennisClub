@@ -54,7 +54,13 @@ public class LessonsBl
     public static CompletableFuture<Array<Lesson>> getLessonsByStudentId(String studentId)
     {
         return DatabaseHandler.list(new LessonBook().tableName(), LessonBook.class)
-                .thenCompose(books -> DatabaseHandler.list(new Lesson().tableName(), Lesson.class)
-                        .thenApply(lessons -> lessons.where(lesson -> books.any(book -> book.getLessonId().equals(lesson.getId()) && book.getUserId().equals(studentId)))));
+                .thenCompose(books -> {
+                    Array<LessonBook> finalBooks = books.where(book -> !book.getIsDeleted());
+                    return DatabaseHandler.list(new Lesson().tableName(), Lesson.class)
+                            .thenApply(lessons -> lessons
+                                    .where(lesson -> !lesson.getIsDeleted())
+                                    .where(lesson -> finalBooks.any(book -> book.getLessonId().equals(lesson.getId())
+                                            && book.getUserId().equals(studentId))));
+                });
     }
 }

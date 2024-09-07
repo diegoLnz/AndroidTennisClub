@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class User extends Model
 {
@@ -122,5 +123,10 @@ public class User extends Model
     public static CompletableFuture<Array<User>> list()
     {
         return Repository.list(User.class);
+    }
+
+    public static CompletableFuture<Array<User>> list(Function<User, Boolean> predicate)
+    {
+        return Repository.list(User.class, predicate);
     }
 }

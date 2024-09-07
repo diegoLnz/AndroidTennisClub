@@ -6,6 +6,7 @@ import com.example.firsttry.utilities.Repository;
 
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class Report extends Model
 {
@@ -68,5 +69,10 @@ public class Report extends Model
     public static CompletableFuture<Array<Report>> list()
     {
         return Repository.list(Report.class);
+    }
+
+    public static CompletableFuture<Array<Report>> list(Function<Report, Boolean> predicate)
+    {
+        return Repository.list(Report.class, predicate);
     }
 }

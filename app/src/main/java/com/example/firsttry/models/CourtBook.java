@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class CourtBook extends Model
 {
@@ -128,5 +129,10 @@ public class CourtBook extends Model
     public static CompletableFuture<Array<CourtBook>> list()
     {
         return Repository.list(CourtBook.class);
+    }
+
+    public static CompletableFuture<Array<CourtBook>> list(Function<CourtBook, Boolean> predicate)
+    {
+        return Repository.list(CourtBook.class, predicate);
     }
 }
