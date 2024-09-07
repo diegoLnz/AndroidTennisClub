@@ -143,6 +143,11 @@ public class Array<T>
         return this;
     }
 
+    public Boolean contains(T item)
+    {
+        return list.contains(item);
+    }
+
     public Integer size() { return list.size(); }
 
     public Boolean isEmpty() { return list.isEmpty(); }

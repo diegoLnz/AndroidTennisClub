@@ -7,14 +7,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.R;
+import com.example.firsttry.businesslogic.LessonsBl;
 import com.example.firsttry.models.Lesson;
+import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 public class SearchedLessonAdapter extends RecyclerView.Adapter<SearchedLessonAdapter.SearchedLessonViewHolder>
 {
@@ -45,9 +49,24 @@ public class SearchedLessonAdapter extends RecyclerView.Adapter<SearchedLessonAd
 
         holder.time.setText(startTimeFormatted + " - " + endTimeFormatted);
 
-        lesson.court().thenAccept(court -> {
-            holder.court.setText(court.getName());
-            holder.deleteLessonButton.setOnClickListener(v -> listener.onClick(lesson));
+        Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> {
+            LessonsBl.getLessonsByStudentId(user.getId()).thenAccept(lessons -> {
+                if (lessons.any(lesson1 -> lesson.getId().equals(lesson1.getId())))
+                {
+                    holder.deleteLessonButton.setText(R.string.annulla_prenotazione);
+                    holder.deleteLessonButton.setBackgroundColor(
+                            ContextCompat.getColor(holder.itemView.getContext(), R.color.custom_red)
+                    );
+                    holder.deleteLessonButton.setOnClickListener(v -> listener.onDelete(lesson));
+                }
+                else
+                {
+                    holder.deleteLessonButton.setOnClickListener(v -> listener.onBook(lesson));
+                }
+                lesson.court().thenAccept(court -> {
+                    holder.court.setText(court.getName());
+                });
+            });
         });
     }
 
@@ -71,7 +90,8 @@ public class SearchedLessonAdapter extends RecyclerView.Adapter<SearchedLessonAd
 
     public interface OnUserActionListener
     {
-        void onClick(Lesson lesson);
+        void onBook(Lesson lesson);
+        void onDelete(Lesson lesson);
     }
 
 }

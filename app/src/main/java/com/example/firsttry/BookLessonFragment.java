@@ -14,14 +14,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.firsttry.businesslogic.LessonsBl;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.extensions.adapters.SearchedLessonAdapter;
 import com.example.firsttry.models.Lesson;
+import com.example.firsttry.models.LessonBook;
 import com.example.firsttry.models.User;
+import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
+import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.DateTimeExtensions;
+import com.example.firsttry.utilities.FragmentHandler;
 
 import java.util.Date;
 import java.util.Objects;
@@ -68,7 +73,23 @@ public class BookLessonFragment
     }
 
     @Override
-    public void onClick(Lesson lesson) {
+    public void onBook(Lesson lesson) {
+        Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> {
+            LessonBook lessonBook = new LessonBook(user.getId(), lesson.getId(), new Date());
+            lessonBook.save()
+                    .thenAccept(lessonBook1 -> {
+                        Toast.makeText(getContext(), "Lezione prenotata con successo!", Toast.LENGTH_SHORT).show();
+                        searchAvailableLessons();
+                    });
+        });
+    }
 
+    @Override
+    public void onDelete(Lesson lesson) {
+        lesson.softDelete()
+                .thenAccept(res -> {
+                    Toast.makeText(getContext(), "Prenotazione annullata!", Toast.LENGTH_SHORT).show();
+                    searchAvailableLessons();
+                });
     }
 }

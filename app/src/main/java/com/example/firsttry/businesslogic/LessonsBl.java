@@ -4,6 +4,7 @@ import static com.example.firsttry.utilities.DateTimeExtensions.convertToDate;
 import static com.example.firsttry.utilities.DateTimeExtensions.getDay;
 
 import com.example.firsttry.models.Lesson;
+import com.example.firsttry.models.LessonBook;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
@@ -48,5 +49,12 @@ public class LessonsBl
                     Date startDay = getDay(lesson.getStartTime());
                     return startDay.equals(dayToDate);
                 }));
+    }
+
+    public static CompletableFuture<Array<Lesson>> getLessonsByStudentId(String studentId)
+    {
+        return DatabaseHandler.list(new LessonBook().tableName(), LessonBook.class)
+                .thenCompose(books -> DatabaseHandler.list(new Lesson().tableName(), Lesson.class)
+                        .thenApply(lessons -> lessons.where(lesson -> books.any(book -> book.getLessonId().equals(lesson.getId()) && book.getUserId().equals(studentId)))));
     }
 }
