@@ -1,5 +1,6 @@
 package com.example.firsttry.models;
 
+import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.Repository;
 
@@ -62,5 +63,11 @@ public class Report extends Model
     {
         setIsDeleted(true);
         return save();
+    }
+
+    @Override
+    public CompletableFuture<Array<Report>> list()
+    {
+        return Repository.list(Report.class);
     }
 }

@@ -6,6 +6,7 @@ import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.enums.UserStatus;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.Repository;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
@@ -116,5 +117,11 @@ public class User extends Model
     {
         setIsDeleted(true);
         return save();
+    }
+
+    @Override
+    public CompletableFuture<Array<User>> list()
+    {
+        return Repository.list(User.class);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.firsttry.models;
 
+import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.Repository;
 
@@ -63,5 +64,11 @@ public class Lesson extends Model
     public CompletableFuture<Lesson> softDelete() {
         setIsDeleted(true);
         return save();
+    }
+
+    @Override
+    public CompletableFuture<Array<Lesson>> list()
+    {
+        return Repository.list(Lesson.class);
     }
 }

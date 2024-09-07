@@ -124,4 +124,10 @@ public class CourtBook extends Model
         setIsDeleted(true);
         return save();
     }
+
+    @Override
+    public CompletableFuture<Array<CourtBook>> list()
+    {
+        return Repository.list(CourtBook.class);
+    }
 }

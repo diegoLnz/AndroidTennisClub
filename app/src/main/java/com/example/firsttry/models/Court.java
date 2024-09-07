@@ -58,4 +58,10 @@ public class Court extends Model
         setIsDeleted(true);
         return save();
     }
+
+    @Override
+    public CompletableFuture<Array<Court>> list()
+    {
+        return Repository.list(Court.class);
+    }
 }

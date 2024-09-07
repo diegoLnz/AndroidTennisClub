@@ -2,6 +2,7 @@ package com.example.firsttry.utilities;
 
 import com.example.firsttry.models.Model;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CompletableFuture;
 
 public class Repository
@@ -25,5 +26,18 @@ public class Repository
                         success -> success,
                         failure -> null
                 ));
+    }
+
+    public static <T extends Model> CompletableFuture<Array<T>> list(Class<T> clazz)
+    {
+        try {
+            return DatabaseHandler.list(clazz.getDeclaredConstructor().newInstance().tableName(), clazz);
+        } catch (IllegalAccessException
+                 | InstantiationException
+                 | InvocationTargetException
+                 | NoSuchMethodException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

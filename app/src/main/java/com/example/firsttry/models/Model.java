@@ -1,5 +1,7 @@
 package com.example.firsttry.models;
 
+import com.example.firsttry.utilities.Array;
+
 import java.util.concurrent.CompletableFuture;
 
 public abstract class Model implements IDatabaseModel
@@ -15,4 +17,5 @@ public abstract class Model implements IDatabaseModel
     public abstract <T extends Model> CompletableFuture<T> save();
     public abstract <T extends Model> CompletableFuture<T> getById(String id);
     public abstract <T extends Model> CompletableFuture<T> softDelete();
+    public abstract <T extends Model> CompletableFuture<Array<T>> list();
 }
