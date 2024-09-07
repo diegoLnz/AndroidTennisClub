@@ -125,8 +125,7 @@ public class CourtBook extends Model
         return save();
     }
 
-    @Override
-    public CompletableFuture<Array<CourtBook>> list()
+    public static CompletableFuture<Array<CourtBook>> list()
     {
         return Repository.list(CourtBook.class);
     }

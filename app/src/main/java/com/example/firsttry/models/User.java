@@ -119,8 +119,7 @@ public class User extends Model
         return save();
     }
 
-    @Override
-    public CompletableFuture<Array<User>> list()
+    public static CompletableFuture<Array<User>> list()
     {
         return Repository.list(User.class);
     }

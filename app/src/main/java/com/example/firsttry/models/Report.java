@@ -65,8 +65,7 @@ public class Report extends Model
         return save();
     }
 
-    @Override
-    public CompletableFuture<Array<Report>> list()
+    public static CompletableFuture<Array<Report>> list()
     {
         return Repository.list(Report.class);
     }

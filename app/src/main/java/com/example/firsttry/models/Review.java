@@ -75,8 +75,7 @@ public class Review extends Model
         return save();
     }
 
-    @Override
-    public CompletableFuture<Array<Review>> list()
+    public static CompletableFuture<Array<Review>> list()
     {
         return Repository.list(Review.class);
     }

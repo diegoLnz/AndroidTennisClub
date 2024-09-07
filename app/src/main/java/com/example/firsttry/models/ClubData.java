@@ -53,8 +53,7 @@ public class ClubData extends Model
         return save();
     }
 
-    @Override
-    public CompletableFuture<Array<ClubData>> list()
+    public static CompletableFuture<Array<ClubData>> list()
     {
         return Repository.list(ClubData.class);
     }

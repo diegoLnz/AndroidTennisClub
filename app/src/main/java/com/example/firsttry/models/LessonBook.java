@@ -54,8 +54,7 @@ public class LessonBook extends Model
         return save();
     }
 
-    @Override
-    public CompletableFuture<Array<LessonBook>> list()
+    public static CompletableFuture<Array<LessonBook>> list()
     {
         return Repository.list(LessonBook.class);
     }
