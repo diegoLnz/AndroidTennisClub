@@ -1,26 +1,28 @@
 package com.example.firsttry;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.businesslogic.LessonsBl;
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.SearchedLessonAdapter;
 import com.example.firsttry.models.Lesson;
-import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
-public class SeeBookedLessonsActivity
-        extends ValidatedCompatActivity
+public class SeeBookedLessonsFragment
+        extends ValidatedFragment
         implements SearchedLessonAdapter.OnUserActionListener
 {
 
@@ -28,11 +30,11 @@ public class SeeBookedLessonsActivity
     private SearchedLessonAdapter adapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_see_booked_lessons);
-        setBackButton(MainActivity.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        currentView = inflater.inflate(R.layout.activity_see_booked_lessons, container, false);
         updateRecyclerView();
+        return currentView;
     }
 
     private void updateRecyclerView()
@@ -42,8 +44,8 @@ public class SeeBookedLessonsActivity
 
     private void setRecyclerView(Array<Lesson> lessons)
     {
-        recyclerView = findViewById(R.id.availableLessonsRecycleView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = currentView.findViewById(R.id.availableLessonsRecycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         adapter = new SearchedLessonAdapter(lessons, this);
         recyclerView.setAdapter(adapter);
@@ -63,7 +65,7 @@ public class SeeBookedLessonsActivity
     @Override
     public void onDelete(Lesson lesson) {
         LessonsBl.deleteLessonBookByLesson(lesson).thenAccept(res -> {
-            Toast.makeText(this, "Prenotazione annullata!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireActivity(), "Prenotazione annullata!", Toast.LENGTH_SHORT).show();
             updateRecyclerView();
         });
     }

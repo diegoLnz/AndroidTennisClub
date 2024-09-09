@@ -1,14 +1,17 @@
 package com.example.firsttry;
 
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.businesslogic.LessonsBl;
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.SearchedLessonAdapter;
 import com.example.firsttry.models.Lesson;
 import com.example.firsttry.utilities.AccountManager;
@@ -17,18 +20,18 @@ import com.example.firsttry.utilities.Array;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
-public class SeeInvitationsActivity extends ValidatedCompatActivity
+public class SeeInvitationsFragment extends ValidatedFragment
 {
 
     private RecyclerView recyclerView;
     private SearchedLessonAdapter adapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_see_booked_lessons);
-        setBackButton(MainActivity.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+        currentView = inflater.inflate(R.layout.activity_see_booked_lessons, container, false);
         updateRecyclerView();
+        return currentView;
     }
 
     private void updateRecyclerView()
@@ -38,8 +41,8 @@ public class SeeInvitationsActivity extends ValidatedCompatActivity
 
     private void setRecyclerView(Array<Lesson> lessons)
     {
-        recyclerView = findViewById(R.id.availableLessonsRecycleView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = currentView.findViewById(R.id.availableLessonsRecycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
 //        adapter = new SearchedLessonAdapter(lessons, this);
 //        recyclerView.setAdapter(adapter);

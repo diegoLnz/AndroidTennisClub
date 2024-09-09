@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.example.firsttry.enums.UserRole;
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.extensions.ValidatedActivity;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.FragmentHandler;
@@ -14,7 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
 
-public class MainActivity extends ValidatedCompatActivity {
+public class MainActivity extends ValidatedActivity {
     private static boolean introCompleted = false;
     private static User user;
 

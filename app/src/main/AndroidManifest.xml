@@ -15,45 +15,6 @@
         android:theme="@style/Theme.FirstTry"
         tools:targetApi="31">
         <activity
-            android:name=".CourtsSettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CourtBookInvitationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TeacherManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SeeBookedCourtsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SeeBookedLessonsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SeeBookersActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TeacherScheduleManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UserEditActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UserDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UserReportActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UserReviewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UsersSettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GenericSettingsActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity

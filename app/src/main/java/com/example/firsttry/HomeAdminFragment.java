@@ -45,7 +45,7 @@ public class HomeAdminFragment extends Fragment
     {
         _settingsBtn = _currentView.findViewById(R.id.buttonGenericSettings);
         _settingsBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), GenericSettingsActivity.class));
+            startActivity(new Intent(getActivity(), GenericSettingsFragment.class));
             getActivity().finish();
         });
     }

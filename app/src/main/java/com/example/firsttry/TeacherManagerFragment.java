@@ -1,49 +1,53 @@
 package com.example.firsttry;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.enums.UserStatus;
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.UserAdapter;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
-import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.FragmentHandler;
+import com.example.firsttry.utilities.HashMapExtensions;
 
 import java.util.Objects;
 
-public class TeacherManagerActivity
-        extends ValidatedCompatActivity
+public class TeacherManagerFragment
+        extends ValidatedFragment
         implements UserAdapter.OnUserActionListener
 {
     private RecyclerView recyclerView;
     private UserAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_manager);
-        setBackButton(GenericSettingsActivity.class);
+        currentView = inflater.inflate(R.layout.activity_teacher_manager, container, false);
         checkAuthenticated();
 
-        recyclerView = findViewById(R.id.teachersRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = currentView.findViewById(R.id.teachersRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         loadUsers();
+        return currentView;
     }
 
     private void loadUsers()
     {
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(account ->
                 DatabaseHandler.list(new User().tableName(), User.class)
-                        .thenAccept(users -> runOnUiThread(() -> {
+                        .thenAccept(users -> requireActivity().runOnUiThread(() -> {
                             Array<User> filteredUsers = users.orderBy(User::getUsername)
                                     .where(user -> !user.getStatus().equals(UserStatus.BANDITED))
                                     .where(user -> user.getRole().equals(UserRole.Teacher))
@@ -56,6 +60,6 @@ public class TeacherManagerActivity
     @Override
     public void onEdit(User user)
     {
-        ActivityHandler.LinkToWithExtra(this, TeacherScheduleManagerActivity.class, "userId", user.getId());
+        FragmentHandler.replaceFragmentWithArguments(requireActivity(),new TeacherScheduleManagerFragment(), HashMapExtensions.from("userId", user.getId()));
     }
 }

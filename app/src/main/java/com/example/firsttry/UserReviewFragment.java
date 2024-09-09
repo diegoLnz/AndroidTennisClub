@@ -1,25 +1,28 @@
 package com.example.firsttry;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.firsttry.enums.UserRole;
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.ValidatedEditText;
-import com.example.firsttry.models.Report;
 import com.example.firsttry.models.Review;
 import com.example.firsttry.models.User;
-import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.DateTimeExtensions;
+import com.example.firsttry.utilities.FragmentHandler;
+import com.example.firsttry.utilities.HashMapExtensions;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class UserReviewActivity extends ValidatedCompatActivity
+public class UserReviewFragment extends ValidatedFragment
 {
     private static final String extraKey = "userId";
 
@@ -29,10 +32,9 @@ public class UserReviewActivity extends ValidatedCompatActivity
     private Button sendReviewButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_review);
+        currentView = inflater.inflate(R.layout.activity_user_review, container, false);
         checkAuthenticated();
         setCurrentUser();
         getTargetUser().thenAccept(user -> {
@@ -41,17 +43,18 @@ public class UserReviewActivity extends ValidatedCompatActivity
             setRatingSpinner();
             setReportButton();
         });
+        return currentView;
     }
 
     private CompletableFuture<User> getTargetUser()
     {
-        String userId = getIntent().getStringExtra(extraKey);
+        String userId = requireActivity().getIntent().getStringExtra(extraKey);
         return new User().getById(userId);
     }
 
     private void setFields()
     {
-        reviewText = findViewById(R.id.review_text_field);
+        reviewText = currentView.findViewById(R.id.review_text_field);
         reviewText.setRequired(true);
     }
 
@@ -59,16 +62,16 @@ public class UserReviewActivity extends ValidatedCompatActivity
     {
         Integer[] ratings = {1, 2, 3, 4, 5};
 
-        Spinner spinner = findViewById(R.id.rating_view_select);
+        Spinner spinner = currentView.findViewById(R.id.rating_view_select);
 
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ratings);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, ratings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
 
     private void setReportButton()
     {
-        sendReviewButton = findViewById(R.id.btn_send_review);
+        sendReviewButton = currentView.findViewById(R.id.btn_send_review);
         sendReviewButton.setOnClickListener(v -> sendReview());
     }
 
@@ -77,7 +80,7 @@ public class UserReviewActivity extends ValidatedCompatActivity
         if (!validateFields())
             return;
 
-        Spinner spinner = findViewById(R.id.rating_view_select);
+        Spinner spinner = currentView.findViewById(R.id.rating_view_select);
         Integer rating = (Integer) spinner.getSelectedItem();
 
         Review review = new Review(
@@ -90,12 +93,13 @@ public class UserReviewActivity extends ValidatedCompatActivity
         review.save()
                 .thenCompose(Review::user)
                 .thenCompose(User::updateReputation)
-                .thenAccept(user -> ActivityHandler.LinkToWithPreviousToast(
-                        this,
-                        UserDetailActivity.class,
-                        "userId",
-                        user.getId(),
-                        "Recensione inviata con successo!"
-                ));
+                .thenAccept(user -> {
+                    Toast.makeText(requireActivity(), "Recensione inviata con successo!", Toast.LENGTH_SHORT).show();
+                    FragmentHandler.replaceFragmentWithArguments(
+                            requireActivity(),
+                            new UserDetailFragment(),
+                            HashMapExtensions.from("userId", user.getId())
+                    );
+                });
     }
 }

@@ -1,21 +1,26 @@
 package com.example.firsttry;
 
-import static com.example.firsttry.enums.ValidatorType.Date;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.models.Report;
 import com.example.firsttry.models.User;
-import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.DateTimeExtensions;
+import com.example.firsttry.utilities.FragmentHandler;
+import com.example.firsttry.utilities.HashMapExtensions;
 
-public class UserReportActivity extends ValidatedCompatActivity
+public class UserReportFragment extends ValidatedFragment
 {
     private static final String extraKey = "userId";
     private TextView reportLabel;
@@ -25,14 +30,14 @@ public class UserReportActivity extends ValidatedCompatActivity
     private Button sendReportButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_report);
+        currentView = inflater.inflate(R.layout.activity_user_report, container, false);
         checkAuthenticated();
         setCurrentUser();
 
-        String userId = getIntent()
+        String userId = requireActivity()
+                .getIntent()
                 .getStringExtra(extraKey);
 
         DatabaseHandler.getById(userId, new User().tableName(), User.class)
@@ -45,19 +50,20 @@ public class UserReportActivity extends ValidatedCompatActivity
                     System.err.println("Failed to retrieve user: " + ex.getMessage());
                     return null;
                 });
+        return currentView;
     }
 
     private void setFields()
     {
-        reportLabel = findViewById(R.id.report_label);
+        reportLabel = currentView.findViewById(R.id.report_label);
         reportLabel.append(" " + targetUser.getUsername());
-        reportText = findViewById(R.id.report_text_field);
+        reportText = currentView.findViewById(R.id.report_text_field);
         reportText.setRequired(true);
     }
 
     private void setReportButton()
     {
-        sendReportButton = findViewById(R.id.btn_report_profile);
+        sendReportButton = currentView.findViewById(R.id.btn_report_profile);
         sendReportButton.setOnClickListener(v -> sendReport());
     }
 
@@ -73,11 +79,13 @@ public class UserReportActivity extends ValidatedCompatActivity
                 DateTimeExtensions.now());
 
         report.save()
-                .thenAccept(savedReport -> ActivityHandler.LinkToWithPreviousToast(
-                        this,
-                        UserDetailActivity.class,
-                        "userId",
-                        targetUser.getId(),
-                        "Segnalazione inviata con successo!"));
+                .thenAccept(savedReport -> {
+                    Toast.makeText(requireActivity(), "Segnalazione inviata con successo!", Toast.LENGTH_SHORT).show();
+                    FragmentHandler.replaceFragmentWithArguments(
+                            requireActivity(),
+                            new UserDetailFragment(),
+                            HashMapExtensions.from("userId", targetUser.getId())
+                    );
+                });
     }
 }

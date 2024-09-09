@@ -6,11 +6,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.extensions.ValidatedActivity;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.utilities.AccountManager;
 
-public class LoginActivity extends ValidatedCompatActivity
+public class LoginActivity extends ValidatedActivity
 {
     private ValidatedEditText EditTextEmail;
     private ValidatedEditText EditTextPassword;

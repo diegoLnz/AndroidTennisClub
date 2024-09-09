@@ -127,7 +127,7 @@ public class HomeFragment
                     courtBook.addUserId(user.getId());
                     courtBook.saveCourtBook().thenAccept(result -> ActivityHandler.LinkToWithPreviousToast(
                             requireActivity(),
-                            CourtBookInvitationActivity.class,
+                            CourtBookInvitationFragment.class,
                             "courtBookId",
                             result.getId(),
                             "Disponibilità registrata con successo!"

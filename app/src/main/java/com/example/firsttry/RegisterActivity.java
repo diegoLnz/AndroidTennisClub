@@ -3,17 +3,15 @@ package com.example.firsttry;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.extensions.ValidatedActivity;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
 
-public class RegisterActivity extends ValidatedCompatActivity
+public class RegisterActivity extends ValidatedActivity
 {
     private ValidatedEditText EditTextUsername;
     private ValidatedEditText EditTextEmail;
@@ -22,7 +20,7 @@ public class RegisterActivity extends ValidatedCompatActivity
     private Button RegisterButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         setFields();

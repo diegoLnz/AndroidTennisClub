@@ -15,25 +15,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.businesslogic.CourtsBookBl;
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.ValidatedEditText;
-import com.example.firsttry.extensions.adapters.SearchedUserAdapter;
 import com.example.firsttry.extensions.adapters.SearchedUserAdapterForBooks;
 import com.example.firsttry.models.CourtBook;
 import com.example.firsttry.models.CourtBookRequest;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
-import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
-import com.example.firsttry.utilities.DateTimeExtensions;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
-public class CourtBookInvitationActivity
-        extends ValidatedCompatActivity
+public class CourtBookInvitationFragment
+        extends ValidatedFragment
         implements SearchedUserAdapterForBooks.OnUserActionListener
 {
     private final String extrakey = "courtBookId";
@@ -46,34 +43,38 @@ public class CourtBookInvitationActivity
     private Button _searchButton;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_court_book_invitation);
-        recyclerView = findViewById(R.id.searchedUsersRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        currentView = inflater.inflate(R.layout.activity_court_book_invitation, container, false);
+
+        recyclerView = currentView.findViewById(R.id.searchedUsersRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
         setCurrentUser();
         setSearchEditText();
+
         getCurrentCourtBook().thenAccept(courtBook -> {
             currentCourtBook = courtBook;
             setSearchButton();
         });
+
+        return currentView;
     }
 
     private CompletableFuture<CourtBook> getCurrentCourtBook()
     {
-        String courtBookId = getIntent().getStringExtra(extrakey);
+        String courtBookId = requireActivity().getIntent().getStringExtra(extrakey);
         return new CourtBook().getById(courtBookId);
     }
 
     private void setSearchEditText()
     {
-        _searchEditText = findViewById(R.id.edit_search);
+        _searchEditText = currentView.findViewById(R.id.edit_search);
         _searchEditText.setRequired(false);
     }
 
     private void setSearchButton()
     {
-        _searchButton = findViewById(R.id.btn_search);
+        _searchButton = currentView.findViewById(R.id.btn_search);
         _searchButton.setOnClickListener(v -> loadSearchedUsers());
     }
 
@@ -130,7 +131,7 @@ public class CourtBookInvitationActivity
         );
         request.save()
                 .thenAccept(res -> {
-                    Toast.makeText(this, "Invito mandato con successo", Toast.LENGTH_SHORT);
+                    Toast.makeText(requireActivity(), "Invito mandato con successo", Toast.LENGTH_SHORT);
                     resetSearch();
                 });
     }

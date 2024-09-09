@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.extensions.ValidatedEditText;
-import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.ActivityHandler;
+import com.example.firsttry.utilities.FragmentHandler;
 
 import java.util.Objects;
 
@@ -72,19 +72,19 @@ public class ProfileFragment extends Fragment
     private void setSeeBookedLessonsBtnListener()
     {
         seeBookedLessonsButton = _currentView.findViewById(R.id.btn_see_lessonbooks);
-        seeBookedLessonsButton.setOnClickListener(v -> ActivityHandler.LinkTo(requireActivity(), SeeBookedLessonsActivity.class));
+        seeBookedLessonsButton.setOnClickListener(v -> FragmentHandler.replaceFragment(requireActivity(), new SeeBookedLessonsFragment()));
     }
 
     private void setSeeBookedCourtsBtnListener()
     {
         seeBookedCourtsButton = _currentView.findViewById(R.id.btn_see_courtbooks);
-        seeBookedCourtsButton.setOnClickListener(v -> ActivityHandler.LinkTo(requireActivity(), SeeBookedCourtsActivity.class));
+        seeBookedCourtsButton.setOnClickListener(v -> FragmentHandler.replaceFragment(requireActivity(), new SeeBookedCourtsFragment()));
     }
 
     private void setSeeInvitationsBtnListener()
     {
         seeInvitationsButton = _currentView.findViewById(R.id.btn_see_invitations);
-        seeInvitationsButton.setOnClickListener(v -> ActivityHandler.LinkTo(requireActivity(), SeeInvitationsActivity.class));
+        seeInvitationsButton.setOnClickListener(v -> FragmentHandler.replaceFragment(requireActivity(), new SeeInvitationsFragment()));
     }
 
     private void setSeeBookersBtnListener()
@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment
             }
 
             seeBookersButton.setVisibility(View.VISIBLE);
-            seeBookersButton.setOnClickListener(v -> ActivityHandler.LinkTo(requireActivity(), SeeBookersActivity.class));
+            seeBookersButton.setOnClickListener(v -> FragmentHandler.replaceFragment(requireActivity(), new SeeBookersFragment()));
         });
     }
 

@@ -1,16 +1,21 @@
 package com.example.firsttry;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.enums.CourtType;
-import com.example.firsttry.extensions.ValidatedCompatActivity;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.extensions.adapters.AddedCourtAdapter;
 import com.example.firsttry.models.Court;
@@ -20,8 +25,8 @@ import com.example.firsttry.utilities.DatabaseHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourtsSettingsActivity
-        extends ValidatedCompatActivity
+public class CourtsSettingsFragment
+        extends ValidatedFragment
         implements AddedCourtAdapter.OnUserActionListener
 {
     private RecyclerView recyclerView;
@@ -31,19 +36,18 @@ public class CourtsSettingsActivity
     private Button addButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_courts_settings);
-        setBackButton(GenericSettingsActivity.class);
+        currentView = inflater.inflate(R.layout.activity_courts_settings, container, false);
         checkAuthenticated();
 
         setNameEditText();
         setDefaultAdapter();
         setCourtTypesSpinner();
         setAddButton();
-        recyclerView = findViewById(R.id.addedCourtsRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = currentView.findViewById(R.id.addedCourtsRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        return currentView;
     }
 
     private void setDefaultAdapter()
@@ -58,13 +62,13 @@ public class CourtsSettingsActivity
 
     private void setNameEditText()
     {
-        _name = findViewById(R.id.edit_name);
+        _name = currentView.findViewById(R.id.edit_name);
         _name.setRequired(true);
     }
 
     private void setAddButton()
     {
-        addButton = findViewById(R.id.btn_add);
+        addButton = currentView.findViewById(R.id.btn_add);
         addButton.setOnClickListener(v -> {
             if (!validateFields())
                 return;
@@ -73,7 +77,7 @@ public class CourtsSettingsActivity
                     .getText()
                     .toString();
 
-            String type = ((Spinner) findViewById(R.id.types_view_select))
+            String type = ((Spinner) currentView.findViewById(R.id.types_view_select))
                     .getSelectedItem()
                     .toString();
 
@@ -81,7 +85,7 @@ public class CourtsSettingsActivity
 
             Court court = new Court(name, courtType);
             court.save().thenAccept(res -> {
-                Toast.makeText(CourtsSettingsActivity.this, "Campo registrato con successo!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), "Campo registrato con successo!", Toast.LENGTH_SHORT).show();
                 DatabaseHandler.list(new Court().tableName(), Court.class).thenAccept(list -> {
                     Array<Court> activeCourts = list
                             .where(item -> !item.getIsDeleted());
@@ -98,9 +102,9 @@ public class CourtsSettingsActivity
         for (CourtType type : CourtType.values())
             types.add(type.name());
 
-        Spinner spinner = findViewById(R.id.types_view_select);
+        Spinner spinner = currentView.findViewById(R.id.types_view_select);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, types);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
@@ -110,7 +114,7 @@ public class CourtsSettingsActivity
     {
         court.setIsDeleted(true);
         court.save().thenAccept(res -> {
-            Toast.makeText(CourtsSettingsActivity.this, "Campo eliminato con successo!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireActivity(), "Campo eliminato con successo!", Toast.LENGTH_SHORT).show();
             DatabaseHandler.list(new Court().tableName(), Court.class).thenAccept(list -> {
                 Array<Court> activeCourts = list
                         .where(item -> !item.getIsDeleted());

@@ -1,31 +1,36 @@
 package com.example.firsttry;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.enums.UserStatus;
-import com.example.firsttry.extensions.ValidatedCompatActivity;
-import com.example.firsttry.extensions.adapters.UserAdapter;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.UserReportsAdapter;
 import com.example.firsttry.models.Report;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.ActivityHandler;
-import com.example.firsttry.utilities.Array;
+import com.example.firsttry.utilities.FragmentHandler;
+import com.example.firsttry.utilities.HashMapExtensions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class UserEditActivity
-        extends ValidatedCompatActivity
+public class UserEditFragment
+        extends ValidatedFragment
         implements UserReportsAdapter.OnUserActionListener
 {
     private User _currentUser;
@@ -37,27 +42,26 @@ public class UserEditActivity
     private UserReportsAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_edit);
-
-        recyclerView = findViewById(R.id.reportsRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        currentView = inflater.inflate(R.layout.activity_user_edit, container, false);
+        recyclerView = currentView.findViewById(R.id.reportsRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         checkAuthenticated();
         fillUserData();
+        return currentView;
     }
 
     private void fillUserData()
     {
-        String userId = getIntent().getStringExtra("userId");
+        String userId = requireActivity().getIntent().getStringExtra("userId");
         _currentUser = new User();
         _currentUser.getById(userId)
                 .thenAccept(user -> {
                     _currentUser = user;
-                    _username = findViewById(R.id.username_view);
-                    _email = findViewById(R.id.email_view);
+                    _username = currentView.findViewById(R.id.username_view);
+                    _email = currentView.findViewById(R.id.email_view);
                     _username.setText(user.getUsername());
                     _email.setText(user.getEmail());
                     setUserRolesSpinner();
@@ -73,7 +77,7 @@ public class UserEditActivity
         _currentUser.reports().thenAccept(reports -> {
             if (reports.isEmpty())
             {
-                TextView reportsLabel = findViewById(R.id.reports_label);
+                TextView reportsLabel = currentView.findViewById(R.id.reports_label);
                 reportsLabel.setText(R.string.nessuna_segnalazione_ricevuta);
                 return;
             }
@@ -99,9 +103,9 @@ public class UserEditActivity
         }
         int pos = roles.indexOf(_currentUser.getRole().name());
 
-        Spinner spinner = findViewById(R.id.roles_view_select);
+        Spinner spinner = currentView.findViewById(R.id.roles_view_select);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roles);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, roles);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setSelection(pos);
@@ -109,13 +113,13 @@ public class UserEditActivity
 
     private void setSaveChangesBtn()
     {
-        Button _saveChangesBtn = findViewById(R.id.btn_save_profile);
+        Button _saveChangesBtn = currentView.findViewById(R.id.btn_save_profile);
         _saveChangesBtn.setOnClickListener(view -> saveChanges());
     }
 
     private void setSuspendUserBtn()
     {
-        Button _suspendUserBtn = findViewById(R.id.btn_suspend_profile);
+        Button _suspendUserBtn = currentView.findViewById(R.id.btn_suspend_profile);
 
         if (_currentUser.getStatus().equals(UserStatus.SUSPENDED))
         {
@@ -131,13 +135,13 @@ public class UserEditActivity
 
     private void setBanditUserBtn()
     {
-        Button _banditUserBtn = findViewById(R.id.btn_bandit_profile);
+        Button _banditUserBtn = currentView.findViewById(R.id.btn_bandit_profile);
         _banditUserBtn.setOnClickListener(view -> banditUser());
     }
 
     private void saveChanges()
     {
-        String role = ((Spinner) findViewById(R.id.roles_view_select))
+        String role = ((Spinner) currentView.findViewById(R.id.roles_view_select))
                 .getSelectedItem()
                 .toString();
 
@@ -146,8 +150,8 @@ public class UserEditActivity
         _currentUser.setRole(userRole);
         _currentUser.save()
                 .thenAccept(user -> {
-                    Toast.makeText(UserEditActivity.this, "Utente salvato con successo!", Toast.LENGTH_SHORT).show();
-                    ActivityHandler.LinkTo(this, UsersSettingsActivity.class);
+                    Toast.makeText(requireActivity(), "Utente salvato con successo!", Toast.LENGTH_SHORT).show();
+                    FragmentHandler.replaceFragment(requireActivity(), new UsersSettingsFragment());
                 });
     }
 
@@ -156,8 +160,8 @@ public class UserEditActivity
         _currentUser.setStatus(UserStatus.SUSPENDED);
         _currentUser.save()
                 .thenAccept(user -> {
-                    Toast.makeText(UserEditActivity.this, "Utente sospeso dal circolo!", Toast.LENGTH_SHORT).show();
-                    ActivityHandler.LinkTo(this, UsersSettingsActivity.class);
+                    Toast.makeText(requireActivity(), "Utente sospeso dal circolo!", Toast.LENGTH_SHORT).show();
+                    FragmentHandler.replaceFragment(requireActivity(), new UsersSettingsFragment());
                 });
     }
 
@@ -166,8 +170,8 @@ public class UserEditActivity
         _currentUser.setStatus(UserStatus.ACTIVE);
         _currentUser.save()
                 .thenAccept(user -> {
-                    Toast.makeText(UserEditActivity.this, "Utente riammesso al circolo!", Toast.LENGTH_SHORT).show();
-                    ActivityHandler.LinkTo(this, UsersSettingsActivity.class);
+                    Toast.makeText(requireActivity(), "Utente riammesso al circolo!", Toast.LENGTH_SHORT).show();
+                    FragmentHandler.replaceFragment(requireActivity(), new UsersSettingsFragment());
                 });
     }
 
@@ -176,8 +180,8 @@ public class UserEditActivity
         _currentUser.setStatus(UserStatus.BANDITED);
         _currentUser.save()
                 .thenAccept(user -> {
-                    Toast.makeText(UserEditActivity.this, "Utente bandito definitivamente dal circolo!", Toast.LENGTH_SHORT).show();
-                    ActivityHandler.LinkTo(this, UsersSettingsActivity.class);
+                    Toast.makeText(requireActivity(), "Utente bandito definitivamente dal circolo!", Toast.LENGTH_SHORT).show();
+                    FragmentHandler.replaceFragment(requireActivity(), new UsersSettingsFragment());
                 });
     }
 
@@ -185,12 +189,12 @@ public class UserEditActivity
     public void onDelete(Report report)
     {
         report.softDelete()
-                .thenAccept(deletedReport -> ActivityHandler.LinkToWithPreviousToast(
-                        UserEditActivity.this,
-                        UserEditActivity.class,
-                        "userId",
-                        _currentUser.getId(),
-                        "Segnalazione cancellata!"
-                ));
+                .thenAccept(deletedReport -> {
+                    Toast.makeText(requireActivity(), "Segnalazione cancellata!", Toast.LENGTH_SHORT).show();
+                    FragmentHandler.replaceFragmentWithArguments(
+                            requireActivity(),
+                            new UserEditFragment(),
+                            HashMapExtensions.from("userId", _currentUser.getId()));
+                });
     }
 }

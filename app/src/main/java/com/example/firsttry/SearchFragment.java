@@ -96,6 +96,6 @@ public class SearchFragment
     @Override
     public void onDetail(User user)
     {
-        ActivityHandler.LinkToWithExtra(requireActivity(), UserDetailActivity.class, "userId", user.getId());
+        ActivityHandler.LinkToWithExtra(requireActivity(), UserDetailFragment.class, "userId", user.getId());
     }
 }
