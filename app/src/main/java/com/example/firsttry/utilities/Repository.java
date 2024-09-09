@@ -32,6 +32,17 @@ public class Repository
                 ));
     }
 
+    public static <T extends Model> CompletableFuture<T> getById(String id, Class<T> clazz)
+    {
+        try {
+            return DatabaseHandler.getById(id, clazz.getDeclaredConstructor().newInstance().tableName(), clazz)
+                    .thenApply(res -> res);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException |
+                 InstantiationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static <T extends Model> CompletableFuture<Array<T>> list(Class<T> clazz)
     {
         try {

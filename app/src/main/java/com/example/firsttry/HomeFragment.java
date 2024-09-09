@@ -24,6 +24,7 @@ import com.example.firsttry.extensions.adapters.AvailableCourtAdapter;
 import com.example.firsttry.models.Court;
 import com.example.firsttry.models.CourtBook;
 import com.example.firsttry.utilities.AccountManager;
+import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.DatabaseHandler;
 
 import java.util.Date;
@@ -124,8 +125,13 @@ public class HomeFragment
                                 addHours(requestedDate, 1));;
                     }
                     courtBook.addUserId(user.getId());
-                    courtBook.saveCourtBook().thenAccept(result ->
-                            Toast.makeText(requireActivity(), "Disponibilità registrata con successo!", Toast.LENGTH_SHORT).show());
+                    courtBook.saveCourtBook().thenAccept(result -> ActivityHandler.LinkToWithPreviousToast(
+                            requireActivity(),
+                            CourtBookInvitationActivity.class,
+                            "courtBookId",
+                            result.getId(),
+                            "Disponibilità registrata con successo!"
+                    ));
                 }));
     }
 

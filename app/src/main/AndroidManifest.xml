@@ -18,7 +18,19 @@
             android:name=".CourtsSettingsActivity"
             android:exported="false" />
         <activity
+            android:name=".CourtBookInvitationActivity"
+            android:exported="false" />
+        <activity
             android:name=".TeacherManagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SeeBookedCourtsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SeeBookedLessonsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SeeBookersActivity"
             android:exported="false" />
         <activity
             android:name=".TeacherScheduleManagerActivity"

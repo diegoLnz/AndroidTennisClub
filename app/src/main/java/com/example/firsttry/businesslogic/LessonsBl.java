@@ -6,11 +6,13 @@ import static com.example.firsttry.utilities.DateTimeExtensions.getDay;
 import com.example.firsttry.models.Lesson;
 import com.example.firsttry.models.LessonBook;
 import com.example.firsttry.models.User;
+import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.DateTimeExtensions;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class LessonsBl
@@ -62,5 +64,13 @@ public class LessonsBl
                                     .where(lesson -> finalBooks.any(book -> book.getLessonId().equals(lesson.getId())
                                             && book.getUserId().equals(studentId))));
                 });
+    }
+
+    public static CompletableFuture<LessonBook> deleteLessonBookByLesson(Lesson lesson)
+    {
+        return Objects.requireNonNull(AccountManager.getCurrentAccount()).thenCompose(user -> LessonBook.list(book -> book.getLessonId().equals(lesson.getId())
+                        && book.getUserId().equals(user.getId())
+                        && !book.getIsDeleted())
+                .thenCompose(list -> list.firstOrDefault().softDelete()));
     }
 }

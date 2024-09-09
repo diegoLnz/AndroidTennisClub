@@ -8,6 +8,8 @@ import android.widget.Button;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.firsttry.LoginActivity;
 import com.example.firsttry.R;
@@ -16,6 +18,7 @@ import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.FragmentHandler;
 
 import java.lang.reflect.Field;
 import java.util.Objects;

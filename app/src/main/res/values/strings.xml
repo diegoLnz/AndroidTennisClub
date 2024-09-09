@@ -129,4 +129,12 @@
     <string name="elimina_lezione">Elimina lezione</string>
     <string name="prenotati">Prenotati</string>
     <string name="annulla_prenotazione">Annulla prenotazione</string>
+    <string name="vedi_lezioni_prenotate">Vedi lezioni prenotate</string>
+    <string name="vedi_campi_prenotati">Vedi campi prenotati</string>
+    <string name="lezioni_prenotate">Lezioni prenotate</string>
+    <string name="campi_prenotati">Campi prenotati</string>
+    <string name="utenti_da_invitare">Utenti da invitare</string>
+    <string name="prenota">Prenota</string>
+    <string name="invita">Invita</string>
+    <string name="vedi_inviti_ricevuti">Vedi inviti ricevuti</string>
 </resources>

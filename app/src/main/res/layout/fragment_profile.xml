@@ -53,6 +53,43 @@
             android:padding="8dp"
             android:layout_marginTop="16dp"/>
 
+        <!-- Common buttons -->
+        <Button
+            android:id="@+id/btn_see_lessonbooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vedi_lezioni_prenotate"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btn_see_courtbooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vedi_campi_prenotati"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btn_see_invitations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vedi_inviti_ricevuti"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+        <!---->
+
+        <!-- Teacher buttons -->
+        <Button
+            android:id="@+id/btn_see_bookers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vedi_lezioni_prenotate"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"/>
+        <!---->
+
         <Button
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
