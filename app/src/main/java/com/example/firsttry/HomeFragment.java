@@ -26,6 +26,8 @@ import com.example.firsttry.models.CourtBook;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.FragmentHandler;
+import com.example.firsttry.utilities.HashMapExtensions;
 
 import java.util.Date;
 import java.util.Objects;
@@ -62,8 +64,7 @@ public class HomeFragment
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> {
             if (user.getRole().equals(UserRole.Admin))
             {
-                startActivity(new Intent(getActivity(), HomeAdminFragment.class));
-                requireActivity().finish();
+                FragmentHandler.replaceFragment(requireActivity(), new HomeAdminFragment());
             }
         });
     }
@@ -125,13 +126,14 @@ public class HomeFragment
                                 addHours(requestedDate, 1));;
                     }
                     courtBook.addUserId(user.getId());
-                    courtBook.saveCourtBook().thenAccept(result -> ActivityHandler.LinkToWithPreviousToast(
-                            requireActivity(),
-                            CourtBookInvitationFragment.class,
-                            "courtBookId",
-                            result.getId(),
-                            "Disponibilità registrata con successo!"
-                    ));
+                    courtBook.saveCourtBook().thenAccept(result -> {
+                        Toast.makeText(requireActivity(), "Disponibilità registrata con successo!", Toast.LENGTH_SHORT).show();
+                        FragmentHandler.replaceFragmentWithArguments(
+                                requireActivity(),
+                                new CourtBookInvitationFragment(),
+                                HashMapExtensions.from("courtBookId", result.getId())
+                        );
+                    });
                 }));
     }
 

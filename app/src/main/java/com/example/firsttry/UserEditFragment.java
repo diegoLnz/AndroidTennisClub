@@ -55,7 +55,7 @@ public class UserEditFragment
 
     private void fillUserData()
     {
-        String userId = requireActivity().getIntent().getStringExtra("userId");
+        String userId = getArguments().getString("userId");
         _currentUser = new User();
         _currentUser.getById(userId)
                 .thenAccept(user -> {

@@ -44,7 +44,7 @@ public class CourtBookInvitationFragment
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        currentView = inflater.inflate(R.layout.activity_court_book_invitation, container, false);
+        currentView = inflater.inflate(R.layout.fragment_court_book_invitation, container, false);
 
         recyclerView = currentView.findViewById(R.id.searchedUsersRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -62,7 +62,7 @@ public class CourtBookInvitationFragment
 
     private CompletableFuture<CourtBook> getCurrentCourtBook()
     {
-        String courtBookId = requireActivity().getIntent().getStringExtra(extrakey);
+        String courtBookId = getArguments().getString(extrakey);
         return new CourtBook().getById(courtBookId);
     }
 

@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.utilities.AccountManager;
+import com.example.firsttry.utilities.FragmentHandler;
 
 import java.util.Objects;
 
@@ -35,8 +36,7 @@ public class HomeAdminFragment extends Fragment
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> {
             if (!user.getRole().equals(UserRole.Admin))
             {
-                startActivity(new Intent(getActivity(), HomeFragment.class));
-                getActivity().finish();
+                FragmentHandler.replaceFragment(requireActivity(), new HomeFragment());
             }
         });
     }
@@ -45,8 +45,7 @@ public class HomeAdminFragment extends Fragment
     {
         _settingsBtn = _currentView.findViewById(R.id.buttonGenericSettings);
         _settingsBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), GenericSettingsFragment.class));
-            getActivity().finish();
+            FragmentHandler.replaceFragment(requireActivity(), new GenericSettingsFragment());
         });
     }
 }

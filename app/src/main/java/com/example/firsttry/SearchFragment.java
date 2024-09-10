@@ -20,6 +20,8 @@ import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.FragmentHandler;
+import com.example.firsttry.utilities.HashMapExtensions;
 
 import java.util.Objects;
 import java.util.function.Function;
@@ -96,6 +98,9 @@ public class SearchFragment
     @Override
     public void onDetail(User user)
     {
-        ActivityHandler.LinkToWithExtra(requireActivity(), UserDetailFragment.class, "userId", user.getId());
+        FragmentHandler.replaceFragmentWithArguments(
+                requireActivity(),
+                new UserDetailFragment(),
+                HashMapExtensions.from("userId", user.getId()));
     }
 }

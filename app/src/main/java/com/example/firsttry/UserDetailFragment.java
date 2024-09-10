@@ -47,7 +47,7 @@ public class UserDetailFragment extends ValidatedFragment
         recyclerView = currentView.findViewById(R.id.reviewsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        String userId = requireActivity().getIntent().getStringExtra(extraKey);
+        String userId = getArguments().getString(extraKey);
         DatabaseHandler.getById(userId, new User().tableName(), User.class)
                 .thenAccept(user -> {
                     targetUser = user;

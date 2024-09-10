@@ -48,7 +48,7 @@ public class UserReviewFragment extends ValidatedFragment
 
     private CompletableFuture<User> getTargetUser()
     {
-        String userId = requireActivity().getIntent().getStringExtra(extraKey);
+        String userId = getArguments().getString(extraKey);
         return new User().getById(userId);
     }
 
