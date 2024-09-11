@@ -1,6 +1,5 @@
 package com.example.firsttry;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,7 @@ public class GenericSettingsFragment extends ValidatedFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_generic_settings, container, false);
+        currentView = inflater.inflate(R.layout.fragment_generic_settings, container, false);
         checkAuthenticated();
         setUsersSettingsButton();
         setCourtsSettingsButton();

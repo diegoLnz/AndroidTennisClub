@@ -1,6 +1,5 @@
 package com.example.firsttry;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.FragmentHandler;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class UsersSettingsFragment
@@ -34,7 +32,7 @@ public class UsersSettingsFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_users_settings, container, false);
+        currentView = inflater.inflate(R.layout.fragment_users_settings, container, false);
         checkAuthenticated();
 
         recyclerView = currentView.findViewById(R.id.recyclerView);

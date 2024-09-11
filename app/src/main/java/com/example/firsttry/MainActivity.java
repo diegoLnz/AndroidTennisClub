@@ -82,7 +82,7 @@ public class MainActivity extends ValidatedActivity {
         if (fragment == null)
             return false;
 
-        FragmentHandler.replaceFragment(this, fragment);
+        FragmentHandler.replaceFragmentWithNoHistory(this, fragment);
         return true;
     }
 

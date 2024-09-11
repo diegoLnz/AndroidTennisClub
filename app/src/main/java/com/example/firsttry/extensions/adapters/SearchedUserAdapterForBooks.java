@@ -39,6 +39,7 @@ public class SearchedUserAdapterForBooks extends RecyclerView.Adapter<SearchedUs
         holder.email.setText(user.getEmail());
 
         holder.viewDetailsButton.setOnClickListener(v -> listener.onInvitation(user));
+        user.rank().thenAccept(userRank -> holder.rank.setText(userRank.toString()));
     }
 
     @Override
@@ -48,6 +49,7 @@ public class SearchedUserAdapterForBooks extends RecyclerView.Adapter<SearchedUs
     {
         TextView username;
         TextView email;
+        TextView rank;
         Button viewDetailsButton;
 
         public SearchedUserViewHolder(@NonNull View itemView)
@@ -55,6 +57,7 @@ public class SearchedUserAdapterForBooks extends RecyclerView.Adapter<SearchedUs
             super(itemView);
             username = itemView.findViewById(R.id.username);
             email = itemView.findViewById(R.id.email);
+            rank = itemView.findViewById(R.id.rank);
             viewDetailsButton = itemView.findViewById(R.id.action_view_details);
         }
     }

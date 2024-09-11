@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.firsttry.businesslogic.LessonsBl;
 import com.example.firsttry.extensions.ValidatedEditText;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.SearchedLessonAdapter;
 import com.example.firsttry.models.Lesson;
 import com.example.firsttry.models.LessonBook;
@@ -33,7 +34,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class BookLessonFragment
-        extends Fragment
+        extends ValidatedFragment
         implements SearchedLessonAdapter.OnUserActionListener
 {
     private ValidatedEditText dateEditText;
@@ -48,6 +49,7 @@ public class BookLessonFragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         _currentView = inflater.inflate(R.layout.fragment_book_lesson, container, false);
         dateEditText = _currentView.findViewById(R.id.edit_date);
+        dateEditText.setRequired(true);
         setSearchAvailableLessonsButton();
         return _currentView;
     }
@@ -69,6 +71,12 @@ public class BookLessonFragment
 
     private void searchAvailableLessons()
     {
+        if (!validateFields())
+        {
+            setRecyclerView(new Array<>());
+            return;
+        }
+
         String dateValue = Objects.requireNonNull(dateEditText.getText()).toString();
         LessonsBl.getLessonsByDay(dateValue).thenAccept(lessons -> {
             lessons = lessons.where(lesson -> lesson.getStartTime().after(now()));

@@ -34,6 +34,8 @@ public class ValidatedEditText extends androidx.appcompat.widget.AppCompatEditTe
 
     public boolean validate()
     {
+        errors.clear();
+
         String error;
         String value = Objects.requireNonNull(getText())
                 .toString()

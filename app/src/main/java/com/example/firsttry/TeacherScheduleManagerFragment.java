@@ -24,7 +24,6 @@ import com.example.firsttry.extensions.adapters.LessonAdapter;
 import com.example.firsttry.models.Court;
 import com.example.firsttry.models.Lesson;
 import com.example.firsttry.models.User;
-import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.FragmentHandler;
@@ -55,7 +54,7 @@ public class TeacherScheduleManagerFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_teacher_schedule_manager, container, false);
+        currentView = inflater.inflate(R.layout.fragment_teacher_schedule_manager, container, false);
         setCurrentUser();
         setTargetUser().thenAccept(tUser -> {
             targetUser = tUser;

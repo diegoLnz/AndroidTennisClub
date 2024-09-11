@@ -7,30 +7,24 @@
     android:background="?attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text=""
         android:textStyle="bold"
-        android:text="@string/username"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/email"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/rank"
+        android:id="@+id/court"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rank"
+        android:text=""
         android:textSize="16sp" />
 
     <Button
-        android:id="@+id/action_view_details"
+        android:id="@+id/action_book_court"
+        android:backgroundTint="@color/custom_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/vedi_dettagli" />
+        android:text="@string/annulla_prenotazione" />
 </LinearLayout>

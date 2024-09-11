@@ -34,7 +34,7 @@ public class UserReviewFragment extends ValidatedFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_user_review, container, false);
+        currentView = inflater.inflate(R.layout.fragment_user_review, container, false);
         checkAuthenticated();
         setCurrentUser();
         getTargetUser().thenAccept(user -> {
@@ -93,6 +93,7 @@ public class UserReviewFragment extends ValidatedFragment
         review.save()
                 .thenCompose(Review::user)
                 .thenCompose(User::updateReputation)
+                .thenCompose(User::updateScore)
                 .thenAccept(user -> {
                     Toast.makeText(requireActivity(), "Recensione inviata con successo!", Toast.LENGTH_SHORT).show();
                     FragmentHandler.replaceFragmentWithArguments(

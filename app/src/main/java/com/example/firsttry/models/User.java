@@ -26,6 +26,7 @@ public class User extends Model
     private UserRole Role;
     private UserStatus Status = UserStatus.ACTIVE;
     private Double Reputation;
+    private Integer Score = 0;
 
     public User() { }
 
@@ -64,6 +65,10 @@ public class User extends Model
 
     public void setReputation(Double reputation) { Reputation = reputation; }
 
+    public Integer getScore() { return Score; }
+
+    public void setScore(Integer score) { Score = score; }
+
     public CompletableFuture<Array<Report>> reports()
     {
         return ReportsBl.getReportsByUserId(this.getId());
@@ -72,6 +77,13 @@ public class User extends Model
     public CompletableFuture<Array<Review>> reviews()
     {
         return ReviewsBl.getReviewsByUserId(this.getId());
+    }
+
+    public CompletableFuture<Integer> rank()
+    {
+        return User.list().thenApply(users
+                -> users.orderByDescending(User::getScore)
+                .indexOfModel(this) + 1);
     }
 
     public static CompletableFuture<User> fromFirebaseUser(@NotNull FirebaseUser user)
@@ -92,6 +104,18 @@ public class User extends Model
                 sum += review.getRating();
             }
             Reputation = sum / reviews.size();
+            return save();
+        });
+    }
+
+    public CompletableFuture<User> updateScore()
+    {
+        return reviews().thenCompose(reviews -> {
+            Score = 0;
+            if (reviews.isEmpty()) {
+                return save();
+            }
+            reviews.forEach(rev -> Score += rev.getRating());
             return save();
         });
     }

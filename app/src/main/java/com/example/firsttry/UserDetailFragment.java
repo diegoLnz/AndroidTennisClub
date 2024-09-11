@@ -29,7 +29,10 @@ public class UserDetailFragment extends ValidatedFragment
     private TextView email;
     private TextView role;
     private TextView bio;
+    private TextView reputation;
+    private TextView score;
     private TextView rank;
+
 
     private Button reviewButton;
     private Button reportButton;
@@ -40,7 +43,7 @@ public class UserDetailFragment extends ValidatedFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_user_detail, container, false);
+        currentView = inflater.inflate(R.layout.fragment_user_detail, container, false);
         checkAuthenticated();
         setCurrentUser();
 
@@ -95,7 +98,9 @@ public class UserDetailFragment extends ValidatedFragment
         email = currentView.findViewById(R.id.email_view);
         role = currentView.findViewById(R.id.role_view);
         bio = currentView.findViewById(R.id.bio_view);
-        rank = currentView.findViewById(R.id.reputation_view);
+        reputation = currentView.findViewById(R.id.reputation_view);
+        score = currentView.findViewById(R.id.score_view);
+        rank = currentView.findViewById(R.id.rank_view);
     }
 
     private void fillFields()
@@ -103,6 +108,7 @@ public class UserDetailFragment extends ValidatedFragment
         username.append("\n" + targetUser.getUsername());
         email.append("\n" + targetUser.getEmail());
         bio.append("\n" + targetUser.getBio());
+        score.append(" " + targetUser.getScore());
 
         if (targetUser.getRole() != null)
             role.append("\n" + targetUser.getRole().toString());
@@ -110,9 +116,11 @@ public class UserDetailFragment extends ValidatedFragment
             role.setText("");
 
         if (targetUser.getReputation() != null)
-            rank.append("\n" + targetUser.getReputation().toString());
+            reputation.append("\n" + targetUser.getReputation().toString());
         else
-            rank.setText("");
+            reputation.setText("");
+
+        targetUser.rank().thenAccept(userRank -> rank.append(" " + userRank.toString()));
     }
 
     private void setReviewsAdapter()

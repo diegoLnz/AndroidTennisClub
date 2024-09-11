@@ -32,7 +32,7 @@ public class SeeBookedLessonsFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_see_booked_lessons, container, false);
+        currentView = inflater.inflate(R.layout.fragment_see_booked_lessons, container, false);
         updateRecyclerView();
         return currentView;
     }

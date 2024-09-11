@@ -33,16 +33,19 @@ public class CourtBook extends Model
 
     public CourtBook(
             String CourtId,
+            String bookerId,
             Date StartsAt,
             Date EndsAt)
     {
         this.UserIds = new ArrayList<>();
         this.CourtId = CourtId;
+        this.bookerId = bookerId;
         this.StartsAt = StartsAt;
         this.EndsAt = EndsAt;
     }
 
     private List<String> UserIds;
+    private String bookerId;
     private String CourtId;
     private Date StartsAt;
     private Date EndsAt;
@@ -51,6 +54,10 @@ public class CourtBook extends Model
     public List<String> getUserIds() { return UserIds; }
 
     public void setUserIds(List<String> UserIds) { this.UserIds = UserIds; }
+
+    public String getBookerId() { return bookerId; }
+
+    public void setBookerId(String bookerId) { this.bookerId = bookerId; }
 
     public String getCourtId() { return CourtId; }
 

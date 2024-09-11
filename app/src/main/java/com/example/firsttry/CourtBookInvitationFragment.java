@@ -52,6 +52,12 @@ public class CourtBookInvitationFragment
         setCurrentUser();
         setSearchEditText();
 
+        User.list().thenAccept(users -> {
+            users.orderByDescending(User::getScore);
+            users = users.where(user -> !user.getId().equals(CurrentUser.getId()));
+            setRecyclerView(users);
+        });
+
         getCurrentCourtBook().thenAccept(courtBook -> {
             currentCourtBook = courtBook;
             setSearchButton();
@@ -78,6 +84,12 @@ public class CourtBookInvitationFragment
         _searchButton.setOnClickListener(v -> loadSearchedUsers());
     }
 
+    private void setRecyclerView(Array<User> users)
+    {
+        adapter = new SearchedUserAdapterForBooks(users, this);
+        recyclerView.setAdapter(adapter);
+    }
+
     private void loadSearchedUsers()
     {
         String searchText = _searchEditText
@@ -86,8 +98,7 @@ public class CourtBookInvitationFragment
 
         if (searchText.isEmpty())
         {
-            adapter = new SearchedUserAdapterForBooks(new Array<>(), this);
-            recyclerView.setAdapter(adapter);
+            setRecyclerView(new Array<>());
             return;
         }
 
@@ -108,15 +119,19 @@ public class CourtBookInvitationFragment
                                     .orderBy(User::getUsername)
                                     .remove(user -> user.getUsername().equals(account.getUsername()));
 
-                            adapter = new SearchedUserAdapterForBooks(foundUsers, this);
-                            recyclerView.setAdapter(adapter);
+                            setRecyclerView(foundUsers);
                         })));
 
     }
 
     private void resetSearch()
     {
-        loadSearchedUsers();
+        _searchEditText.setText("");
+        CourtsBookBl.getNotInvitedUsersByCourtBook(currentCourtBook).thenAccept(users -> {
+            users.orderByDescending(User::getScore);
+            users = users.where(user -> !user.getId().equals(CurrentUser.getId()));
+            setRecyclerView(users);
+        });
     }
 
     //ToDo: Implement notification

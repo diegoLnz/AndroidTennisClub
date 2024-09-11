@@ -61,18 +61,17 @@ public class SearchFragment
         _searchButton.setOnClickListener(v -> loadSearchedUsers());
     }
 
+    private void setRecyclerView(Array<User> users)
+    {
+        adapter = new SearchedUserAdapter(users, this);
+        recyclerView.setAdapter(adapter);
+    }
+
     private void loadSearchedUsers()
     {
         String searchText = _searchEditText
                 .getText()
                 .toString();
-
-        if (searchText.isEmpty())
-        {
-            adapter = new SearchedUserAdapter(new Array<>(), this);
-            recyclerView.setAdapter(adapter);
-            return;
-        }
 
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(account ->
                 DatabaseHandler.list(new User().tableName(), User.class)
@@ -87,11 +86,10 @@ public class SearchFragment
 
                             Array<User> foundUsers = users
                                     .where(searchFunc)
-                                    .orderBy(User::getUsername)
+                                    .orderByDescending(User::getScore)
                                     .remove(user -> user.getUsername().equals(account.getUsername()));
 
-                            adapter = new SearchedUserAdapter(foundUsers, this);
-                            recyclerView.setAdapter(adapter);
+                            setRecyclerView(foundUsers);
                         }));
     }
 

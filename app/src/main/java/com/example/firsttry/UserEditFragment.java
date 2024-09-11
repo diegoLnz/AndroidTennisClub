@@ -21,12 +21,10 @@ import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.UserReportsAdapter;
 import com.example.firsttry.models.Report;
 import com.example.firsttry.models.User;
-import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.FragmentHandler;
 import com.example.firsttry.utilities.HashMapExtensions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class UserEditFragment
@@ -44,7 +42,7 @@ public class UserEditFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_user_edit, container, false);
+        currentView = inflater.inflate(R.layout.fragment_user_edit, container, false);
         recyclerView = currentView.findViewById(R.id.reportsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 

@@ -26,17 +26,6 @@ public abstract class ValidatedFragment extends Fragment
     private boolean isValid = true;
     protected User CurrentUser = null;
     protected View currentView;
-//    private boolean HasBackButton = false;
-
-//    protected Button backButton;
-
-//    public boolean hasBackButton() {
-//        return HasBackButton;
-//    }
-
-//    public void setBackButton(Class backActivityClass) {
-//        setupBackButton(backActivityClass);
-//    }
 
     public void checkAuthenticated()
     {
@@ -60,12 +49,6 @@ public abstract class ValidatedFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return currentView;
     }
-
-//    private void setupBackButton(Class backActivityClass)
-//    {
-//        backButton = findViewById(R.id.back_button);
-//        backButton.setOnClickListener(v -> ActivityHandler.LinkTo(this, backActivityClass));
-//    }
 
     public boolean validateFields()
     {

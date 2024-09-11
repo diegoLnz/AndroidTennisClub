@@ -122,8 +122,9 @@ public class HomeFragment
                     {
                         courtBook = new CourtBook(
                                 court.getId(),
+                                user.getId(),
                                 requestedDate,
-                                addHours(requestedDate, 1));;
+                                addHours(requestedDate, 1));
                     }
                     courtBook.addUserId(user.getId());
                     courtBook.saveCourtBook().thenAccept(result -> {

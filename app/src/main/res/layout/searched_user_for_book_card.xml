@@ -21,6 +21,13 @@
         android:text="@string/email"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rank"
+        android:textSize="16sp" />
+
     <Button
         android:id="@+id/action_view_details"
         android:layout_width="wrap_content"

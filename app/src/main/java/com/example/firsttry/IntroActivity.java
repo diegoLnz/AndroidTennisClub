@@ -1,7 +1,6 @@
 package com.example.firsttry;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -15,7 +14,7 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.intro_activity);
+        setContentView(R.layout.activity_intro);
         buildStartBtn();
     }
 

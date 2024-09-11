@@ -57,6 +57,22 @@
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
 
+        <TextView
+            android:id="@+id/score_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/score"
+            android:textSize="24sp"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/rank_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rank"
+            android:textSize="24sp"
+            android:paddingBottom="16dp"/>
+
         <Button
             android:id="@+id/btn_review_profile"
             android:layout_width="match_parent"

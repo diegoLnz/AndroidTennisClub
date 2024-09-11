@@ -33,7 +33,7 @@ public class TeacherManagerFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_teacher_manager, container, false);
+        currentView = inflater.inflate(R.layout.fragment_teacher_manager, container, false);
         checkAuthenticated();
 
         recyclerView = currentView.findViewById(R.id.teachersRecyclerView);

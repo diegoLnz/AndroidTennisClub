@@ -1,5 +1,6 @@
 package com.example.firsttry.models;
 
+import com.example.firsttry.enums.CourtBookRequestStatus;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.Repository;
 
@@ -22,10 +23,20 @@ public class CourtBookRequest extends Model
         this.timestamp = timestamp;
     }
 
+    public CourtBookRequest(String userId, String targetUserId, String courtBookId, Date timestamp, CourtBookRequestStatus status)
+    {
+        this.userId = userId;
+        this.targetUserId = targetUserId;
+        this.courtBookId = courtBookId;
+        this.timestamp = timestamp;
+        this.status = status;
+    }
+
     private String userId;
     private String targetUserId;
     private String courtBookId;
     private Date timestamp;
+    private CourtBookRequestStatus status = CourtBookRequestStatus.Pending;
 
     public String getUserId() {
         return userId;
@@ -57,6 +68,14 @@ public class CourtBookRequest extends Model
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public CourtBookRequestStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CourtBookRequestStatus status) {
+        this.status = status;
     }
 
     public CompletableFuture<User> user()

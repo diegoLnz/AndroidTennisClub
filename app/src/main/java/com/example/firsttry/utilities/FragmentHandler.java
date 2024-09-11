@@ -23,6 +23,14 @@ public class FragmentHandler
         fragmentTransaction.commit();
     }
 
+    public static void replaceFragmentWithNoHistory(FragmentActivity fragmentActivity, Fragment fragment)
+    {
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+    }
+
     public static <T extends Serializable> void replaceFragmentWithArguments(FragmentActivity fragmentActivity, Fragment fragment, HashMap<String, T> args)
     {
         Bundle argsBundle = new Bundle();

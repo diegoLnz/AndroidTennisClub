@@ -137,4 +137,10 @@
     <string name="prenota">Prenota</string>
     <string name="invita">Invita</string>
     <string name="vedi_inviti_ricevuti">Vedi inviti ricevuti</string>
+    <string name="accetta">Accetta</string>
+    <string name="accettato">Accettato</string>
+    <string name="rifiuta">Rifiuta</string>
+    <string name="rifiutata">Rifiutata</string>
+    <string name="inviti_ricevuti">Inviti ricevuti</string>
+    <string name="score">Score</string>
 </resources>

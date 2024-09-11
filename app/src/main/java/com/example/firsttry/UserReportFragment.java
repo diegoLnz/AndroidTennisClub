@@ -32,7 +32,7 @@ public class UserReportFragment extends ValidatedFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_user_report, container, false);
+        currentView = inflater.inflate(R.layout.fragment_user_report, container, false);
         checkAuthenticated();
         setCurrentUser();
 

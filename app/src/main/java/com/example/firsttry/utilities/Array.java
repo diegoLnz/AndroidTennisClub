@@ -2,9 +2,12 @@ package com.example.firsttry.utilities;
 
 import android.util.Log;
 
+import com.example.firsttry.models.Model;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -26,6 +29,21 @@ public class Array<T>
 
     public void add(T item) {
         list.add(item);
+    }
+
+    public void add(T... items)
+    {
+        list.addAll(Arrays.asList(items));
+    }
+
+    public void add(Array<T> items)
+    {
+        list.addAll(items.getList());
+    }
+
+    public void clear()
+    {
+        list.clear();
     }
 
     public Array<T> where(Function<T, Boolean> predicate)
@@ -125,6 +143,22 @@ public class Array<T>
         return new Array<>(sortedList);
     }
 
+    public Array<T> thenBy(Function<T, Comparable> selector) {
+        List<T> sortedList = new ArrayList<>(list);
+
+        sortedList.sort((item1, item2) -> {
+            Comparable value1 = selector.apply(item1);
+            Comparable value2 = selector.apply(item2);
+
+            int result = value1.compareTo(value2);
+            return result;
+        });
+
+        this.list = sortedList;
+
+        return new Array<>(sortedList);
+    }
+
     public Array<T> orderByDescending(Function<T, Comparable> selector)
     {
         List<T> sortedList = new ArrayList<>(list);
@@ -146,6 +180,21 @@ public class Array<T>
     public Boolean contains(T item)
     {
         return list.contains(item);
+    }
+
+    public <T extends Model> int indexOfModel(T obj) {
+        if (obj == null)
+            return -1;
+
+        if (!Objects.equals(((Model) obj).tableName(), ((Model) list.get(0)).tableName()))
+            return -1;
+
+        for (int i = 0; i < list.size(); i++) {
+            if (((Model)list.get(i)).getId().equals(obj.getId())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public Integer size() { return list.size(); }

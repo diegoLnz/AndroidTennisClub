@@ -38,7 +38,7 @@ public class CourtsSettingsFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        currentView = inflater.inflate(R.layout.activity_courts_settings, container, false);
+        currentView = inflater.inflate(R.layout.fragment_courts_settings, container, false);
         checkAuthenticated();
 
         setNameEditText();
