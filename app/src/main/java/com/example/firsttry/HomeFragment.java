@@ -3,7 +3,6 @@ package com.example.firsttry;
 import static com.example.firsttry.utilities.DateTimeExtensions.addHours;
 import static com.example.firsttry.utilities.DateTimeExtensions.convertToDate;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,6 @@ import com.example.firsttry.extensions.adapters.AvailableCourtAdapter;
 import com.example.firsttry.models.Court;
 import com.example.firsttry.models.CourtBook;
 import com.example.firsttry.utilities.AccountManager;
-import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.FragmentHandler;
 import com.example.firsttry.utilities.HashMapExtensions;
@@ -127,7 +125,7 @@ public class HomeFragment
                                 addHours(requestedDate, 1));
                     }
                     courtBook.addUserId(user.getId());
-                    courtBook.saveCourtBook().thenAccept(result -> {
+                    courtBook.safeSave().thenAccept(result -> {
                         Toast.makeText(requireActivity(), "Disponibilità registrata con successo!", Toast.LENGTH_SHORT).show();
                         FragmentHandler.replaceFragmentWithArguments(
                                 requireActivity(),

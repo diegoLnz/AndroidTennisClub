@@ -1,6 +1,7 @@
 package com.example.firsttry.models;
 
 import com.example.firsttry.enums.BookState;
+import com.example.firsttry.enums.CourtBookRequestStatus;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.Repository;
@@ -87,6 +88,11 @@ public class CourtBook extends Model
                         .where(user -> this.getUserIds().contains(user.getId())));
     }
 
+    public CompletableFuture<Array<CourtBookRequest>> requests()
+    {
+        return CourtBookRequest.list(request -> request.getCourtBookId().equals(this.getId()));
+    }
+
     public void calculateState()
     {
         int usersCount = this.getUserIds().size();
@@ -107,10 +113,25 @@ public class CourtBook extends Model
             this.setState(BookState.Booked);
     }
 
-    public CompletableFuture<CourtBook> saveCourtBook()
+    public CompletableFuture<CourtBook> safeSave()
     {
         this.calculateState();
+        if (getState().equals(BookState.Booked))
+        {
+            cancelRequests();
+        }
         return this.save();
+    }
+
+    private void cancelRequests()
+    {
+        this.requests()
+                .thenAccept(requests -> requests
+                        .where(request -> request.getStatus().equals(CourtBookRequestStatus.Pending))
+                        .forEach(request -> {
+                            request.setStatus(CourtBookRequestStatus.Expired);
+                            request.save();
+                        }));
     }
 
     @Override

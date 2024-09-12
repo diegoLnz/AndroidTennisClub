@@ -66,7 +66,8 @@ public class SeeInvitationsFragment
         request.setStatus(CourtBookRequestStatus.Accepted);
         request.save()
                 .thenAccept(res -> {
-                    Toast.makeText(requireActivity(), "Invito accettato con successo!", Toast.LENGTH_SHORT).show();
+                    request.updateCourtBook();
+                    Toast.makeText(requireActivity(), "Invito accettato", Toast.LENGTH_SHORT).show();
                     updateRecyclerView();
                 });
     }

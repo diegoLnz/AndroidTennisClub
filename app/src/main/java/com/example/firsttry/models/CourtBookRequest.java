@@ -5,6 +5,7 @@ import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.Repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
@@ -91,6 +92,23 @@ public class CourtBookRequest extends Model
     public CompletableFuture<CourtBook> courtBook()
     {
         return new CourtBook().getById(courtBookId);
+    }
+
+    public void updateCourtBook()
+    {
+        courtBook().thenAccept(this::addIdToBookListIfNotFull);
+    }
+
+    private void addIdToBookListIfNotFull(CourtBook book)
+    {
+        List<String> ids = book.getUserIds();
+
+        if (ids.size() >= 4)
+            return;
+
+        ids.add(targetUserId);
+        book.setUserIds(ids);
+        book.safeSave();
     }
 
     @Override

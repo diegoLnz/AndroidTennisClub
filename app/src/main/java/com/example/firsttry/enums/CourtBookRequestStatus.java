@@ -4,5 +4,6 @@ public enum CourtBookRequestStatus
 {
     Pending,
     Accepted,
-    NotAccepted
+    NotAccepted,
+    Expired
 }

@@ -81,8 +81,17 @@ public class BookRequestAdapter extends RecyclerView.Adapter<BookRequestAdapter.
             holder.denyButton.setVisibility(View.VISIBLE);
             holder.denyButton.setEnabled(true);
         }
-        else {
+        else if (request.getStatus().equals(CourtBookRequestStatus.NotAccepted))
+        {
             holder.acceptButton.setText(R.string.rifiutata);
+            holder.acceptButton.setEnabled(false);
+
+            holder.denyButton.setVisibility(View.GONE);
+            holder.denyButton.setEnabled(false);
+        }
+        else
+        {
+            holder.acceptButton.setText(R.string.scaduto);
             holder.acceptButton.setEnabled(false);
 
             holder.denyButton.setVisibility(View.GONE);

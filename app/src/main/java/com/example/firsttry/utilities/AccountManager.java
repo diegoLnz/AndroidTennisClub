@@ -46,7 +46,7 @@ public class AccountManager
     public static CompletableFuture<User> getCurrentAccount()
     {
         if (mAuth.getCurrentUser() == null)
-            return null;
+            return CompletableFuture.completedFuture(null);
 
         return User.fromFirebaseUser(mAuth.getCurrentUser());
     }
