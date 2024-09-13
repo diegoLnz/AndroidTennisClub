@@ -46,6 +46,14 @@
             android:layout_marginTop="8dp"/>
 
         <Button
+            android:id="@+id/btn_edit_profile_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/modifica_immagine_profilo"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"/>
+
+        <Button
             android:id="@+id/btn_save_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

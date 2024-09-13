@@ -144,4 +144,6 @@
     <string name="inviti_ricevuti">Inviti ricevuti</string>
     <string name="score">Score</string>
     <string name="scaduto">Scaduto</string>
+    <string name="seleziona_un_immagine">Seleziona un\' immagine</string>
+    <string name="modifica_immagine_profilo">Modifica immagine profilo</string>
 </resources>
