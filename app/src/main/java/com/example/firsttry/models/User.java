@@ -1,5 +1,6 @@
 package com.example.firsttry.models;
 
+import com.example.firsttry.ProfileFragment;
 import com.example.firsttry.businesslogic.ReportsBl;
 import com.example.firsttry.businesslogic.ReviewsBl;
 import com.example.firsttry.enums.UserRole;
@@ -77,6 +78,12 @@ public class User extends Model
     public CompletableFuture<Array<Review>> reviews()
     {
         return ReviewsBl.getReviewsByUserId(this.getId());
+    }
+
+    public CompletableFuture<ProfilePicture> currentProfilePicture()
+    {
+        return ProfilePicture.list(pictures -> pictures.getUserId().equals(this.getId()))
+                .thenApply(Array::firstOrDefault);
     }
 
     public CompletableFuture<Integer> rank()

@@ -1,17 +1,8 @@
 package com.example.firsttry;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +10,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.firsttry.enums.UploadRequestType;
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.models.ProfilePicture;
 import com.example.firsttry.utilities.AccountManager;
-import com.example.firsttry.utilities.ActivityHandler;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.FragmentHandler;
 import com.example.firsttry.utilities.GlideHelper;
 import com.example.firsttry.utilities.ImageUploader;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.UploadTask;
 
@@ -84,7 +78,7 @@ public class ProfileFragment extends Fragment
                     if (pic == null)
                         return;
                     ImageUploader.getDownloadUrl(pic.getUrl())
-                            .addOnSuccessListener(uri -> GlideHelper.setImage(
+                            .addOnSuccessListener(uri -> GlideHelper.setRoundedImage(
                                     imageView,
                                     uri.toString(),
                                     requireContext()
@@ -172,9 +166,12 @@ public class ProfileFragment extends Fragment
 
     private CompletableFuture<ProfilePicture> saveProfilePicture(String imageName)
     {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        ProfilePicture pic = new ProfilePicture("profilepictures/" + imageName, userId);
-        return pic.save();
+        return AccountManager.getCurrentAccount().thenCompose(user -> user.currentProfilePicture().thenCompose(picture -> {
+            ProfilePicture pic = new ProfilePicture("profilepictures/" + imageName, user.getId());
+            if (picture != null)
+                pic.setId(picture.getId());
+            return pic.save();
+        }));
     }
 
     private void doLogout()

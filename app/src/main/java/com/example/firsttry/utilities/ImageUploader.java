@@ -9,10 +9,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.firsttry.R;
 import com.example.firsttry.enums.UploadRequestType;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.UploadTask;
 
 public class ImageUploader
