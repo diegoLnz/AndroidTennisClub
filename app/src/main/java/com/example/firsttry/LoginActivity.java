@@ -67,6 +67,7 @@ public class LoginActivity extends ValidatedActivity
         AccountManager.doLogin(email, password).thenApply(result -> result
                 .match(
                         success -> {
+                            AccountManager.checkFcmToken();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                             return true;

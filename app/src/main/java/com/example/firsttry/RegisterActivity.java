@@ -77,6 +77,7 @@ public class RegisterActivity extends ValidatedActivity
         AccountManager.doRegister(user).thenApply(result -> result
                 .match(
                         success -> {
+                            AccountManager.checkFcmToken();
                             startActivity(new Intent(this, MainActivity.class));
                             finish();
                             return true;

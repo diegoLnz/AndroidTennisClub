@@ -28,6 +28,7 @@ public class User extends Model
     private UserStatus Status = UserStatus.ACTIVE;
     private Double Reputation;
     private Integer Score = 0;
+    private String FcmToken;
 
     public User() { }
 
@@ -69,6 +70,10 @@ public class User extends Model
     public Integer getScore() { return Score; }
 
     public void setScore(Integer score) { Score = score; }
+
+    public String getFcmToken() { return FcmToken; }
+
+    public void setFcmToken(String fcmToken) { FcmToken = fcmToken; }
 
     public CompletableFuture<Array<Report>> reports()
     {

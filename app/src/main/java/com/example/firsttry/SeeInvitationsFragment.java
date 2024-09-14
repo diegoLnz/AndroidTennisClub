@@ -22,6 +22,7 @@ import com.example.firsttry.models.CourtBookRequest;
 import com.example.firsttry.models.Lesson;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
+import com.example.firsttry.utilities.NotificationSender;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -37,6 +38,7 @@ public class SeeInvitationsFragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         currentView = inflater.inflate(R.layout.fragment_see_invitations, container, false);
+        setCurrentUser();
         updateRecyclerView();
         return currentView;
     }
@@ -64,21 +66,43 @@ public class SeeInvitationsFragment
     @Override
     public void onAccept(CourtBookRequest request) {
         request.setStatus(CourtBookRequestStatus.Accepted);
-        request.save()
-                .thenAccept(res -> {
-                    request.updateCourtBook();
-                    Toast.makeText(requireActivity(), "Invito accettato", Toast.LENGTH_SHORT).show();
-                    updateRecyclerView();
-                });
+        request.save().thenAccept(this::onAcceptedInvite);
     }
 
     @Override
     public void onDeny(CourtBookRequest request) {
         request.setStatus(CourtBookRequestStatus.NotAccepted);
-        request.save()
-                .thenAccept(res -> {
-                    Toast.makeText(requireActivity(), "Invito rifiutato", Toast.LENGTH_SHORT).show();
-                    updateRecyclerView();
-                });
+        request.save().thenAccept(this::onDeniedInvite);
+    }
+
+    private void onAcceptedInvite(CourtBookRequest request)
+    {
+        request.updateCourtBook();
+        Toast.makeText(requireActivity(), R.string.invito_accettato, Toast.LENGTH_SHORT).show();
+        updateRecyclerView();
+
+        AccountManager.getFcmToken(request.getUserId()).thenAccept(token
+                        -> {
+                    NotificationSender.sendNotification(
+                            token,
+                            "Accettazione invito",
+                            CurrentUser.getUsername() + " ha accettato l'invito"
+                    );
+                }
+        );
+    }
+
+    private void onDeniedInvite(CourtBookRequest request)
+    {
+        Toast.makeText(requireActivity(), R.string.invito_rifiutato, Toast.LENGTH_SHORT).show();
+        updateRecyclerView();
+
+        AccountManager.getFcmToken(request.getUserId()).thenAccept(token
+                        -> NotificationSender.sendNotification(
+                        token,
+                        "Invito rifiutato",
+                        CurrentUser.getUsername() + " ha rifiutato l'invito"
+                )
+        );
     }
 }

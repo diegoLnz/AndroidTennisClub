@@ -1,9 +1,12 @@
 package com.example.firsttry.utilities;
 
+import android.util.Log;
+
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -38,6 +41,34 @@ public class AccountManager
                 })
                 .addOnFailureListener(e -> future.complete(Result.failure(e)));
         return future;
+    }
+
+    public static void checkFcmToken()
+    {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("IntroActivity", "getToken failed", task.getException());
+                        return;
+                    }
+
+                    String token = task.getResult();
+                    Log.d("", "Token: " + token);
+                    saveFcmToken(token);
+                });
+    }
+
+    public static void saveFcmToken(String token)
+    {
+        getCurrentAccount().thenAccept(user -> {
+            user.setFcmToken(token);
+            user.save();
+        });
+    }
+
+    public static CompletableFuture<String> getFcmToken(String userId)
+    {
+        return Repository.getById(userId, User.class).thenApply(User::getFcmToken);
     }
 
     public static void doLogout() { mAuth.signOut(); }

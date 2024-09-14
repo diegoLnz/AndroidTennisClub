@@ -42,7 +42,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES}"
         }
     }
 }
@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
     implementation ("com.github.bumptech.glide:glide:4.15.1")
+    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation ("com.google.auth:google-auth-library-oauth2-http:1.15.0")
+    implementation(libs.firebase.messaging)
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

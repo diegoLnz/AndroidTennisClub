@@ -146,4 +146,7 @@
     <string name="scaduto">Scaduto</string>
     <string name="seleziona_un_immagine">Seleziona un\' immagine</string>
     <string name="modifica_immagine_profilo">Modifica immagine profilo</string>
+    <string name="invito_accettato">Invito accettato</string>
+    <string name="accettazione_invito">Accettazione invito</string>
+    <string name="invito_rifiutato">Invito rifiutato</string>
 </resources>
