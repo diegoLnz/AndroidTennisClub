@@ -2,6 +2,7 @@ package com.example.firsttry.businesslogic;
 
 import static com.example.firsttry.utilities.DateTimeExtensions.convertToDate;
 import static com.example.firsttry.utilities.DateTimeExtensions.getDay;
+import static com.example.firsttry.utilities.DateTimeExtensions.now;
 
 import com.example.firsttry.models.Lesson;
 import com.example.firsttry.models.LessonBook;
@@ -10,6 +11,7 @@ import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.DateTimeExtensions;
+import com.example.firsttry.utilities.Repository;
 
 import java.util.Date;
 import java.util.Objects;
@@ -72,5 +74,13 @@ public class LessonsBl
                         && book.getUserId().equals(user.getId())
                         && !book.getIsDeleted())
                 .thenCompose(list -> list.firstOrDefault().softDelete()));
+    }
+
+    public static CompletableFuture<Array<Lesson>> getTeacherLessons(User user)
+    {
+        return Repository.list(Lesson.class, lesson -> lesson.getTeacherId().equals(user.getId()))
+                .thenApply(lessons ->
+                        lessons.where(lesson -> !lesson.getIsDeleted()
+                                && lesson.getStartTime().after(now())));
     }
 }

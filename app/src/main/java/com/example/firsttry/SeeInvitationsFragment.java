@@ -23,6 +23,7 @@ import com.example.firsttry.models.Lesson;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.NotificationSender;
+import com.example.firsttry.utilities.Repository;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -81,14 +82,10 @@ public class SeeInvitationsFragment
         Toast.makeText(requireActivity(), R.string.invito_accettato, Toast.LENGTH_SHORT).show();
         updateRecyclerView();
 
-        AccountManager.getFcmToken(request.getUserId()).thenAccept(token
-                        -> {
-                    NotificationSender.sendNotification(
-                            token,
-                            "Accettazione invito",
-                            CurrentUser.getUsername() + " ha accettato l'invito"
-                    );
-                }
+        NotificationSender.sendNotification(
+                request.getUserId(),
+                "Accettazione invito",
+                CurrentUser.getUsername() + " ha accettato l'invito"
         );
     }
 
@@ -97,12 +94,9 @@ public class SeeInvitationsFragment
         Toast.makeText(requireActivity(), R.string.invito_rifiutato, Toast.LENGTH_SHORT).show();
         updateRecyclerView();
 
-        AccountManager.getFcmToken(request.getUserId()).thenAccept(token
-                        -> NotificationSender.sendNotification(
-                        token,
-                        "Invito rifiutato",
-                        CurrentUser.getUsername() + " ha rifiutato l'invito"
-                )
-        );
+        NotificationSender.sendNotification(
+                request.getUserId(),
+                "Invito rifiutato",
+                CurrentUser.getUsername() + " ha rifiutato l'invito");
     }
 }

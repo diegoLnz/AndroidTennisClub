@@ -10,7 +10,7 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/time"
         android:textStyle="bold"
         android:textSize="16sp" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/court"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/court"
         android:textSize="16sp" />
 
     <Button

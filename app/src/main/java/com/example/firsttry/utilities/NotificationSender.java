@@ -21,6 +21,19 @@ import okhttp3.Response;
 public class NotificationSender
 {
     public static void sendNotification(
+            String userId,
+            String title,
+            String body)
+    {
+        AccountManager.getFcmToken(userId).thenAccept(token
+                -> NotificationSender.sendNotificationWithToken(
+                token,
+                title,
+                body)
+        );
+    }
+
+    private static void sendNotificationWithToken(
             String token,
             String title,
             String body)

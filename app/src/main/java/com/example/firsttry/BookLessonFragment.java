@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.firsttry.businesslogic.LessonsBl;
+import com.example.firsttry.enums.LessonState;
 import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.SearchedLessonAdapter;
@@ -79,17 +80,22 @@ public class BookLessonFragment
 
         String dateValue = Objects.requireNonNull(dateEditText.getText()).toString();
         LessonsBl.getLessonsByDay(dateValue).thenAccept(lessons -> {
-            lessons = lessons.where(lesson -> lesson.getStartTime().after(now()));
+            lessons = lessons
+                    .where(lesson -> lesson.getStatus() == LessonState.NotBooked)
+                    .where(lesson -> lesson.getStartTime().after(now()));
             setRecyclerView(lessons);
         });
     }
 
     @Override
-    public void onBook(Lesson lesson) {
+    public void onBook(Lesson lesson)
+    {
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> {
             LessonBook lessonBook = new LessonBook(user.getId(), lesson.getId(), new Date());
             lessonBook.save()
                     .thenAccept(lessonBook1 -> {
+                        lesson.setStatus(LessonState.Booked);
+                        lesson.save();
                         Toast.makeText(getContext(), "Lezione prenotata con successo!", Toast.LENGTH_SHORT).show();
                         searchAvailableLessons();
                     });
@@ -97,11 +103,14 @@ public class BookLessonFragment
     }
 
     @Override
-    public void onDelete(Lesson lesson) {
+    public void onDelete(Lesson lesson)
+    {
         Objects.requireNonNull(AccountManager.getCurrentAccount()).thenAccept(user -> LessonBook.list(book -> book.getLessonId().equals(lesson.getId())
                         && book.getUserId().equals(user.getId())
                         && !book.getIsDeleted())
                 .thenAccept(list -> list.firstOrDefault().softDelete().thenAccept(res -> {
+                    lesson.setStatus(LessonState.NotBooked);
+                    lesson.save();
                     Toast.makeText(getContext(), "Prenotazione annullata!", Toast.LENGTH_SHORT).show();
                     searchAvailableLessons();
                 })));

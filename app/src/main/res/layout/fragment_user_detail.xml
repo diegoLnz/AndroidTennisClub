@@ -17,6 +17,23 @@
             android:textStyle="bold"
             android:paddingBottom="16dp"/>
 
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/immagine_profilo"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/username_label_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nome_utente"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
+
         <TextView
             android:id="@+id/username_view"
             android:layout_width="match_parent"
@@ -24,6 +41,14 @@
             android:text="@string/nome_utente"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/email_label_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/email_utente"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/email_view"
@@ -34,12 +59,28 @@
             android:paddingBottom="16dp"/>
 
         <TextView
+            android:id="@+id/bio_label_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bio"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
             android:id="@+id/bio_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/bio"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/role_label_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tipo_utente"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/role_view"
@@ -50,6 +91,14 @@
             android:paddingBottom="16dp"/>
 
         <TextView
+            android:id="@+id/reputation_label_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reputazione"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
             android:id="@+id/reputation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,12 +107,28 @@
             android:paddingBottom="16dp"/>
 
         <TextView
+            android:id="@+id/score_label_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/score"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
             android:id="@+id/score_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/score"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/rank_label_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rank"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/rank_view"

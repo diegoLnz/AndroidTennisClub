@@ -4,6 +4,7 @@ import com.example.firsttry.enums.BookState;
 import com.example.firsttry.enums.CourtBookRequestStatus;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.NotificationSender;
 import com.example.firsttry.utilities.Repository;
 
 import java.util.ArrayList;
@@ -118,6 +119,7 @@ public class CourtBook extends Model
         this.calculateState();
         if (getState().equals(BookState.Booked))
         {
+            notifyFilled();
             cancelRequests();
         }
         return this.save();
@@ -132,6 +134,21 @@ public class CourtBook extends Model
                             request.setStatus(CourtBookRequestStatus.Expired);
                             request.save();
                         }));
+    }
+
+    /**
+     * Manda una notifica all' utente che ha originariamente prenotato il campo che la prenotazione è al completo
+     */
+    public void notifyFilled()
+    {
+        if (getUserIds().size() != 4)
+            return;
+
+        NotificationSender.sendNotification(
+                bookerId,
+                "Prenotazione al completo",
+                "La tua prenotazione è al completo"
+        );
     }
 
     @Override

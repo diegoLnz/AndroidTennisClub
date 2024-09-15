@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.example.firsttry.R;
 import com.example.firsttry.enums.UserStatus;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.Array;
+import com.example.firsttry.utilities.ImageUploader;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>
 {
@@ -49,11 +51,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.email.setText(user.getEmail());
         setStatusText(holder, user);
         holder.editButton.setOnClickListener(v -> listener.onEdit(user));
+        setProfilePicture(user, holder);
 
         if (isOnlyForTeachers)
         {
             holder.editButton.setText(R.string.gestisci_orari);
         }
+    }
+
+    private void setProfilePicture(
+            User user,
+            @NonNull UserViewHolder holder)
+    {
+        user.currentProfilePicture().thenAccept(pic -> ImageUploader.setImage(
+                pic.getUrl(),
+                holder.profilePic,
+                holder.itemView.getContext()
+        ));
     }
 
     private void setStatusText(@NonNull UserViewHolder holder, User user)
@@ -78,6 +92,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         TextView email;
         TextView status;
         Button editButton;
+        ImageView profilePic;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +100,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             email = itemView.findViewById(R.id.email);
             status = itemView.findViewById(R.id.status);
             editButton = itemView.findViewById(R.id.action_edit);
+            profilePic = itemView.findViewById(R.id.profile_picture);
         }
     }
 

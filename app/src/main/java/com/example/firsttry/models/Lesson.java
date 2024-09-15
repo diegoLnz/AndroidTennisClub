@@ -1,5 +1,6 @@
 package com.example.firsttry.models;
 
+import com.example.firsttry.enums.LessonState;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.Repository;
@@ -29,6 +30,7 @@ public class Lesson extends Model
     private String courtId;
     private Date startTime;
     private Date endTime;
+    private LessonState status = LessonState.NotBooked;
 
     public String getTeacherId() { return teacherId; }
 
@@ -45,6 +47,10 @@ public class Lesson extends Model
     public Date getEndTime() { return endTime; }
 
     public void setEndTime(Date endTime) { this.endTime = endTime; }
+
+    public LessonState getStatus() { return status; }
+
+    public void setStatus(LessonState status) { this.status = status; }
 
     public CompletableFuture<Court> court()
     {

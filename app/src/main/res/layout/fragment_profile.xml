@@ -94,7 +94,7 @@
             android:id="@+id/btn_see_bookers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/vedi_lezioni_prenotate"
+            android:text="@string/vedi_lezioni_da_tenere"
             android:padding="8dp"
             android:layout_marginTop="16dp"
             android:visibility="gone"/>

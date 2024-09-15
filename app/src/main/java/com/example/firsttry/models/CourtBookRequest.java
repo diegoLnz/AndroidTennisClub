@@ -2,6 +2,7 @@ package com.example.firsttry.models;
 
 import com.example.firsttry.enums.CourtBookRequestStatus;
 import com.example.firsttry.utilities.Array;
+import com.example.firsttry.utilities.NotificationSender;
 import com.example.firsttry.utilities.Repository;
 
 import java.util.Date;
@@ -104,7 +105,9 @@ public class CourtBookRequest extends Model
         List<String> ids = book.getUserIds();
 
         if (ids.size() >= 4)
+        {
             return;
+        }
 
         ids.add(targetUserId);
         book.setUserIds(ids);

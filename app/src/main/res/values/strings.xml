@@ -149,4 +149,8 @@
     <string name="invito_accettato">Invito accettato</string>
     <string name="accettazione_invito">Accettazione invito</string>
     <string name="invito_rifiutato">Invito rifiutato</string>
+    <string name="vedi_lezioni_da_tenere">Vedi lezioni da tenere</string>
+    <string name="time">Time</string>
+    <string name="court">court</string>
+    <string name="lezioni_in_programma">Lezioni in programma</string>
 </resources>

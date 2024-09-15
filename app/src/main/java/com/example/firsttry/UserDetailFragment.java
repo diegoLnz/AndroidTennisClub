@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.FragmentHandler;
 import com.example.firsttry.utilities.HashMapExtensions;
+import com.example.firsttry.utilities.ImageUploader;
 
 public class UserDetailFragment extends ValidatedFragment
 {
@@ -54,6 +56,7 @@ public class UserDetailFragment extends ValidatedFragment
         DatabaseHandler.getById(userId, new User().tableName(), User.class)
                 .thenAccept(user -> {
                     targetUser = user;
+                    setProfilePicture();
                     fillUserInfo();
                     setReviewButton();
                     setReportButton();
@@ -105,22 +108,33 @@ public class UserDetailFragment extends ValidatedFragment
 
     private void fillFields()
     {
-        username.append("\n" + targetUser.getUsername());
-        email.append("\n" + targetUser.getEmail());
-        bio.append("\n" + targetUser.getBio());
-        score.append(" " + targetUser.getScore());
+        username.setText(targetUser.getUsername());
+        email.setText(targetUser.getEmail());
+        bio.setText(targetUser.getBio());
+        score.setText(targetUser.getScore().toString());
 
         if (targetUser.getRole() != null)
-            role.append("\n" + targetUser.getRole().toString());
+            role.setText(targetUser.getRole().toString());
         else
             role.setText("");
 
         if (targetUser.getReputation() != null)
-            reputation.append("\n" + targetUser.getReputation().toString());
+            reputation.setText(targetUser.getReputation().toString());
         else
             reputation.setText("");
 
-        targetUser.rank().thenAccept(userRank -> rank.append(" " + userRank.toString()));
+        targetUser.rank().thenAccept(userRank -> rank.setText(userRank.toString()));
+    }
+
+    private void setProfilePicture()
+    {
+        ImageView imageView = currentView.findViewById(R.id.profile_picture);
+        targetUser.currentProfilePicture().thenAccept(pic ->
+                ImageUploader.setImage(
+                        pic.getUrl(),
+                        imageView,
+                        requireContext()
+                ));
     }
 
     private void setReviewsAdapter()

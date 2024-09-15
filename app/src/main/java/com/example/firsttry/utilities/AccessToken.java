@@ -29,7 +29,8 @@ public class AccessToken
 
     public static void getAccessTokenAsync(Callback callback)
     {
-        executorService.submit(() -> {
+        executorService.submit(() ->
+        {
             String token = getAccessToken();
             new Handler(Looper.getMainLooper()).post(() -> callback.onTokenReceived(token));
         });
@@ -37,11 +38,13 @@ public class AccessToken
 
     private static String getAccessToken()
     {
-        if (isStillValidToken()) {
+        if (isStillValidToken())
+        {
             return cachedToken;
         }
 
-        try {
+        try
+        {
             InputStream stream = new ByteArrayInputStream(FcmData.jsonString.getBytes(StandardCharsets.UTF_8));
             GoogleCredentials googleCredentials = GoogleCredentials.fromStream(stream)
                     .createScoped(FIREBASE_MESSAGING_SCOPE);
@@ -52,7 +55,9 @@ public class AccessToken
             tokenExpiration = accessToken.getExpirationTime().getTime();
 
             return cachedToken;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Log.e(TAG, "Error getting access token: " + e.getMessage(), e);
             return null;
         }

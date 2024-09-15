@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.firsttry.R;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.Array;
+import com.example.firsttry.utilities.ImageUploader;
 
 public class SearchedUserAdapterForBooks extends RecyclerView.Adapter<SearchedUserAdapterForBooks.SearchedUserViewHolder>
 {
@@ -37,9 +39,21 @@ public class SearchedUserAdapterForBooks extends RecyclerView.Adapter<SearchedUs
         User user = userList.get(position);
         holder.username.setText(user.getUsername());
         holder.email.setText(user.getEmail());
+        setProfilePicture(user, holder);
 
         holder.viewDetailsButton.setOnClickListener(v -> listener.onInvitation(user));
         user.rank().thenAccept(userRank -> holder.rank.setText(userRank.toString()));
+    }
+
+    private void setProfilePicture(
+            User user,
+            @NonNull SearchedUserAdapterForBooks.SearchedUserViewHolder holder)
+    {
+        user.currentProfilePicture().thenAccept(pic -> ImageUploader.setImage(
+                pic.getUrl(),
+                holder.profilePic,
+                holder.itemView.getContext()
+        ));
     }
 
     @Override
@@ -51,6 +65,7 @@ public class SearchedUserAdapterForBooks extends RecyclerView.Adapter<SearchedUs
         TextView email;
         TextView rank;
         Button viewDetailsButton;
+        ImageView profilePic;
 
         public SearchedUserViewHolder(@NonNull View itemView)
         {
@@ -59,6 +74,7 @@ public class SearchedUserAdapterForBooks extends RecyclerView.Adapter<SearchedUs
             email = itemView.findViewById(R.id.email);
             rank = itemView.findViewById(R.id.rank);
             viewDetailsButton = itemView.findViewById(R.id.action_view_details);
+            profilePic = itemView.findViewById(R.id.profile_picture);
         }
     }
 

@@ -24,6 +24,8 @@ import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
+import com.example.firsttry.utilities.NotificationSender;
+import com.example.firsttry.utilities.Repository;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -134,7 +136,6 @@ public class CourtBookInvitationFragment
         });
     }
 
-    //ToDo: Implement notification
     @Override
     public void onInvitation(User user)
     {
@@ -146,8 +147,17 @@ public class CourtBookInvitationFragment
         );
         request.save()
                 .thenAccept(res -> {
-                    Toast.makeText(requireActivity(), "Invito mandato con successo", Toast.LENGTH_SHORT);
+                    sendInvitationNotification(res);
+                    Toast.makeText(requireActivity(), "Invito mandato con successo", Toast.LENGTH_SHORT).show();
                     resetSearch();
                 });
+    }
+
+    private void sendInvitationNotification(CourtBookRequest request)
+    {
+        NotificationSender.sendNotification(
+                request.getTargetUserId(),
+                "Hai ricevuto un invito!",
+                "Controlla la lista degli inviti");
     }
 }
