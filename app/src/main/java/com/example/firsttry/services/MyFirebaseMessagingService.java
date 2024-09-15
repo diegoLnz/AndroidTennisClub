@@ -36,6 +36,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
     @Override
     public void onCreate() {
         super.onCreate();
+        initManager();
+        createNotificationChannel();
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
@@ -73,8 +75,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
     {
         setPendingIntent();
         setNotificationBuilder(title, message, pendingIntent);
-        initManager();
-        createNotificationChannel();
         saveNotification(title, message)
                 .thenAccept(notification -> sendNotify(notification.getId()));
     }
@@ -105,7 +105,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                 this,
                 0,
                 intent,
-                PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+                PendingIntent.FLAG_MUTABLE);
     }
 
     private void createNotificationChannel()
@@ -118,6 +118,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                 "Court Notifications",
                 NotificationManager.IMPORTANCE_HIGH
         );
+        channel.enableLights(true);
+        channel.enableVibration(true);
         notificationManager.createNotificationChannel(channel);
     }
 

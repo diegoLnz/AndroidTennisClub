@@ -2,16 +2,21 @@ package com.example.firsttry.utilities;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Objects;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class NotificationSender
 {
@@ -20,11 +25,20 @@ public class NotificationSender
             String title,
             String body)
     {
-        Request request = HttpManager.buildRequest(composeRequestBody(
-                title,
-                body,
-                token));
-        executeCall(request);
+        HttpManager.buildMessageRequest(composeRequestBody(title, body, token), new HttpManager.RequestCallback()
+        {
+            @Override
+            public void onRequestBuilt(Request request)
+            {
+                executeCall(request);
+            }
+
+            @Override
+            public void onError(Exception e)
+            {
+                Log.e("HTTP", "Error: " + e.getMessage());
+            }
+        });
     }
 
     private static RequestBody composeRequestBody(
@@ -51,7 +65,7 @@ public class NotificationSender
         {
             notificationObj.put("title", title);
             notificationObj.put("body", body);
-            messageObj.put("topic", token);
+            messageObj.put("token", token);
             messageObj.put("notification", notificationObj);
             dataObj.put("message", messageObj);
         }
@@ -65,13 +79,21 @@ public class NotificationSender
     private static void executeCall(Request request)
     {
         OkHttpClient client = new OkHttpClient();
-        try
+        client.newCall(request).enqueue(new Callback()
         {
-            client.newCall(request).execute();
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
+            @Override
+            public void onFailure(
+                    @NonNull Call call,
+                    @NonNull IOException e)
+            {
+                Log.e("HTTP", "Request fallita: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(
+                    @NonNull Call call,
+                    @NonNull Response response)
+            { }
+        });
     }
 }
