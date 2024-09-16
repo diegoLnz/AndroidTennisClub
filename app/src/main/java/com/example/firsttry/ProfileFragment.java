@@ -185,7 +185,8 @@ public class ProfileFragment extends Fragment
         mGetContent.launch("image/*");
     }
 
-    private void handleImage(Uri imageUri) {
+    private void handleImage(Uri imageUri)
+    {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String extension = ImageUploader.getFileExtension(imageUri, this);
 

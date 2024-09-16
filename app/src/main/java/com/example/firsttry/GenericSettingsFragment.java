@@ -14,6 +14,7 @@ import com.example.firsttry.utilities.FragmentHandler;
 
 public class GenericSettingsFragment extends ValidatedFragment
 {
+    private Button _clubSettingsButton;
     private Button _usersSettingsButton;
     private Button _courtsSettingsButton;
     private Button _teacherSettingsButton;
@@ -23,10 +24,17 @@ public class GenericSettingsFragment extends ValidatedFragment
     {
         currentView = inflater.inflate(R.layout.fragment_generic_settings, container, false);
         checkAuthenticated();
+        setClubSettingsButton();
         setUsersSettingsButton();
         setCourtsSettingsButton();
         setTeacherSettingsButton();
         return currentView;
+    }
+
+    private void setClubSettingsButton()
+    {
+        _clubSettingsButton = currentView.findViewById(R.id.buttonClubSettings);
+        _clubSettingsButton.setOnClickListener(v -> FragmentHandler.replaceFragment(requireActivity(), new ClubSettingsFragment()));
     }
 
     private void setUsersSettingsButton()

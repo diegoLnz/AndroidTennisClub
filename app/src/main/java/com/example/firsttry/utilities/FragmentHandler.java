@@ -41,4 +41,9 @@ public class FragmentHandler
         fragment.setArguments(argsBundle);
         replaceFragment(fragmentActivity, fragment);
     }
+
+    public static void refreshFragment()
+    {
+
+    }
 }

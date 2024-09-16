@@ -3,6 +3,7 @@ package com.example.firsttry.models;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.DatabaseHandler;
 import com.example.firsttry.utilities.Repository;
+import com.google.firebase.database.core.Repo;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
@@ -12,15 +13,13 @@ public class ClubData extends Model
     @Override
     public String tableName() { return "clubdata"; }
 
-    public String Name;
-    public String profilePicPath;
+    private String Name;
 
     public ClubData() { }
 
-    public ClubData(String name, String profilePicPath)
+    public ClubData(String name)
     {
         this.Name = name;
-        this.profilePicPath = profilePicPath;
     }
 
     @Override
@@ -30,9 +29,11 @@ public class ClubData extends Model
 
     public void setName(String name) { this.Name = name; }
 
-    public String getProfilePicPath() { return profilePicPath; }
-
-    public void setProfilePicPath(String profilePicPath) { this.profilePicPath = profilePicPath; }
+    public CompletableFuture<ClubPicture> currentPicture()
+    {
+        return Repository.list(ClubPicture.class)
+                .thenApply(Array::firstOrDefault);
+    }
 
     @Override
     public CompletableFuture<ClubData> save()
@@ -43,8 +44,7 @@ public class ClubData extends Model
     @Override
     public CompletableFuture<ClubData> getById(String id)
     {
-        return DatabaseHandler.getById(id, this.tableName(), this.getClass())
-                .thenApply(result -> result);
+        return Repository.getById(id, ClubData.class);
     }
 
     @Override

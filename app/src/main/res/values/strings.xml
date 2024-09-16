@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FirstTry</string>
     <string name="Start">Inizia</string>
-    <string name="Welcome">Benvenuti al Circolo!</string>
+    <string name="Welcome">Benvenuti al Circolo</string>
     <string name="Home">Home</string>
     <string name="Search">Ricerca</string>
     <string name="Profile">Profilo</string>
@@ -153,4 +153,6 @@
     <string name="time">Time</string>
     <string name="court">court</string>
     <string name="lezioni_in_programma">Lezioni in programma</string>
+    <string name="modifica_immagine_circolo">Modifica immagine circolo</string>
+    <string name="salva_impostazioni">Salva impostazioni</string>
 </resources>
