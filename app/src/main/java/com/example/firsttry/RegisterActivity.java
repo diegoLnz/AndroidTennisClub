@@ -11,6 +11,8 @@ import com.example.firsttry.extensions.ValidatedEditText;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
 
+import java.util.concurrent.CompletableFuture;
+
 public class RegisterActivity extends ValidatedActivity
 {
     private ValidatedEditText EditTextUsername;
@@ -53,6 +55,11 @@ public class RegisterActivity extends ValidatedActivity
     private void setSubmitListener()
     {
         RegisterButton.setOnClickListener(v -> {
+            if (!validateFields())
+            {
+                return;
+            }
+
             String email = EditTextEmail
                     .getText()
                     .toString()
@@ -84,18 +91,31 @@ public class RegisterActivity extends ValidatedActivity
 
     private void registerUser(User user, String password)
     {
-        AccountManager.doRegister(user, password).thenApply(result -> result
-                .match(
-                        success -> {
-                            AccountManager.checkFcmToken();
-                            startActivity(new Intent(this, MainActivity.class));
-                            finish();
-                            return true;
-                        },
-                        failure -> {
-                            Toast.makeText(this, "Registrazione fallita: " + failure.getMessage(), Toast.LENGTH_SHORT).show();
-                            return false;
-                        }
-                ));
+        checkExistingUser(user).thenAccept(alreadyExists ->
+        {
+            if (alreadyExists)
+            {
+                Toast.makeText(this, "Registrazione fallita: " + "Utente già registrato", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            AccountManager.doRegister(user, password).thenApply(result -> result
+                    .match(
+                            success -> {
+                                AccountManager.checkFcmToken();
+                                startActivity(new Intent(this, MainActivity.class));
+                                finish();
+                                return true;
+                            },
+                            failure -> {
+                                Toast.makeText(this, "Registrazione fallita: " + failure.getMessage(), Toast.LENGTH_SHORT).show();
+                                return false;
+                            }
+                    ));
+        });
+    }
+
+    private CompletableFuture<Boolean> checkExistingUser(User user)
+    {
+        return AccountManager.checkExistingUser(user);
     }
 }

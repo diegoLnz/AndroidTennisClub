@@ -13,13 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.businesslogic.CourtsBookBl;
 import com.example.firsttry.businesslogic.LessonsBl;
+import com.example.firsttry.enums.CourtBookRequestStatus;
 import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.BookedCourtAdapter;
 import com.example.firsttry.models.CourtBook;
+import com.example.firsttry.models.CourtBookRequest;
 import com.example.firsttry.models.Lesson;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -34,7 +37,10 @@ public class SeeBookedCourtsFragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         currentView = inflater.inflate(R.layout.fragment_see_booked_courts, container, false);
-        updateRecyclerView();
+        AccountManager.getCurrentAccount().thenAccept(account -> {
+            CurrentUser = account;
+            updateRecyclerView();
+        });
         return currentView;
     }
 
@@ -59,10 +65,37 @@ public class SeeBookedCourtsFragment
     }
 
     @Override
-    public void onDelete(CourtBook courtBook) {
+    public void onDelete(CourtBook courtBook)
+    {
         CourtsBookBl.deleteCourtBookAndItsRequests(courtBook).thenAccept(res -> {
             Toast.makeText(requireActivity(), "Prenotazione annullata!", Toast.LENGTH_SHORT).show();
             updateRecyclerView();
         });
     }
+
+    @Override
+    public void onInvitationCancel(CourtBook courtBook)
+    {
+        CourtBookRequest.list(req -> req.getCourtBookId().equals(courtBook.getId())
+                        && req.getTargetUserId().equals(CurrentUser.getId()))
+                .thenAccept(requests ->
+                {
+                    CourtBookRequest request = requests.firstOrDefault();
+                    request.setStatus(CourtBookRequestStatus.NotAccepted);
+                    List<String> ids = courtBook.getUserIds();
+                    ids.forEach(id -> {
+                        if(id.equals(CurrentUser.getId()))
+                        {
+                            ids.remove(id);
+                        }
+                    });
+                    courtBook.setUserIds(ids);
+                    request.save();
+                    courtBook.updateRequestsStatusWhenOneUserCancelsInvitation();
+                    courtBook.safeSave();
+                    updateRecyclerView();
+                });
+    }
+
+
 }

@@ -94,6 +94,23 @@ public class CourtBook extends Model
         return CourtBookRequest.list(request -> request.getCourtBookId().equals(this.getId()));
     }
 
+    public void updateRequestsStatusWhenOneUserCancelsInvitation()
+    {
+        CourtBookRequest.list(req -> req.getCourtBookId().equals(this.getId())
+                        && req.getStatus().equals(CourtBookRequestStatus.Expired))
+                .thenAccept(requests -> {
+                    calculateState();
+                    if (getState().equals(BookState.Booked))
+                    {
+                        return;
+                    }
+                    requests.forEach(request -> {
+                        request.setStatus(CourtBookRequestStatus.Pending);
+                        request.save();
+                    });
+                });
+    }
+
     public void calculateState()
     {
         int usersCount = this.getUserIds().size();

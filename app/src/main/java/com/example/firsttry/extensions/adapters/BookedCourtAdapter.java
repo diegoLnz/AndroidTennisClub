@@ -10,12 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firsttry.R;
+import com.example.firsttry.enums.CourtBookRequestStatus;
 import com.example.firsttry.models.Court;
 import com.example.firsttry.models.CourtBook;
+import com.example.firsttry.models.CourtBookRequest;
+import com.example.firsttry.models.User;
+import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 
 public class BookedCourtAdapter extends RecyclerView.Adapter<BookedCourtAdapter.BookedCourtViewHolder>
 {
@@ -49,7 +54,38 @@ public class BookedCourtAdapter extends RecyclerView.Adapter<BookedCourtAdapter.
         new Court().getById(courtBook.getCourtId())
                 .thenAccept(court -> holder.court.setText(court.getName()));
 
-        holder.deleteCourtButton.setOnClickListener(v -> listener.onDelete(courtBook));
+        populateUsersList(courtBook, holder);
+        setButton(courtBook, holder);
+    }
+
+    private void populateUsersList(
+            CourtBook courtBook,
+            BookedCourtViewHolder holder)
+    {
+        CourtBookRequest.list(req -> req.getStatus().equals(CourtBookRequestStatus.Accepted)
+                        && req.getCourtBookId().equals(courtBook.getId()))
+                .thenAccept(acceptedRequests ->
+                        acceptedRequests.forEach(acceptedRequest
+                                -> new User().getById(acceptedRequest.getTargetUserId())
+                                .thenAccept(user -> holder.usersList.append("\n - " + user.getUsername()))));
+    }
+
+    private void setButton(
+            CourtBook courtBook,
+            BookedCourtViewHolder holder)
+    {
+        AccountManager.getCurrentAccount().thenAccept(user -> {
+            if (!courtBook.getBookerId().equals(user.getId()))
+            {
+                holder.deleteCourtButton.setText(R.string.annulla_invito);
+                holder.deleteCourtButton.setOnClickListener(v -> listener.onInvitationCancel(courtBook));
+            }
+            else
+            {
+                holder.deleteCourtButton.setText(R.string.annulla_prenotazione);
+                holder.deleteCourtButton.setOnClickListener(v -> listener.onDelete(courtBook));
+            }
+        });
     }
 
     @Override
@@ -59,6 +95,7 @@ public class BookedCourtAdapter extends RecyclerView.Adapter<BookedCourtAdapter.
     {
         TextView time;
         TextView court;
+        TextView usersList;
         Button deleteCourtButton;
 
         public BookedCourtViewHolder(@NonNull View itemView)
@@ -67,12 +104,14 @@ public class BookedCourtAdapter extends RecyclerView.Adapter<BookedCourtAdapter.
             time = itemView.findViewById(R.id.time);
             court = itemView.findViewById(R.id.court);
             deleteCourtButton = itemView.findViewById(R.id.action_book_court);
+            usersList = itemView.findViewById(R.id.users_list);
         }
     }
 
     public interface OnUserActionListener
     {
         void onDelete(CourtBook courtBook);
+        void onInvitationCancel(CourtBook courtBook);
     }
 
 }

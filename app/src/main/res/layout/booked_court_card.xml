@@ -10,7 +10,7 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/tempo"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -19,8 +19,18 @@
         android:id="@+id/court"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/campo"
         android:textColor="@android:color/black"
+        android:layout_marginBottom="10sp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/users_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/inviti_accettati"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="10sp"
         android:textSize="16sp" />
 
     <Button

@@ -22,6 +22,13 @@ public class AccountManager
         return future;
     }
 
+    public static CompletableFuture<Boolean> checkExistingUser(User user)
+    {
+        return User.list(account -> account.getUsername().equalsIgnoreCase(user.getUsername())
+                        || account.getEmail().equalsIgnoreCase(user.getEmail()))
+                .thenApply(users -> !users.isEmpty());
+    }
+
     public static CompletableFuture<Result<User, Exception>> doRegister(User user, String password)
     {
         CompletableFuture<Result<User, Exception>> future = new CompletableFuture<>();
