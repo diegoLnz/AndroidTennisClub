@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text="@string/username"
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
 
     <TextView
@@ -27,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email"
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
     <TextView
@@ -34,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/stato"
+        android:textColor="@android:color/black"
         android:layout_marginTop="10dp"
         android:textSize="13sp" />
 
@@ -41,11 +44,14 @@
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="10sp"/>
 
     <Button
         android:id="@+id/action_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/modifica" />
+        android:text="@string/modifica"
+        android:background="@drawable/rounded_button"/>
 </LinearLayout>

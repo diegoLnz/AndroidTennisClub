@@ -17,6 +17,8 @@
             android:text="@string/nuova_recensione"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:gravity="center"
             android:paddingBottom="16dp" />
 
         <com.example.firsttry.extensions.ValidatedEditText
@@ -38,6 +40,7 @@
             android:text="@string/numero_di_stelle"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:layout_marginTop="10dp"
             android:paddingBottom="16dp" />
 
@@ -52,7 +55,8 @@
             android:layout_height="wrap_content"
             android:text="@string/invia"
             android:padding="8dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
     </LinearLayout>
 </ScrollView>

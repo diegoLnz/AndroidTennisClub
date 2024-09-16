@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text="@string/username"
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="@string/recensione"
         android:layout_marginTop="10dp"
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
     <TextView
@@ -36,6 +38,7 @@
         android:layout_height="wrap_content"
         android:text="@string/data_recensione"
         android:layout_marginTop="16dp"
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
 </LinearLayout>

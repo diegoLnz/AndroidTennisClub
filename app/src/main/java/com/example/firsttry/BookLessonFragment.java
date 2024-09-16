@@ -48,6 +48,7 @@ public class BookLessonFragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        checkAuthenticated();
         _currentView = inflater.inflate(R.layout.fragment_book_lesson, container, false);
         dateEditText = _currentView.findViewById(R.id.edit_date);
         dateEditText.setRequired(true);

@@ -155,4 +155,6 @@
     <string name="lezioni_in_programma">Lezioni in programma</string>
     <string name="modifica_immagine_circolo">Modifica immagine circolo</string>
     <string name="salva_impostazioni">Salva impostazioni</string>
+    <string name="amministrazione">Amministrazione</string>
+    <string name="hai_gi_un_account_esegui_il_login">Hai già un account? Esegui il login!</string>
 </resources>

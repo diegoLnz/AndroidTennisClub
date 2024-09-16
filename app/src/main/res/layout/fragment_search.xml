@@ -11,6 +11,8 @@
         android:text="@string/UserSearch"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@android:color/black"
         android:paddingBottom="16dp"/>
 
     <com.example.firsttry.extensions.ValidatedEditText
@@ -28,7 +30,8 @@
         android:layout_height="wrap_content"
         android:text="@string/cerca"
         android:padding="8dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button"/>
 
     <TextView
         android:id="@+id/search_results"

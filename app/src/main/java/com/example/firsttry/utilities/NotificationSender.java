@@ -1,8 +1,14 @@
 package com.example.firsttry.utilities;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +26,19 @@ import okhttp3.Response;
 
 public class NotificationSender
 {
+    public static void requirePermission(Activity context)
+    {
+        if (!isTiramisuOrHigher()) {
+            return;
+        }
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            Log.d("IntroActivity", "Permesso per le notifiche già concesso");
+        } else {
+            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+        }
+    }
+
     public static void sendNotification(
             String userId,
             String title,
@@ -108,5 +127,10 @@ public class NotificationSender
                     @NonNull Response response)
             { }
         });
+    }
+
+    private static Boolean isTiramisuOrHigher()
+    {
+        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU;
     }
 }

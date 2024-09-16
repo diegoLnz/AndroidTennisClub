@@ -16,6 +16,8 @@
             android:text="@string/gestisci_campi"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@android:color/black"
             android:paddingBottom="16dp"/>
 
         <com.example.firsttry.extensions.ValidatedEditText
@@ -38,18 +40,12 @@
             android:layout_height="wrap_content"
             android:text="@string/registra"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/addedCourtsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/indietro" />
     </LinearLayout>
 </ScrollView>

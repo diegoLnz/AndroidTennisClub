@@ -23,7 +23,6 @@ public class User extends Model
     private String Username;
     private String Email;
     private String Bio;
-    private String Password;
     private UserRole Role;
     private UserStatus Status = UserStatus.ACTIVE;
     private Double Reputation;
@@ -50,10 +49,6 @@ public class User extends Model
     public String getBio() { return Bio; }
 
     public void setBio(String bio) { Bio = bio; }
-
-    public String getPassword() { return Password; }
-
-    public void setPassword(String password) { Password = password; }
 
     public UserRole getRole() { return Role; }
 

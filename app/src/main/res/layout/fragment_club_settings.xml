@@ -15,6 +15,8 @@
             android:text="@string/impostazioni_circolo"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:gravity="center"
             android:paddingBottom="16dp"/>
 
         <ImageView
@@ -34,6 +36,7 @@
             android:hint="@string/nome"
             android:inputType="text"
             android:minHeight="48dp"
+            android:textColor="@android:color/black"
             android:padding="8dp" />
 
         <Button
@@ -42,7 +45,8 @@
             android:layout_height="wrap_content"
             android:text="@string/modifica_immagine_circolo"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
         <Button
             android:id="@+id/btn_save_profile"
@@ -50,6 +54,7 @@
             android:layout_height="wrap_content"
             android:text="@string/salva_impostazioni"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
     </LinearLayout>
 </ScrollView>

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.firsttry.businesslogic.CourtsBookBl;
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.extensions.ValidatedEditText;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.AvailableCourtAdapter;
 import com.example.firsttry.models.Court;
 import com.example.firsttry.models.CourtBook;
@@ -32,7 +33,7 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class HomeFragment
-        extends Fragment
+        extends ValidatedFragment
         implements AvailableCourtAdapter.OnUserActionListener
 {
     private ValidatedEditText day;
@@ -48,6 +49,7 @@ public class HomeFragment
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         redirectIfAdmin();
+        checkAuthenticated();
         _currentView = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = _currentView.findViewById(R.id.availableCourtsRecycleView);

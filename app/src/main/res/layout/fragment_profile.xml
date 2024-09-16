@@ -15,6 +15,8 @@
             android:text="@string/profilo_utente"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@android:color/black"
             android:paddingBottom="16dp"/>
 
         <ImageView
@@ -53,7 +55,8 @@
             android:layout_height="wrap_content"
             android:text="@string/modifica_immagine_profilo"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
         <Button
             android:id="@+id/btn_save_profile"
@@ -61,7 +64,8 @@
             android:layout_height="wrap_content"
             android:text="@string/salva_profilo"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
         <!-- Common buttons -->
         <Button
@@ -70,7 +74,8 @@
             android:layout_height="wrap_content"
             android:text="@string/vedi_lezioni_prenotate"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
         <Button
             android:id="@+id/btn_see_courtbooks"
@@ -78,7 +83,8 @@
             android:layout_height="wrap_content"
             android:text="@string/vedi_campi_prenotati"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
         <Button
             android:id="@+id/btn_see_invitations"
@@ -86,7 +92,8 @@
             android:layout_height="wrap_content"
             android:text="@string/vedi_inviti_ricevuti"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
         <!---->
 
         <!-- Teacher buttons -->
@@ -97,7 +104,8 @@
             android:text="@string/vedi_lezioni_da_tenere"
             android:padding="8dp"
             android:layout_marginTop="16dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:background="@drawable/rounded_button"/>
         <!---->
 
         <Button
@@ -106,6 +114,7 @@
             android:layout_height="wrap_content"
             android:text="@string/esci"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
     </LinearLayout>
 </ScrollView>

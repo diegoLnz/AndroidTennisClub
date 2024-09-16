@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.firsttry.enums.UploadRequestType;
 import com.example.firsttry.enums.UserRole;
 import com.example.firsttry.extensions.ValidatedEditText;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.models.ProfilePicture;
 import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
@@ -31,7 +32,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
-public class ProfileFragment extends Fragment
+public class ProfileFragment extends ValidatedFragment
 {
     private ValidatedEditText _username;
     private ValidatedEditText _bio;
@@ -43,6 +44,7 @@ public class ProfileFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        checkAuthenticated();
         _currentView = inflater.inflate(R.layout.fragment_profile, container, false);
         setProfileImage();
         setupButtons();

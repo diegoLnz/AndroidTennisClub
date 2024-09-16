@@ -1,8 +1,10 @@
 package com.example.firsttry.extensions;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.example.firsttry.R;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.StringValidator;
 import com.example.firsttry.enums.ValidatorType;
@@ -18,11 +20,14 @@ public class ValidatedEditText extends androidx.appcompat.widget.AppCompatEditTe
     private HashMap<Predicate<String>, String> validationConditions = new HashMap<>();
     private ValidatorType validatorType = ValidatorType.None;
 
-    public ValidatedEditText(Context context) { super(context); }
+    @SuppressLint("ResourceAsColor")
+    public ValidatedEditText(Context context) { super(context); setTextColor(R.color.black); }
 
-    public ValidatedEditText(Context context, AttributeSet attrs) { super(context, attrs); }
+    @SuppressLint("ResourceAsColor")
+    public ValidatedEditText(Context context, AttributeSet attrs) { super(context, attrs); setTextColor(R.color.black); }
 
-    public ValidatedEditText(Context context, AttributeSet attrs, int defStyleAttr) { super(context, attrs, defStyleAttr); }
+    @SuppressLint("ResourceAsColor")
+    public ValidatedEditText(Context context, AttributeSet attrs, int defStyleAttr) { super(context, attrs, defStyleAttr); setTextColor(R.color.black); }
 
     public Boolean isRequired() { return isRequired; }
     public void setRequired(Boolean required) { isRequired = required; }

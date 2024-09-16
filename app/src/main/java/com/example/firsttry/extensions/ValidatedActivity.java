@@ -21,17 +21,6 @@ public abstract class ValidatedActivity extends AppCompatActivity
 {
     private boolean isValid = true;
     protected User CurrentUser = null;
-    private boolean HasBackButton = false;
-
-    protected Button backButton;
-
-    public boolean hasBackButton() {
-        return HasBackButton;
-    }
-
-    public void setBackButton(Class backActivityClass) {
-        setupBackButton(backActivityClass);
-    }
 
     public void checkAuthenticated()
     {
@@ -54,12 +43,6 @@ public abstract class ValidatedActivity extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    private void setupBackButton(Class backActivityClass)
-    {
-        backButton = findViewById(R.id.back_button);
-        backButton.setOnClickListener(v -> ActivityHandler.LinkTo(this, backActivityClass));
     }
 
     public boolean validateFields()

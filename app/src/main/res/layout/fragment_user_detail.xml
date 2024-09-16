@@ -15,6 +15,8 @@
             android:text="@string/profilo_utente"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@android:color/black"
             android:paddingBottom="16dp"/>
 
         <ImageView
@@ -31,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nome_utente"
+            android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="24sp"/>
 
@@ -39,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nome_utente"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
 
@@ -47,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/email_utente"
+            android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="24sp"/>
 
@@ -55,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/email_utente"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
 
@@ -62,6 +68,7 @@
             android:id="@+id/bio_label_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:text="@string/bio"
             android:textSize="24sp"
             android:textStyle="bold"/>
@@ -70,6 +77,7 @@
             android:id="@+id/bio_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:text="@string/bio"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
@@ -78,6 +86,7 @@
             android:id="@+id/role_label_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:text="@string/tipo_utente"
             android:textSize="24sp"
             android:textStyle="bold"/>
@@ -86,6 +95,7 @@
             android:id="@+id/role_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:text="@string/tipo_utente"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
@@ -95,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/reputazione"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
@@ -103,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/reputazione"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
 
@@ -111,6 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/score"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
@@ -119,6 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/score"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
 
@@ -127,6 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rank"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
@@ -135,6 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rank"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:paddingBottom="16dp"/>
 
@@ -144,7 +160,8 @@
             android:layout_height="wrap_content"
             android:text="@string/lascia_una_recensione"
             android:padding="8dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
         <Button
             android:id="@+id/btn_report_profile"
@@ -153,7 +170,8 @@
             android:text="@string/segnala"
             android:padding="8dp"
             android:layout_marginTop="16dp"
-            android:backgroundTint="#BD0000" />
+            android:backgroundTint="#BD0000"
+            android:background="@drawable/rounded_button"/>
 
         <TextView
             android:id="@+id/reviews_label"
@@ -162,6 +180,7 @@
             android:text="@string/recensioni_ricevute"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:paddingBottom="16dp"
             android:layout_marginTop="16dp"/>
 

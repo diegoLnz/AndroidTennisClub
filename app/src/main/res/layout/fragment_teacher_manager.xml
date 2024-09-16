@@ -15,18 +15,13 @@
             android:text="@string/gestisci_insegnanti"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@android:color/black"
             android:paddingBottom="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/teachersRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/indietro" />
     </LinearLayout>
 </ScrollView>

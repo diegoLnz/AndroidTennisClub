@@ -14,8 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/gestisci_orari"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:gravity="center"
             android:paddingBottom="16dp"/>
 
         <TextView
@@ -83,19 +85,13 @@
             android:layout_height="wrap_content"
             android:text="@string/aggiungi_lezione"
             android:padding="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/addedLessonsRecyclerView"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/indietro" />
     </LinearLayout>
 </ScrollView>

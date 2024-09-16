@@ -14,6 +14,7 @@ import com.example.firsttry.utilities.AccountManager;
 import com.example.firsttry.utilities.Array;
 import com.example.firsttry.utilities.GlideHelper;
 import com.example.firsttry.utilities.ImageUploader;
+import com.example.firsttry.utilities.NotificationSender;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.concurrent.CompletableFuture;
@@ -26,6 +27,7 @@ public class IntroActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        NotificationSender.requirePermission(this);
         setContentView(R.layout.activity_intro);
         AccountManager.checkFcmToken();
         currentConfig().thenAccept(conf -> {

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/time"
         android:textStyle="bold"
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
     <TextView
@@ -19,11 +20,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/court"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="10sp"
         android:textSize="16sp" />
 
     <Button
         android:id="@+id/action_delete_lesson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/elimina_lezione" />
+        android:text="@string/elimina_lezione"
+        android:background="@drawable/rounded_button"/>
 </LinearLayout>

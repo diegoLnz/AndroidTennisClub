@@ -18,6 +18,8 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:paddingBottom="16dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
             tools:ignore="ExtraText" />
 
         <com.example.firsttry.extensions.ValidatedEditText

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text=""
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
 
     <TextView
@@ -19,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
     <TextView
@@ -26,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
     <TextView
@@ -33,11 +36,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="10sp"/>
 
     <Button
         android:id="@+id/action_set_yourself_available"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/prenota" />
+        android:text="@string/prenota"
+        android:background="@drawable/rounded_button"/>
 </LinearLayout>

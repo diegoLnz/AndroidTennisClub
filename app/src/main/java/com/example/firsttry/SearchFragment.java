@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.firsttry.extensions.ValidatedEditText;
+import com.example.firsttry.extensions.ValidatedFragment;
 import com.example.firsttry.extensions.adapters.SearchedUserAdapter;
 import com.example.firsttry.models.User;
 import com.example.firsttry.utilities.AccountManager;
@@ -27,7 +28,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public class SearchFragment
-        extends Fragment
+        extends ValidatedFragment
         implements SearchedUserAdapter.OnUserActionListener
 {
     private View _currentView;
@@ -40,6 +41,7 @@ public class SearchFragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        checkAuthenticated();
         _currentView = inflater.inflate(R.layout.fragment_search, container, false);
 
         recyclerView = _currentView.findViewById(R.id.searchedUsersRecyclerView);

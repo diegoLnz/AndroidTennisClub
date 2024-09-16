@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@android:color/background_light"
     android:padding="16dp">
 
     <ImageView
@@ -18,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Welcome"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textAlignment="center"
         android:padding="16dp" />

@@ -22,15 +22,14 @@ public class AccountManager
         return future;
     }
 
-    public static CompletableFuture<Result<User, Exception>> doRegister(User user)
+    public static CompletableFuture<Result<User, Exception>> doRegister(User user, String password)
     {
         CompletableFuture<Result<User, Exception>> future = new CompletableFuture<>();
-        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+        mAuth.createUserWithEmailAndPassword(user.getEmail(), password)
                 .addOnCompleteListener(authResult -> {
                     if (authResult.isSuccessful())
                     {
                         user.setId(authResult.getResult().getUser().getUid());
-                        user.setPassword(Sha256Encryptor.encrypt(user.getPassword()));
                         user.setRole(UserRole.Common);
                         user.save().thenApply(account -> future.complete(Result.success(account)));
                     }
